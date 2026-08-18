@@ -1,0 +1,16 @@
+{
+  "name": "AZ Global Translations",
+  "short_name": "AZ Translations",
+  "description": "Professional certified translation services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066cc",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "200x82",
+      "type": "image/png"
+    }
+  ]
+}
