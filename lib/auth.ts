@@ -1,9 +1,19 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-const secret = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'fallback-secret-key-change-me'
-);
+/**
+ * Resolve the JWT signing secret. Fails closed: if JWT_SECRET is not set we
+ * throw rather than fall back to a well-known default (which would let anyone
+ * forge admin tokens). Resolved lazily so importing this module during
+ * `next build` does not require the secret to be present.
+ */
+function getSecret(): Uint8Array {
+  const value = process.env.JWT_SECRET;
+  if (!value) {
+    throw new Error('JWT_SECRET is not defined in environment variables');
+  }
+  return new TextEncoder().encode(value);
+}
 
 export interface JWTPayload {
   userId: string;
@@ -16,12 +26,12 @@ export async function createToken(payload: JWTPayload): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
-    .sign(secret);
+    .sign(getSecret());
 }
 
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    const verified = await jwtVerify(token, secret);
+    const verified = await jwtVerify(token, getSecret());
     return verified.payload as unknown as JWTPayload;
   } catch (error) {
     return null;

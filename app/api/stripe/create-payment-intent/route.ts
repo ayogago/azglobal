@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Create PaymentIntent for guest order
-      const paymentIntent = await stripe.paymentIntents.create({
+      const paymentIntent = await getStripe().paymentIntents.create({
         amount: Math.round(amount * 100),
         currency,
         automatic_payment_methods: {
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create a PaymentIntent with the order amount and currency
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await getStripe().paymentIntents.create({
       amount: Math.round(amount * 100), // Stripe expects amount in cents
       currency,
       automatic_payment_methods: {

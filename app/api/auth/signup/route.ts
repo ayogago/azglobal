@@ -90,11 +90,12 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Set auth cookie in response
-    // Note: secure is false because nginx handles SSL termination
+    // Set auth cookie in response. `secure` is enabled in production so the
+    // session cookie is only ever sent over HTTPS. Behind a TLS-terminating
+    // proxy (e.g. nginx) the browser still uses HTTPS, so this is correct.
     response.cookies.set('auth_token', token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',

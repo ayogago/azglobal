@@ -89,11 +89,11 @@ export default function QuotePage() {
       setTimeout(() => {
         if (updated.pricingModel === 'per-word' && updated.words) {
           const pricePerWord = updated.speed === 'same-day' ? sameDayPricePerWord : standardPricePerWord;
-          let price = parseFloat(updated.words) * pricePerWord;
+          const price = parseFloat(updated.words) * pricePerWord;
           setEstimatedPrice(price);
         } else if (updated.pricingModel === 'per-page' && updated.pages) {
           const pricePerPage = updated.speed === 'same-day' ? sameDayPricePerPage : standardPricePerPage;
-          let price = parseFloat(updated.pages) * pricePerPage;
+          const price = parseFloat(updated.pages) * pricePerPage;
           setEstimatedPrice(price);
         }
       }, 0);
@@ -153,12 +153,12 @@ export default function QuotePage() {
           if (formData.pricingModel === 'per-word') {
             setFormData(prev => ({ ...prev, words: words.toString() }));
             const pricePerWord = formData.speed === 'same-day' ? sameDayPricePerWord : standardPricePerWord;
-            let price = words * pricePerWord;
+            const price = words * pricePerWord;
             setEstimatedPrice(price);
           } else if (formData.pricingModel === 'per-page') {
             setFormData(prev => ({ ...prev, pages: pages.toString() }));
             const pricePerPage = formData.speed === 'same-day' ? sameDayPricePerPage : standardPricePerPage;
-            let price = pages * pricePerPage;
+            const price = pages * pricePerPage;
             setEstimatedPrice(price);
           }
         } catch (docxError) {
@@ -173,12 +173,12 @@ export default function QuotePage() {
           if (formData.pricingModel === 'per-word') {
             setFormData(prev => ({ ...prev, words: estimatedWords.toString() }));
             const pricePerWord = formData.speed === 'same-day' ? sameDayPricePerWord : standardPricePerWord;
-            let price = estimatedWords * pricePerWord;
+            const price = estimatedWords * pricePerWord;
             setEstimatedPrice(price);
           } else if (formData.pricingModel === 'per-page') {
             setFormData(prev => ({ ...prev, pages: estimatedPages.toString() }));
             const pricePerPage = formData.speed === 'same-day' ? sameDayPricePerPage : standardPricePerPage;
-            let price = estimatedPages * pricePerPage;
+            const price = estimatedPages * pricePerPage;
             setEstimatedPrice(price);
           }
         }
@@ -194,12 +194,12 @@ export default function QuotePage() {
         if (formData.pricingModel === 'per-word') {
           setFormData(prev => ({ ...prev, words: estimatedWords.toString() }));
           const pricePerWord = formData.speed === 'same-day' ? sameDayPricePerWord : standardPricePerWord;
-          let price = estimatedWords * pricePerWord;
+          const price = estimatedWords * pricePerWord;
           setEstimatedPrice(price);
         } else if (formData.pricingModel === 'per-page') {
           setFormData(prev => ({ ...prev, pages: estimatedPages.toString() }));
           const pricePerPage = formData.speed === 'same-day' ? sameDayPricePerPage : standardPricePerPage;
-          let price = estimatedPages * pricePerPage;
+          const price = estimatedPages * pricePerPage;
           setEstimatedPrice(price);
         }
       }

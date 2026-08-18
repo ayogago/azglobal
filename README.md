@@ -1,164 +1,142 @@
-# AZ Global Translations - Next.js 14 Website
+# AZ Global Translations
 
-Production-ready Next.js 14 website for AZ Global Translations - Professional Certified Translation Services.
+Production Next.js 15 (App Router) website and client portal for AZ Global
+Translations — professional certified translation services. Includes a public
+marketing site, a customer/admin portal with authentication, order management,
+document uploads, and Stripe payments.
 
-## Features
+## Tech stack
 
-- ⚡ **Next.js 14** with App Router
-- 🎨 **Tailwind CSS** for styling
-- 📱 **Fully Responsive** design
-- 🔍 **SEO Optimized** with metadata
-- ♿ **Accessible** components
-- 🚀 **Performance Optimized**
-- 📝 **TypeScript** for type safety
-
-## Pages Included
-
-- **Home** - Hero section, services overview, and CTAs
-- **Services** - Detailed service offerings
-- **About** - Company information and values
-- **Contact** - Contact form and information
-- **Quote** - Free quote request form
+- **Next.js 15** (App Router) + **React 19**
+- **TypeScript** (strict)
+- **Tailwind CSS 3**
+- **Prisma** ORM (PostgreSQL)
+- **jose** JWT auth, **bcryptjs** password hashing
+- **Stripe** (Payment Intents) for checkout
+- **Nodemailer** for transactional email
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ installed
-- npm or yarn package manager
+- Node.js 18+ (20+ recommended)
+- A PostgreSQL database
+- npm
 
-### Installation
+### Setup
 
 1. Install dependencies:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-2. Run the development server:
+2. Create `.env` (see [Environment Variables](#environment-variables) below).
 
-```bash
-npm run dev
-```
+3. Generate the Prisma client and apply migrations:
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+   ```bash
+   npx prisma generate
+   npx prisma migrate deploy   # or `npx prisma migrate dev` in development
+   ```
 
-## Build for Production
+4. (Optional) Create the initial admin user:
 
-```bash
-npm run build
-npm start
+   ```bash
+   node scripts/create-admin.js
+   ```
+
+   Change the default credentials in that script — and rotate the password
+   immediately after first login.
+
+5. Run the development server (port **3005**):
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3005](http://localhost:3005).
+
+## Scripts
+
+| Command         | Description                              |
+| --------------- | ---------------------------------------- |
+| `npm run dev`   | Start the dev server on port 3005        |
+| `npm run build` | Production build                         |
+| `npm start`     | Start the production server on port 3005 |
+| `npm run lint`  | Run ESLint (`next lint`)                 |
+
+## Environment Variables
+
+All of the following are read at runtime. `JWT_SECRET` and the Stripe keys are
+required — the app fails closed (throws) if the secret is missing rather than
+falling back to an insecure default.
+
+```env
+# Database
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+# Auth — REQUIRED. Use a long, random value (e.g. `openssl rand -base64 48`).
+JWT_SECRET=your-long-random-secret
+
+# Stripe — REQUIRED for checkout
+STRIPE_SECRET_KEY=sk_live_or_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_or_test_...
+
+# SMTP (transactional email)
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=apikey
+SMTP_PASSWORD=your-smtp-password
+SMTP_FROM=info@azglobaltranslations.com
+SMTP_FROM_NAME=AZ Global Translations
+
+# App URL (used in emails and absolute links)
+NEXT_PUBLIC_APP_URL=https://azglobaltranslations.com
 ```
 
 ## Project Structure
 
 ```
 ├── app/
-│   ├── layout.tsx          # Root layout with Header/Footer
-│   ├── page.tsx            # Homepage
-│   ├── globals.css         # Global styles
-│   ├── services/           # Services page
-│   ├── about/              # About page
-│   ├── contact/            # Contact page
-│   └── quote/              # Quote request page
-├── components/
-│   ├── Header.tsx          # Navigation header
-│   └── Footer.tsx          # Footer component
-├── public/                 # Static assets
-└── tailwind.config.ts      # Tailwind configuration
+│   ├── layout.tsx              # Root layout, global metadata
+│   ├── page.tsx                # Homepage
+│   ├── services|about|contact|quote/   # Marketing pages
+│   ├── privacy-policy|terms-and-conditions/
+│   ├── complete-order/         # Guest order completion + payment
+│   ├── portal/                 # Authenticated customer + admin portal
+│   ├── admin/                  # Admin views
+│   └── api/                    # Route handlers (auth, orders, stripe, users, …)
+├── components/                 # Header, Footer, Logo, StripeCheckout
+├── lib/                        # auth, prisma, stripe, email, pdf, rate-limit
+├── prisma/                     # schema.prisma + migrations
+├── scripts/create-admin.js     # Seed an admin user
+└── public/                     # Static assets (logo, icons, manifest)
 ```
 
-## Brand Colors
+## Payments
 
-- Primary Green: `#1B9C85`
-- Primary Dark: `#178E79`
-- Dark Text: `#0F172A`
-- Dark Light: `#454F5E`
-
-## Typography
-
-- Headings: **Encode Sans**
-- Body: **Open Sans**
-
-## Customization
-
-### Update Colors
-
-Edit `tailwind.config.ts`:
-
-```typescript
-colors: {
-  primary: {
-    DEFAULT: '#1B9C85',
-    dark: '#178E79',
-  },
-  // ...
-}
-```
-
-### Update Content
-
-- Homepage: `app/page.tsx`
-- Services: `app/services/page.tsx`
-- About: `app/about/page.tsx`
-- Contact: `app/contact/page.tsx`
-- Quote: `app/quote/page.tsx`
-
-### Update Navigation
-
-Edit `components/Header.tsx` to add/remove menu items.
+Checkout uses Stripe Payment Intents. The `/api/stripe/webhook` endpoint
+verifies the Stripe signature and is the source of truth for marking orders
+paid; configure it in the Stripe dashboard and set `STRIPE_WEBHOOK_SECRET`.
 
 ## Deployment
 
-### Vercel (Recommended)
-
-1. Push code to GitHub
-2. Import project in [Vercel](https://vercel.com)
-3. Deploy automatically
-
-### Other Platforms
-
-Build the production bundle:
+Designed for Vercel (or any Node host). Set all environment variables in the
+hosting provider, then build:
 
 ```bash
 npm run build
+npm start
 ```
 
-Deploy the `.next` folder and `public` directory to your hosting provider.
-
-## Environment Variables
-
-Create a `.env.local` file for environment-specific variables:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://azglobaltranslations.com
-NEXT_PUBLIC_CONTACT_EMAIL=info@azglobaltranslations.com
-```
-
-## Performance
-
-- Uses Next.js Image optimization
-- Implements font optimization with `next/font`
-- CSS is automatically optimized and purged
-- Built-in code splitting
-
-## SEO
-
-- Metadata configured for all pages
-- Semantic HTML structure
-- Optimized for search engines
-- Open Graph tags ready to add
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Behind a TLS-terminating proxy (e.g. nginx), the session cookie is still marked
+`Secure` in production because the browser connection is HTTPS.
 
 ## License
 
-Copyright © 2024 AZ Global Translations. All rights reserved.
+Copyright © AZ Global Translations. All rights reserved.
 
 ## Support
 
