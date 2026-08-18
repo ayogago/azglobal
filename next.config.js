@@ -26,7 +26,10 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Strip console output in production, but keep console.error so real
+    // failures (e.g. database errors) remain visible in Vercel runtime logs.
+    removeConsole:
+      process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],
