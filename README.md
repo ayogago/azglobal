@@ -1,143 +1,49 @@
-# AZ Global Translations
+# AZ Global Translations — website
 
-Production Next.js 15 (App Router) website and client portal for AZ Global
-Translations — professional certified translation services. Includes a public
-marketing site, a customer/admin portal with authentication, order management,
-document uploads, and Stripe payments.
+Informational marketing site for [azglobaltranslations.com](https://azglobaltranslations.com):
+certified Armenian, Russian and Ukrainian ⇄ English translation.
 
-## Tech stack
+No accounts, checkout or database. Visitors request a quote (with document uploads) or send a message;
+submissions are emailed to the team.
 
-- **Next.js 15** (App Router) + **React 19**
-- **TypeScript** (strict)
-- **Tailwind CSS 3**
-- **Prisma** ORM (PostgreSQL)
-- **jose** JWT auth, **bcryptjs** password hashing
-- **Stripe** (Payment Intents) for checkout
-- **Nodemailer** for transactional email
+## Stack
 
-## Getting Started
+- Next.js 15 (App Router) + Tailwind CSS, deployed on Vercel
+- Vercel Blob (**private** store) for uploaded documents — browser uploads directly, so large scans work
+- Nodemailer over SMTP for notification + confirmation emails
+- Self-hosted fonts (Montserrat, Open Sans) via Fontsource
 
-### Prerequisites
+## How the request form works
 
-- Node.js 18+ (20+ recommended)
-- A PostgreSQL database
-- npm
+1. The browser uploads each file to the private Blob store using a short-lived token from `POST /api/upload`
+   (PDF, JPG/PNG/HEIC, Word, etc.; up to 10 files, 25 MB each).
+2. The form posts details + file references to `POST /api/request`, which validates everything,
+   emails the team (files attached when ≤ 15 MB total, plus signed download links), and sends the customer a confirmation.
+3. Download links go through `GET /api/files/...?sig=…` (HMAC-signed; only people with the email can open them).
+4. A daily cron (`/api/cron/cleanup`, see `vercel.json`) deletes uploads older than `UPLOAD_RETENTION_DAYS` (default 90).
 
-### Setup
+Spam protection: honeypot field + per-IP rate limits.
 
-1. Install dependencies:
+## Pages
 
-   ```bash
-   npm install
-   ```
+| Path | Purpose |
+| --- | --- |
+| `/` | Home |
+| `/quote` | Quote request form |
+| `/armenian-translation`, `/russian-translation`, `/ukrainian-translation` | Language landing pages (SEO) with embedded form |
+| `/services`, `/about`, `/contact` | Info pages (contact has a message form) |
+| `/privacy-policy`, `/terms-and-conditions` | Legal |
 
-2. Create `.env` (see [Environment Variables](#environment-variables) below).
+Old `/portal/*`, `/admin/*` and `/complete-order` URLs permanently redirect to `/quote` or `/`.
 
-3. Generate the Prisma client and apply migrations:
+Business details (phone, email, languages, form options) live in `lib/site.ts`; page copy for services,
+FAQs and language pages lives in `lib/content.ts`.
 
-   ```bash
-   npx prisma generate
-   npx prisma migrate deploy   # or `npx prisma migrate dev` in development
-   ```
-
-4. (Optional) Create the initial admin user:
-
-   ```bash
-   node scripts/create-admin.js
-   ```
-
-   Change the default credentials in that script — and rotate the password
-   immediately after first login.
-
-5. Run the development server (port **3005**):
-
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3005](http://localhost:3005).
-
-## Scripts
-
-| Command         | Description                              |
-| --------------- | ---------------------------------------- |
-| `npm run dev`   | Start the dev server on port 3005        |
-| `npm run build` | Production build                         |
-| `npm start`     | Start the production server on port 3005 |
-| `npm run lint`  | Run ESLint (`next lint`)                 |
-
-## Environment Variables
-
-All of the following are read at runtime. `JWT_SECRET` and the Stripe keys are
-required — the app fails closed (throws) if the secret is missing rather than
-falling back to an insecure default.
-
-```env
-# Database
-DATABASE_URL=postgresql://user:password@host:5432/dbname
-
-# Auth — REQUIRED. Use a long, random value (e.g. `openssl rand -base64 48`).
-JWT_SECRET=your-long-random-secret
-
-# Stripe — REQUIRED for checkout
-STRIPE_SECRET_KEY=sk_live_or_test_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_or_test_...
-
-# SMTP (transactional email)
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_USER=apikey
-SMTP_PASSWORD=your-smtp-password
-SMTP_FROM=info@azglobaltranslations.com
-SMTP_FROM_NAME=AZ Global Translations
-
-# App URL (used in emails and absolute links)
-NEXT_PUBLIC_APP_URL=https://azglobaltranslations.com
-```
-
-## Project Structure
-
-```
-├── app/
-│   ├── layout.tsx              # Root layout, global metadata
-│   ├── page.tsx                # Homepage
-│   ├── services|about|contact|quote/   # Marketing pages
-│   ├── privacy-policy|terms-and-conditions/
-│   ├── complete-order/         # Guest order completion + payment
-│   ├── portal/                 # Authenticated customer + admin portal
-│   ├── admin/                  # Admin views
-│   └── api/                    # Route handlers (auth, orders, stripe, users, …)
-├── components/                 # Header, Footer, Logo, StripeCheckout
-├── lib/                        # auth, prisma, stripe, email, pdf, rate-limit
-├── prisma/                     # schema.prisma + migrations
-├── scripts/create-admin.js     # Seed an admin user
-└── public/                     # Static assets (logo, icons, manifest)
-```
-
-## Payments
-
-Checkout uses Stripe Payment Intents. The `/api/stripe/webhook` endpoint
-verifies the Stripe signature and is the source of truth for marking orders
-paid; configure it in the Stripe dashboard and set `STRIPE_WEBHOOK_SECRET`.
-
-## Deployment
-
-Designed for Vercel (or any Node host). Set all environment variables in the
-hosting provider, then build:
+## Development
 
 ```bash
-npm run build
-npm start
+npm install
+cp .env.example .env.local   # fill in SMTP + BLOB_READ_WRITE_TOKEN
+npm run dev
+npm run lint && npm run build
 ```
-
-Behind a TLS-terminating proxy (e.g. nginx), the session cookie is still marked
-`Secure` in production because the browser connection is HTTPS.
-
-## License
-
-Copyright © AZ Global Translations. All rights reserved.
-
-## Support
-
-For questions or support, contact: info@azglobaltranslations.com

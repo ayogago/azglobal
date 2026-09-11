@@ -1,365 +1,215 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, User, LogOut, FileText, ShoppingCart, LayoutDashboard, ChevronDown } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { ChevronDown, Menu, Phone, X } from 'lucide-react';
+import { LANGUAGES, SITE } from '@/lib/site';
+import Flag from '@/components/Flag';
+
+const NAV = [
+  { name: 'Services', href: '/services' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'Services', href: '/services' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ];
-
+  // Close menus on navigation.
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    // Check if user is logged in via API
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/me', {
-          credentials: 'include',
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error('Error checking auth:', error);
-        setUser(null);
-      }
-    };
-
-    checkAuth();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    setMobileOpen(false);
+    setLangOpen(false);
   }, [pathname]);
 
-  const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include',
-      });
+  // Close the languages dropdown on outside click / Escape.
+  useEffect(() => {
+    if (!langOpen) return;
+    const onClick = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setLangOpen(false);
+    document.addEventListener('mousedown', onClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [langOpen]);
 
-      setUser(null);
-      setUserMenuOpen(false);
-      router.push('/');
-    } catch (error) {
-      console.error('Error logging out:', error);
-      // Still clear the user state on error
-      setUser(null);
-      setUserMenuOpen(false);
-      router.push('/');
-    }
-  };
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
+  const isActive = (href: string) => pathname === href;
+  const langActive = LANGUAGES.some((l) => pathname === l.href);
+
+  const linkClass = (active: boolean) =>
+    `rounded-md px-3 py-2 text-[15px] font-semibold transition-colors ${
+      active ? 'text-primary' : 'text-dark hover:text-primary'
+    }`;
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg'
-            : 'bg-white shadow-sm'
-        }`}
-      >
-        <nav className="container-custom">
-          <div className="flex items-center justify-between lg:justify-between justify-center relative h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center transform hover:scale-105 transition-transform duration-200">
-              <Image
-                src="/logo.png"
-                alt="AZ Global Translations"
-                width={300}
-                height={123}
-                priority
-                className="h-auto w-auto max-h-16 md:max-h-20 lg:max-h-16"
-              />
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+        <nav className="container-custom flex h-[72px] items-center justify-between gap-4" aria-label="Main">
+          <Link href="/" className="flex shrink-0 items-center" aria-label="AZ Global Translations home">
+            <Image
+              src="/logo-mark.png"
+              alt="AZ Global Translations"
+              width={1200}
+              height={282}
+              priority
+              sizes="(min-width: 640px) 200px, 170px"
+              className="h-10 w-auto sm:h-11"
+            />
+          </Link>
+
+          <div className="hidden items-center gap-1 lg:flex">
+            <Link href="/services" className={linkClass(isActive('/services'))}>
+              Services
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
-              {navigation.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`relative px-4 py-2 text-sm font-semibold transition-all duration-200 rounded-lg group ${
-                      isActive
-                        ? 'text-primary'
-                        : 'text-gray-700 hover:text-primary hover:bg-primary/5'
-                    }`}
-                  >
-                    {item.name}
-                    <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary transition-all duration-200 ${
-                      isActive ? 'w-8' : 'w-0 group-hover:w-8'
-                    }`}></span>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Auth Buttons - Desktop */}
-            <div className="hidden lg:flex items-center space-x-3">
-              <Link
-                href="/quote"
-                className="px-5 py-2.5 text-sm font-semibold bg-gradient-to-r from-primary to-primary-dark text-white rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+            <div className="relative" ref={langRef}>
+              <button
+                type="button"
+                className={`${linkClass(langActive)} inline-flex items-center gap-1`}
+                aria-expanded={langOpen}
+                aria-haspopup="true"
+                onClick={() => setLangOpen((v) => !v)}
               >
-                Order Translation
-              </Link>
-
-              {user ? (
-                <div className="relative">
-                  <button
-                    onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center space-x-2 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
-                  >
-                    <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center">
-                      <span className="text-sm font-bold">{user.name?.charAt(0) || 'U'}</span>
-                    </div>
-                    <span>{user.name}</span>
-                    <ChevronDown className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {userMenuOpen && (
-                    <>
-                      <div
-                        className="fixed inset-0 z-30"
-                        onClick={() => setUserMenuOpen(false)}
-                      />
-                      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-40">
-                        <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-sm font-semibold text-dark">{user.name}</p>
-                          <p className="text-xs text-dark-light">{user.email}</p>
-                        </div>
-                        <Link
-                          href="/portal/dashboard"
-                          className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors"
-                          onClick={() => setUserMenuOpen(false)}
-                        >
-                          <LayoutDashboard className="h-4 w-4" />
-                          <span>Dashboard</span>
-                        </Link>
-                        <Link
-                          href="/portal/translations"
-                          className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors"
-                          onClick={() => setUserMenuOpen(false)}
-                        >
-                          <FileText className="h-4 w-4" />
-                          <span>My Translations</span>
-                        </Link>
-                        <Link
-                          href="/portal/orders"
-                          className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors"
-                          onClick={() => setUserMenuOpen(false)}
-                        >
-                          <ShoppingCart className="h-4 w-4" />
-                          <span>My Orders</span>
-                        </Link>
-                        <Link
-                          href="/portal/profile"
-                          className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary transition-colors"
-                          onClick={() => setUserMenuOpen(false)}
-                        >
-                          <User className="h-4 w-4" />
-                          <span>Profile</span>
-                        </Link>
-                        <div className="border-t border-gray-100 mt-2 pt-2">
-                          <button
-                            onClick={handleLogout}
-                            className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-                          >
-                            <LogOut className="h-4 w-4" />
-                            <span>Logout</span>
-                          </button>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                Languages
+                <ChevronDown className={`h-4 w-4 transition-transform ${langOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {langOpen && (
+                <div className="absolute left-0 top-full mt-2 w-64 rounded-xl border border-slate-200 bg-white p-2 shadow-card">
+                  {LANGUAGES.map((l) => (
+                    <Link
+                      key={l.slug}
+                      href={l.href}
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 hover:bg-primary-soft"
+                    >
+                      <Flag code={l.flag} className="h-4 w-6 rounded-sm" />
+                      <span>
+                        <span className="block text-sm font-semibold text-dark">{l.name} translation</span>
+                        <span className="block text-xs text-dark-light">{l.native} ⇄ English</span>
+                      </span>
+                    </Link>
+                  ))}
                 </div>
-              ) : (
-                <>
-                  <Link
-                    href="/portal/login"
-                    className="px-5 py-2.5 text-sm font-semibold text-gray-700 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    href="/portal/signup"
-                    className="px-5 py-2.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-lg transition-all duration-200"
-                  >
-                    Sign Up
-                  </Link>
-                </>
               )}
             </div>
 
-            {/* Mobile menu button */}
+            {NAV.slice(1).map((item) => (
+              <Link key={item.href} href={item.href} className={linkClass(isActive(item.href))}>
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="hidden items-center gap-4 lg:flex">
+            <a
+              href={SITE.phoneHref}
+              className="inline-flex items-center gap-2 text-[15px] font-semibold text-dark hover:text-primary"
+            >
+              <Phone className="h-4 w-4 text-primary" />
+              {SITE.phone}
+            </a>
+            <Link href="/quote" className="btn-primary px-5 py-2.5 text-[15px]">
+              Get a Free Quote
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-1 lg:hidden">
+            <a
+              href={SITE.phoneHref}
+              className="rounded-lg p-2.5 text-primary hover:bg-primary-soft"
+              aria-label={`Call ${SITE.phone}`}
+            >
+              <Phone className="h-5 w-5" />
+            </a>
             <button
               type="button"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              className="lg:hidden absolute right-0 text-gray-700 hover:text-primary p-2 rounded-lg hover:bg-primary/5 transition-all"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="rounded-lg p-2.5 text-dark hover:bg-slate-100"
+              aria-label="Open menu"
+              aria-expanded={mobileOpen}
+              onClick={() => setMobileOpen(true)}
             >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              <Menu className="h-6 w-6" />
             </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile Navigation Overlay */}
+      {/* Mobile menu */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300 ${
-          mobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-[55] bg-dark/50 transition-opacity lg:hidden ${
+          mobileOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
-        onClick={() => setMobileMenuOpen(false)}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden="true"
       />
-
-      {/* Mobile Navigation Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 lg:hidden transform transition-transform duration-300 ease-in-out ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-y-0 right-0 z-[56] flex w-80 max-w-[88vw] flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
+          mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        inert={!mobileOpen}
       >
-        <div className="flex flex-col h-full">
-          {/* Mobile Menu Header */}
-          <div className="relative flex items-center justify-center p-6 border-b border-gray-100">
-            <Image
-              src="/logo.png"
-              alt="AZ Global Translations"
-              width={260}
-              height={106}
-              className="h-auto w-auto max-h-14"
-            />
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
-              className="absolute right-6 p-2 text-gray-700 hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-
-          {/* Mobile Menu Links */}
-          <div className="flex-1 overflow-y-auto py-6 px-4">
-            <div className="space-y-1">
-              {navigation.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`block px-4 py-3 rounded-lg font-semibold transition-all ${
-                      isActive
-                        ? 'bg-primary text-white'
-                        : 'text-gray-700 hover:bg-primary/5 hover:text-primary'
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Mobile Menu Footer Auth */}
-          <div className="p-6 border-t border-gray-100 space-y-3">
+        <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+          <Image src="/logo-mark.png" alt="AZ Global Translations" width={1200} height={282} sizes="150px" className="h-8 w-auto" />
+          <button
+            type="button"
+            className="rounded-lg p-2 text-dark hover:bg-slate-100"
+            aria-label="Close menu"
+            onClick={() => setMobileOpen(false)}
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto px-3 py-4">
+          {[{ name: 'Home', href: '/' }, ...NAV].map((item) => (
             <Link
-              href="/quote"
-              className="block bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-3 rounded-lg font-semibold text-center shadow-lg hover:shadow-xl transition-all"
-              onClick={() => setMobileMenuOpen(false)}
+              key={item.href}
+              href={item.href}
+              className={`block rounded-lg px-3 py-3 font-semibold ${
+                isActive(item.href) ? 'bg-primary-soft text-primary' : 'text-dark hover:bg-slate-50'
+              }`}
             >
-              Order Translation
+              {item.name}
             </Link>
-
-            {user ? (
-              <>
-                <div className="bg-primary/5 rounded-lg p-4 mb-3">
-                  <p className="text-sm font-semibold text-dark">{user.name}</p>
-                  <p className="text-xs text-dark-light">{user.email}</p>
-                </div>
-                <Link
-                  href="/portal/dashboard"
-                  className="flex items-center space-x-2 px-6 py-3 text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <LayoutDashboard className="h-5 w-5" />
-                  <span>Dashboard</span>
-                </Link>
-                <Link
-                  href="/portal/translations"
-                  className="flex items-center space-x-2 px-6 py-3 text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <FileText className="h-5 w-5" />
-                  <span>My Translations</span>
-                </Link>
-                <Link
-                  href="/portal/orders"
-                  className="flex items-center space-x-2 px-6 py-3 text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  <span>My Orders</span>
-                </Link>
-                <Link
-                  href="/portal/profile"
-                  className="flex items-center space-x-2 px-6 py-3 text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <User className="h-5 w-5" />
-                  <span>Profile</span>
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center space-x-2 w-full px-6 py-3 text-red-600 font-semibold hover:bg-red-50 rounded-lg transition-all"
-                >
-                  <LogOut className="h-5 w-5" />
-                  <span>Logout</span>
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/portal/login"
-                  className="block text-center px-6 py-3 text-gray-700 font-semibold hover:bg-primary/5 hover:text-primary rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/portal/signup"
-                  className="block text-center px-6 py-3 border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white rounded-lg transition-all"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+          ))}
+          <p className="mt-5 px-3 text-xs font-bold uppercase tracking-wider text-dark-light">Languages</p>
+          {LANGUAGES.map((l) => (
+            <Link
+              key={l.slug}
+              href={l.href}
+              className={`mt-1 flex items-center gap-3 rounded-lg px-3 py-3 font-semibold ${
+                isActive(l.href) ? 'bg-primary-soft text-primary' : 'text-dark hover:bg-slate-50'
+              }`}
+            >
+              <Flag code={l.flag} className="h-4 w-6 rounded-sm" />
+              {l.name} translation
+            </Link>
+          ))}
+        </div>
+        <div className="space-y-3 border-t border-slate-100 p-5">
+          <Link href="/quote" className="btn-primary w-full">
+            Get a Free Quote
+          </Link>
+          <a href={SITE.phoneHref} className="btn-outline w-full">
+            <Phone className="h-4 w-4" />
+            {SITE.phone}
+          </a>
         </div>
       </div>
     </>

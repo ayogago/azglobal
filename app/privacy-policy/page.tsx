@@ -1,9 +1,11 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy | AZ Global Translations',
+export const metadata: Metadata = pageMetadata({
+  title: 'Privacy Policy',
   description: 'Privacy Policy for AZ Global Translations. Learn how we collect, use, and protect your personal information.',
-};
+  path: '/privacy-policy',
+});
 
 export default function PrivacyPolicyPage() {
   return (
@@ -16,7 +18,7 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-lg text-dark-light">
-              Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              Last Updated: September 11, 2026
             </p>
           </div>
         </div>
@@ -30,7 +32,7 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">1. Introduction</h2>
                 <p className="text-dark-light leading-relaxed">
-                  AZ Global Translations ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our translation services and visit our website.
+                  AZ Global Translations (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our translation services and visit our website.
                 </p>
               </div>
 
@@ -40,8 +42,8 @@ export default function PrivacyPolicyPage() {
                   We may collect the following types of information:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
-                  <li><strong>Personal Information:</strong> Name, email address, phone number, billing address, and payment information.</li>
-                  <li><strong>Documents:</strong> Files and documents you submit for translation services.</li>
+                  <li><strong>Personal Information:</strong> Name, email address and phone number you provide through our quote or contact forms, and billing details if you choose to use our services.</li>
+                  <li><strong>Documents:</strong> Files and documents you upload through our website or send to us for translation. Uploaded files are stored in private, access-controlled storage and are only accessible to our team.</li>
                   <li><strong>Usage Data:</strong> Information about how you access and use our website, including IP address, browser type, pages visited, and time spent on pages.</li>
                   <li><strong>Communication Data:</strong> Records of your communications with us, including emails, chat messages, and phone calls.</li>
                 </ul>
@@ -54,7 +56,7 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
                   <li>To provide, maintain, and improve our translation services</li>
-                  <li>To process your transactions and send you related information</li>
+                  <li>To prepare quotes, process your requests and send you related information</li>
                   <li>To respond to your inquiries and provide customer support</li>
                   <li>To send you technical notices, updates, and administrative messages</li>
                   <li>To communicate with you about services, offers, and promotions</li>
@@ -69,7 +71,7 @@ export default function PrivacyPolicyPage() {
                   We do not sell your personal information. We may share your information in the following circumstances:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
-                  <li><strong>Service Providers:</strong> With third-party vendors who perform services on our behalf, such as payment processing and data analysis.</li>
+                  <li><strong>Service Providers:</strong> With third-party vendors who perform services on our behalf, such as secure file storage, email delivery, payment processing and website analytics.</li>
                   <li><strong>Professional Translators:</strong> With certified translators who work with us to complete your translation projects, under strict confidentiality agreements.</li>
                   <li><strong>Legal Requirements:</strong> When required by law or to protect our rights, property, or safety.</li>
                   <li><strong>Business Transfers:</strong> In connection with a merger, sale, or acquisition of all or part of our business.</li>
@@ -86,7 +88,7 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">6. Data Retention</h2>
                 <p className="text-dark-light leading-relaxed">
-                  We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. Your translated documents are typically retained for a period of 90 days after project completion, unless you request earlier deletion.
+                  We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. Documents uploaded through our website and your translated documents are typically retained for up to 90 days, unless you request earlier deletion.
                 </p>
               </div>
 
@@ -112,7 +114,7 @@ export default function PrivacyPolicyPage() {
               </div>
 
               <div>
-                <h2 className="text-2xl font-heading font-bold text-dark mb-4">9. Children's Privacy</h2>
+                <h2 className="text-2xl font-heading font-bold text-dark mb-4">9. Children’s Privacy</h2>
                 <p className="text-dark-light leading-relaxed">
                   Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children under 18. If you become aware that a child has provided us with personal information, please contact us, and we will take steps to delete such information.
                 </p>
@@ -121,7 +123,7 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">10. Changes to This Privacy Policy</h2>
                 <p className="text-dark-light leading-relaxed">
-                  We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.
+                  We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the “Last Updated” date. You are advised to review this Privacy Policy periodically for any changes.
                 </p>
               </div>
 
