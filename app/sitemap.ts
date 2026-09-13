@@ -1,63 +1,23 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+import { LANGUAGES, SITE } from '@/lib/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://azglobaltranslations.com';
-  const currentDate = new Date();
+  const lastModified = new Date('2026-09-11');
+  const page = (path: string, priority: number, changeFrequency: 'weekly' | 'monthly' | 'yearly' = 'monthly') => ({
+    url: `${SITE.url}${path}`,
+    lastModified,
+    changeFrequency,
+    priority,
+  });
 
   return [
-    {
-      url: baseUrl,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/quote`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/privacy-policy`,
-      lastModified: currentDate,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/terms-and-conditions`,
-      lastModified: currentDate,
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/portal/login`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/portal/signup`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
+    page('', 1.0, 'weekly'),
+    ...LANGUAGES.map((l) => page(l.href, 0.9)),
+    page('/quote', 0.9),
+    page('/services', 0.8),
+    page('/about', 0.6),
+    page('/contact', 0.6),
+    page('/privacy-policy', 0.3, 'yearly'),
+    page('/terms-and-conditions', 0.3, 'yearly'),
   ];
 }

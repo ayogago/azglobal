@@ -4,7 +4,12 @@
 
 @layer base {
   :root {
-    --font-open-sans: 'Open Sans', system-ui, sans-serif;
+    --font-body: 'Open Sans Variable', 'Open Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+    --font-heading: 'Montserrat Variable', 'Montserrat', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
@@ -12,12 +17,47 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-semibold text-dark;
+    @apply font-heading font-bold text-dark tracking-tight;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
   }
 }
 
-@layer utilities {
+@layer components {
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold transition-colors duration-150 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark;
+  }
+  .btn-outline {
+    @apply btn border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+  .btn-light {
+    @apply btn bg-white text-primary-dark hover:bg-primary-soft;
+  }
+  .btn-ghost-light {
+    @apply btn border-2 border-white/40 text-white hover:bg-white/10;
+  }
+
+  .eyebrow {
+    @apply inline-block text-xs font-bold uppercase tracking-[0.14em] text-primary;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .field-label {
+    @apply block text-sm font-semibold text-dark mb-1.5;
+  }
+  .field {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-dark placeholder:text-slate-400 transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30;
   }
 }

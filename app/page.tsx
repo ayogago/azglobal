@@ -1,502 +1,255 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { CheckCircle, Clock, Globe, Shield, Award, FileText, Languages, Zap, ArrowRight, DollarSign, Users, TrendingUp, MessageCircle, Star } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MessageSquareText, Stamp, Upload } from 'lucide-react';
+import { LANGUAGES, SITE } from '@/lib/site';
+import { GENERAL_FAQ, SERVICES } from '@/lib/content';
+import { SERVICE_ICONS } from '@/lib/service-icons';
+import Flag from '@/components/Flag';
+import { CtaBand, Faq, Rating, SectionHeading, StatsBar } from '@/components/Sections';
+
+export const metadata = {
+  alternates: { canonical: '/' },
+};
+
+
+const STEPS = [
+  {
+    icon: Upload,
+    title: 'Send your document',
+    text: 'Upload a photo or scan through our secure form — no account needed.',
+  },
+  {
+    icon: MessageSquareText,
+    title: 'Get your free quote',
+    text: 'We review your document and reply with a quote and delivery time.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'Receive your translation',
+    text: 'Your certified translation is ready in 12–48 hours for most documents.',
+  },
+];
+
+const ACCEPTED_BY = ['USCIS', 'Courts', 'Universities', 'Government agencies'];
 
 export default function Home() {
-  const languages = [
-    { name: 'Armenian', flagUrl: 'https://flagcdn.com/w160/am.png', code: 'hy' },
-    { name: 'Russian', flagUrl: 'https://flagcdn.com/w160/ru.png', code: 'ru' },
-    { name: 'English', flagUrl: 'https://flagcdn.com/w160/us.png', code: 'en' },
-    { name: 'Ukrainian', flagUrl: 'https://flagcdn.com/w160/ua.png', code: 'uk' },
-    { name: 'French', flagUrl: 'https://flagcdn.com/w160/fr.png', code: 'fr' },
-    { name: 'Spanish', flagUrl: 'https://flagcdn.com/w160/es.png', code: 'es' },
-  ];
-
-  const services = [
-    {
-      icon: FileText,
-      title: 'Certified Translation',
-      description: 'USCIS-accepted certified translations with official stamp and signature.',
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop',
-    },
-    {
-      icon: Shield,
-      title: 'Legal Documents',
-      description: 'Court-ready legal translations for contracts, agreements, and more.',
-      image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop',
-    },
-    {
-      icon: Globe,
-      title: 'Business Translation',
-      description: 'Professional business document translation for global operations.',
-      image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop',
-    },
-    {
-      icon: Award,
-      title: 'Academic Documents',
-      description: 'Certified translation of diplomas, transcripts, and certificates.',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=600&fit=crop',
-    },
-  ];
-
-  const stats = [
-    { number: '10,000+', label: 'Documents Translated', icon: FileText },
-    { number: '1000+', label: 'Happy Clients', icon: Users },
-    { number: '12-48h', label: 'Average Turnaround', icon: Clock },
-  ];
-
   return (
     <>
-      {/* Hero Section with Background Image */}
-      <section className="relative bg-dark text-white py-16 md:py-20 lg:py-24 overflow-hidden">
-        {/* Background with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary-dark/90 to-dark/95"></div>
-          {/* Animated gradient orbs */}
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-700"></div>
-        </div>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-dark text-white">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-90"
+          style={{
+            background:
+              'radial-gradient(60rem 30rem at 85% -10%, rgba(10,143,189,0.55), transparent 60%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.35), transparent 60%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="container-custom relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <Rating light />
+            <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl">
+              Certified translations, <span className="text-leaf">accepted by USCIS.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
+              Armenian, Russian and Ukrainian ⇄ English. Professional translators, Los Angeles based, delivered in 12–48
+              hours.
+            </p>
 
-        <div className="container-custom relative z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left Content */}
-              <div className="lg:col-span-7 text-center lg:text-left">
-                {/* Trust Badge */}
-                <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-white/30">
-                  <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 fill-yellow-300 text-yellow-300" />
-                    <Star className="h-4 w-4 fill-yellow-300 text-yellow-300" />
-                    <Star className="h-4 w-4 fill-yellow-300 text-yellow-300" />
-                    <Star className="h-4 w-4 fill-yellow-300 text-yellow-300" />
-                    <Star className="h-4 w-4 fill-yellow-300 text-yellow-300" />
-                  </div>
-                  <span className="text-sm font-semibold">Trusted by 1000+ Clients</span>
-                </div>
-
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-extrabold mb-6 leading-tight">
-                  Professional Translation
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
-                    In 12-48 Hours
-                  </span>
-                </h1>
-
-                <p className="text-lg md:text-xl mb-8 text-white/90 leading-relaxed">
-                  USCIS-accepted certified translations starting at just <span className="font-bold text-white text-2xl">$0.10/word</span>.
-                  Fast, accurate, and guaranteed to meet your deadlines.
-                </p>
-
-                {/* Key Benefits */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="flex items-center space-x-2 text-sm">
-                    <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <span>USCIS Accepted</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm">
-                    <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <span>Fast Delivery</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm">
-                    <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <span>24/7 Support</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-sm">
-                    <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                      <CheckCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <span>Certified Experts</span>
-                  </div>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-                  <Link
-                    href="/quote"
-                    className="group relative bg-white text-primary hover:bg-gray-50 px-8 py-4 rounded-xl transition-all font-bold text-lg inline-flex items-center justify-center shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 overflow-hidden"
-                  >
-                    <span className="relative z-10 flex items-center">
-                      Order Translation Now
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="bg-white/10 backdrop-blur-md border-2 border-white/50 text-white hover:bg-white hover:text-primary px-8 py-4 rounded-xl transition-all font-bold text-lg inline-flex items-center justify-center hover:shadow-lg"
-                  >
-                    Contact Us
-                  </Link>
-                </div>
-
-                {/* Social Proof */}
-                <div className="flex items-center justify-center lg:justify-start space-x-6 text-sm text-white/80">
-                  <div className="flex items-center space-x-2">
-                    <Users className="h-5 w-5" />
-                    <span className="font-semibold">1000+ Clients</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <FileText className="h-5 w-5" />
-                    <span className="font-semibold">10,000+ Documents</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Content - Pricing Card */}
-              <div className="lg:col-span-5 relative">
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl">
-                  <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
-                    LIMITED TIME
-                  </div>
-
-                  <h3 className="text-2xl font-heading font-bold mb-6 text-white">Get Instant Quote</h3>
-
-                  <div className="space-y-4 mb-6">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-white/80">Starting Price</span>
-                        <span className="text-3xl font-bold text-white">$0.10</span>
-                      </div>
-                      <p className="text-sm text-white/70">per word</p>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3 text-white/90">
-                        <CheckCircle className="h-5 w-5 text-green-300 flex-shrink-0" />
-                        <span className="text-sm">Certified translation included</span>
-                      </div>
-                      <div className="flex items-center space-x-3 text-white/90">
-                        <CheckCircle className="h-5 w-5 text-green-300 flex-shrink-0" />
-                        <span className="text-sm">Official stamp & signature</span>
-                      </div>
-                      <div className="flex items-center space-x-3 text-white/90">
-                        <CheckCircle className="h-5 w-5 text-green-300 flex-shrink-0" />
-                        <span className="text-sm">12-48 hour delivery</span>
-                      </div>
-                      <div className="flex items-center space-x-3 text-white/90">
-                        <CheckCircle className="h-5 w-5 text-green-300 flex-shrink-0" />
-                        <span className="text-sm">Quality guarantee</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/quote"
-                    className="block w-full bg-gradient-to-r from-white to-blue-50 text-primary hover:from-blue-50 hover:to-white px-6 py-4 rounded-xl transition-all font-bold text-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                  >
-                    Calculate Your Price →
-                  </Link>
-
-                  <p className="text-center text-xs text-white/60 mt-4">
-                    No credit card required • Instant quote
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg className="w-full h-12 md:h-16" viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0 48H1440V0C1440 0 1140 48 720 48C300 48 0 0 0 0V48Z" fill="white"/>
-          </svg>
-        </div>
-      </section>
-
-      {/* Stats Section with Background Image */}
-      <section className="relative py-16 bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-4">
-                    <Icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="text-3xl md:text-4xl font-bold text-dark mb-2">{stat.number}</div>
-                  <div className="text-dark-light font-medium">{stat.label}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section with Image */}
-      <section className="py-20 bg-gray-50">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"
-                alt="Team collaboration"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                loading="lazy"
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-6">
-                Your Trusted Translation Partner
-              </h2>
-              <p className="text-lg text-dark-light mb-6">
-                At AZ Global Translations, we combine cutting-edge technology with expert human translators to deliver accurate, certified translations that meet the highest standards.
-              </p>
-              <p className="text-lg text-dark-light mb-8">
-                Our team of certified professionals specializes in legal, business, and academic translations across 6 major languages, ensuring your documents are handled with precision and care.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-dark">Fast 12-48h turnaround</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-dark">USCIS accepted</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-dark">Quality guarantee</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-dark">24/7 customer support</span>
-                </div>
-              </div>
-              <Link
-                href="/about"
-                className="inline-flex items-center text-primary hover:text-primary-dark font-semibold text-lg"
-              >
-                Learn More About Us
-                <ArrowRight className="ml-2 h-5 w-5" />
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/quote" className="btn bg-leaf px-7 py-4 text-lg text-dark hover:bg-[#9cc251]">
+                Get a Free Quote
+                <ArrowRight className="h-5 w-5" />
               </Link>
+              <a href={SITE.phoneHref} className="btn-ghost-light px-7 py-4 text-lg">
+                Call {SITE.phone}
+              </a>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-2">
+              {LANGUAGES.map((l) => (
+                <Link
+                  key={l.slug}
+                  href={l.href}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  <Flag code={l.flag} className="h-3.5 w-5 rounded-[2px]" />
+                  {l.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Certified translation illustration */}
+          <div className="hidden lg:col-span-5 lg:block" aria-hidden="true">
+            <div className="relative mx-auto max-w-sm">
+              <div className="absolute -left-6 top-6 h-full w-full -rotate-6 rounded-2xl bg-white/10" />
+              <div className="relative rounded-2xl bg-white p-7 text-dark shadow-2xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-widest text-primary">Certified translation</span>
+                  <BadgeCheck className="h-6 w-6 text-leaf-dark" />
+                </div>
+                <p className="mt-4 font-heading text-xl font-bold">Certificate of Birth</p>
+                <div className="mt-5 space-y-2.5">
+                  {[92, 78, 85, 64, 88, 70].map((w, i) => (
+                    <div key={i} className="h-2.5 rounded-full bg-slate-200" style={{ width: `${w}%` }} />
+                  ))}
+                </div>
+                <div className="mt-7 flex items-end justify-between">
+                  <div>
+                    <div className="h-px w-32 bg-slate-300" />
+                    <p className="mt-2 text-xs text-dark-light">Certification of accuracy</p>
+                  </div>
+                  <div className="flex h-20 w-20 rotate-12 items-center justify-center rounded-full border-4 border-primary/70 text-primary/80">
+                    <Stamp className="h-8 w-8" />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-5 -right-4 flex items-center gap-2 rounded-xl bg-leaf px-4 py-3 font-semibold text-dark shadow-xl">
+                <Clock className="h-5 w-5" />
+                Ready in 12–48h
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Services Section with Images */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-              Our Translation Services
-            </h2>
-            <p className="text-lg text-dark-light max-w-2xl mx-auto">
-              Professional certified translations for all your needs
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <div
-                  key={index}
-                  className="group bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-primary hover:shadow-2xl transition-all duration-300"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      loading="lazy"
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4">
-                      <div className="inline-flex items-center justify-center w-12 h-12 bg-white rounded-lg shadow-lg">
-                        <Icon className="h-6 w-6 text-primary" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-heading font-semibold mb-3 group-hover:text-primary transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-dark-light">{service.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Languages Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-              Languages We Translate
-            </h2>
-            <p className="text-lg text-dark-light max-w-2xl mx-auto">
-              Expert translation services between 6 major languages
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
-            {languages.map((language, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all text-center group hover:-translate-y-1"
-              >
-                <div className="mb-3 flex justify-center">
-                  <Image
-                    src={language.flagUrl}
-                    alt={`${language.name} flag`}
-                    width={80}
-                    height={60}
-                    loading="lazy"
-                    className="rounded shadow-sm"
-                  />
-                </div>
-                <h3 className="font-semibold text-dark group-hover:text-primary transition-colors">
-                  {language.name}
-                </h3>
-              </div>
+        <div className="relative border-t border-white/10">
+          <div className="container-custom flex flex-wrap items-center gap-x-8 gap-y-2 py-5 text-sm text-slate-300">
+            <span className="font-semibold text-white">Accepted by:</span>
+            {ACCEPTED_BY.map((item) => (
+              <span key={item} className="inline-flex items-center gap-2">
+                <BadgeCheck className="h-4 w-4 text-leaf" />
+                {item}
+              </span>
             ))}
           </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/services"
-              className="inline-flex items-center text-primary hover:text-primary-dark font-semibold"
-            >
-              View All Services
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* How It Works with Images */}
-      <section className="py-20 bg-white">
+      <StatsBar />
+
+      {/* Languages */}
+      <section className="section bg-slate-50" id="languages">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-              How It Works
-            </h2>
-            <p className="text-lg text-dark-light max-w-2xl mx-auto">
-              Get your documents translated in 3 simple steps
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center">
-              <div className="relative h-64 mb-6 rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=600&h=400&fit=crop"
-                  alt="Upload document"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  loading="lazy"
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
-                  1
-                </div>
-              </div>
-              <h3 className="text-xl font-heading font-bold text-dark mb-3">Upload Your Document</h3>
-              <p className="text-dark-light">Send us your file through our secure portal in any format</p>
-            </div>
-
-            <div className="text-center">
-              <div className="relative h-64 mb-6 rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&h=400&fit=crop"
-                  alt="Get instant quote"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  loading="lazy"
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
-                  2
-                </div>
-              </div>
-              <h3 className="text-xl font-heading font-bold text-dark mb-3">Get Instant Quote</h3>
-              <p className="text-dark-light">Receive transparent pricing within minutes - only $0.10/word</p>
-            </div>
-
-            <div className="text-center">
-              <div className="relative h-64 mb-6 rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop"
-                  alt="Receive translation"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  loading="lazy"
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold text-xl">
-                  3
-                </div>
-              </div>
-              <h3 className="text-xl font-heading font-bold text-dark mb-3">Receive Translation</h3>
-              <p className="text-dark-light">Get your certified translation delivered in 12-48 hours</p>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/quote"
-              className="inline-flex items-center bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg transition-all font-bold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Order Translation Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA with Background Image */}
-      <section className="relative py-24 text-white overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1920&h=600&fit=crop"
-            alt="Professional team"
-            fill
-            sizes="100vw"
-            loading="lazy"
-            className="object-cover opacity-20"
+          <SectionHeading
+            eyebrow="Languages"
+            title="Specialists in three languages"
+            text="We focus on Armenian, Russian and Ukrainian, translating to and from English — so every document gets a translator who knows it well."
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-dark"></div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {LANGUAGES.map((l) => (
+              <Link
+                key={l.slug}
+                href={l.href}
+                className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition hover:-translate-y-0.5 hover:border-primary/40"
+              >
+                <div className="flex items-center gap-4">
+                  <Flag code={l.flag} className="h-9 w-[54px] rounded-md shadow-sm" />
+                  <div>
+                    <h3 className="text-xl">{l.name}</h3>
+                    <p className="text-sm text-dark-light">{l.native} ⇄ English</p>
+                  </div>
+                </div>
+                <p className="mt-5 flex-1 text-dark-light">
+                  Certified {l.name} translations of civil records, diplomas, legal and medical documents.
+                </p>
+                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-primary">
+                  {l.name} translation services
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
+      </section>
 
-        <div className="container-custom text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">
-            Ready to Get Your Documents Translated?
-          </h2>
-          <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-            Starting at just $0.10 per word • 12-48 Hour Delivery • USCIS Accepted
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/quote"
-              className="bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-lg transition-all font-bold text-lg inline-flex items-center justify-center shadow-lg hover:shadow-xl"
-            >
-              Order Translation Now
-              <ArrowRight className="ml-2 h-5 w-5" />
+      {/* Services */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading
+              eyebrow="What we translate"
+              title="Documents for every situation"
+              text="From a single birth certificate to a full immigration file."
+            />
+            <Link href="/services" className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline">
+              All services <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              href="/contact"
-              className="bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 rounded-lg transition-all font-bold text-lg inline-flex items-center justify-center"
-            >
-              Contact Us
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {SERVICES.map((service) => {
+              const Icon = SERVICE_ICONS[service.key];
+              return (
+                <div key={service.key} className="rounded-2xl border border-slate-200 p-7">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-5 text-xl">{service.title}</h3>
+                  <p className="mt-2 text-dark-light">{service.summary}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="section bg-primary-soft">
+        <div className="container-custom">
+          <SectionHeading eyebrow="How it works" title="Three simple steps" center />
+          <ol className="mt-12 grid gap-6 md:grid-cols-3">
+            {STEPS.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <li key={step.title} className="relative rounded-2xl bg-white p-8 shadow-card">
+                  <span className="absolute right-6 top-5 font-heading text-5xl font-extrabold text-primary/10">{i + 1}</span>
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-5 text-xl">{step.title}</h3>
+                  <p className="mt-2 text-dark-light">{step.text}</p>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="mt-10 text-center">
+            <Link href="/quote" className="btn-primary px-8 py-4 text-lg">
+              Start with a free quote
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
         </div>
       </section>
+
+      {/* Why us */}
+      <section className="section bg-white">
+        <div className="container-custom grid items-center gap-12 lg:grid-cols-2">
+          <SectionHeading
+            eyebrow="Why AZ Global"
+            title="Precision in every word. Speed in every project."
+            text="Your documents matter — to your immigration case, your education and your family. We treat every one that way."
+          />
+          <ul className="grid gap-5 sm:grid-cols-2">
+            {[
+              { icon: BadgeCheck, title: 'USCIS accepted', text: 'Signed certification of accuracy on every certified translation.' },
+              { icon: Clock, title: '12–48 hour delivery', text: 'Fast turnaround for most documents, with support 24/7.' },
+              { icon: Stamp, title: 'Notarization available', text: 'Certified and notarized translations on request.' },
+              { icon: Lock, title: 'Private & confidential', text: 'Documents are stored privately and only seen by our team.' },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.title} className="rounded-2xl bg-slate-50 p-6">
+                  <Icon className="h-6 w-6 text-leaf-dark" />
+                  <h3 className="mt-3 text-lg">{item.title}</h3>
+                  <p className="mt-1 text-dark-light">{item.text}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+
+      <Faq items={GENERAL_FAQ} />
+      <CtaBand />
     </>
   );
 }

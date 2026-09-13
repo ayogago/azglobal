@@ -1,127 +1,70 @@
-import { Metadata } from 'next';
-import { CheckCircle, Users, Globe, Award, Target, Heart } from 'lucide-react';
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import { Heart, ShieldCheck, Target, Zap } from 'lucide-react';
+import { CtaBand, PageHero, StatsBar } from '@/components/Sections';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'About Us | AZ Global Translations',
-  description: 'Learn about AZ Global Translations, our mission, values, and commitment to providing professional certified translation services.',
-  alternates: {
-    canonical: '/about',
-  },
-  openGraph: {
-    title: 'About Us | AZ Global Translations',
-    description: 'Learn about AZ Global Translations, our mission, values, and commitment to providing professional certified translation services.',
-    url: 'https://azglobaltranslations.com/about',
-    type: 'website',
-    images: ['/logo.png'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'About Us | AZ Global Translations',
-    description: 'Learn about AZ Global Translations, our mission, values, and commitment to providing professional certified translation services.',
-    images: ['/logo.png'],
-  },
-};
+export const metadata: Metadata = pageMetadata({
+  title: 'About Us',
+  description:
+    'AZ Global Translations is a Los Angeles based certified translation company specializing in Armenian, Russian and Ukrainian. 10,000+ documents translated for 1,000+ clients.',
+  path: '/about',
+});
+
+const VALUES = [
+  { icon: Target, title: 'Accuracy', text: 'Every translation is precise and faithful to the original — names, dates, stamps and all.' },
+  { icon: Zap, title: 'Speed', text: 'Most documents are delivered in 12–48 hours, because deadlines matter.' },
+  { icon: ShieldCheck, title: 'Confidentiality', text: 'Personal documents are handled privately and only by our team.' },
+  { icon: Heart, title: 'Care', text: 'Real people answer your questions, with support available 24/7.' },
+];
 
 export default function AboutPage() {
-  const values = [
-    {
-      icon: Target,
-      title: 'Accuracy',
-      description: 'We ensure every translation is precise and faithful to the original document.',
-    },
-    {
-      icon: Globe,
-      title: 'Global Reach',
-      description: 'Serving clients worldwide with translation services in Armenian, English, French, Russian, Spanish, and Ukrainian.',
-    },
-    {
-      icon: Users,
-      title: 'Expert Team',
-      description: 'Certified translators with specialized knowledge in various industries.',
-    },
-    {
-      icon: Heart,
-      title: 'Customer Focus',
-      description: 'Dedicated to exceeding our clients\' expectations with every project.',
-    },
-  ];
-
-  const stats = [
-    { number: '10K+', label: 'Documents Translated' },
-    { number: '6', label: 'Languages' },
-    { number: '50+', label: 'Countries Served' },
-    { number: '99%', label: 'Customer Satisfaction' },
-  ];
-
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 to-white py-16 md:py-20">
-        <div className="container-custom">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-dark mb-4">
-              About AZ Global Translations
-            </h1>
-            <p className="text-xl text-dark-light">
-              Your trusted partner for professional certified translation services
+      <PageHero
+        eyebrow="About us"
+        title="Translation that helps people move forward"
+        intro="AZ Global Translations provides certified Armenian, Russian and Ukrainian translations for individuals, families, attorneys and businesses — from our base in Los Angeles."
+      />
+
+      <section className="section bg-white">
+        <div className="container-custom grid gap-12 lg:grid-cols-2">
+          <div>
+            <span className="eyebrow">Our mission</span>
+            <h2 className="mt-3 text-3xl md:text-4xl">Precision in every word. Speed in every project.</h2>
+          </div>
+          <div className="space-y-5 text-lg leading-relaxed text-dark-light">
+            <p>
+              Accurate translation is more than converting words from one language to another. It&apos;s preserving meaning
+              and context, and making sure every document meets the standards of the office that will receive it.
+            </p>
+            <p>
+              We chose to specialize. By focusing on Armenian, Russian and Ukrainian, our professional translators bring
+              deep familiarity with the documents, formats and terminology of these languages — whether it&apos;s a
+              birth certificate for USCIS, a diploma for a university, or a contract for court.
+            </p>
+            <p>
+              More than 1,000 clients have trusted us with over 10,000 documents. We&apos;d be glad to help you too.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-                Our Mission
-              </h2>
-              <p className="text-lg text-dark-light">
-                To bridge language barriers and connect people, businesses, and cultures through
-                accurate, certified translation services delivered with speed and precision.
-              </p>
-            </div>
-            <div className="prose prose-lg max-w-none text-dark-light">
-              <p>
-                At AZ Global Translations, we understand that accurate translation is more than just
-                converting words from one language to another. It's about preserving meaning, context,
-                and cultural nuances while ensuring that every document meets the highest standards
-                of accuracy and professionalism.
-              </p>
-              <p>
-                Founded with a commitment to excellence, we have grown to become a trusted name in
-                certified translation services. Our team of professional translators brings together
-                linguistic expertise, cultural knowledge, and industry-specific experience to deliver
-                translations that you can rely on.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <StatsBar />
 
-      {/* Values Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="section bg-slate-50">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-              Our Values
-            </h2>
-            <p className="text-lg text-dark-light">
-              The principles that guide everything we do
-            </p>
+          <div className="max-w-2xl">
+            <span className="eyebrow">Our values</span>
+            <h2 className="mt-3 text-3xl md:text-4xl">What you can count on</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => {
-              const Icon = value.icon;
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {VALUES.map((v) => {
+              const Icon = v.icon;
               return (
-                <div key={index} className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
-                    <Icon className="h-8 w-8 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-heading font-semibold mb-2">{value.title}</h3>
-                  <p className="text-dark-light">{value.description}</p>
+                <div key={v.title} className="rounded-2xl bg-white p-7 shadow-card">
+                  <Icon className="h-7 w-7 text-primary" />
+                  <h3 className="mt-4 text-xl">{v.title}</h3>
+                  <p className="mt-2 text-dark-light">{v.text}</p>
                 </div>
               );
             })}
@@ -129,92 +72,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-primary text-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
-                <div className="text-white/90">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-8 text-center">
-              Why Choose Us?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">Certified Translators</h3>
-                  <p className="text-dark-light">All our translators are certified professionals with proven expertise</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">Fast Turnaround</h3>
-                  <p className="text-dark-light">Quick delivery without compromising on quality</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">Competitive Pricing</h3>
-                  <p className="text-dark-light">Professional services at affordable rates</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">Quality Guarantee</h3>
-                  <p className="text-dark-light">100% satisfaction guarantee on all translations</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">Confidentiality</h3>
-                  <p className="text-dark-light">Your documents are handled with strict confidentiality</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-semibold text-dark mb-1">24/7 Support</h3>
-                  <p className="text-dark-light">Round-the-clock customer support for your convenience</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-dark mb-4">
-            Ready to Work With Us?
-          </h2>
-          <p className="text-xl text-dark-light mb-8">
-            Get your free quote today and experience the AZ Global difference
-          </p>
-          <Link
-            href="/quote"
-            className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-md transition-colors font-medium text-lg"
-          >
-            Request Free Quote
-          </Link>
-        </div>
-      </section>
+      <CtaBand />
     </>
   );
 }

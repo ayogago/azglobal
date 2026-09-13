@@ -1,22 +1,9 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
+import { SITE } from '@/lib/site';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://azglobaltranslations.com';
-
   return {
-    rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: [
-          '/portal/admin/',
-          '/admin/',
-          '/api/',
-          '/_next/',
-          '/portal/admin-setup',
-        ],
-      },
-    ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    rules: [{ userAgent: '*', allow: '/', disallow: ['/api/'] }],
+    sitemap: `${SITE.url}/sitemap.xml`,
   };
 }

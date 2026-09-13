@@ -1,165 +1,49 @@
-# AZ Global Translations - Next.js 14 Website
+# AZ Global Translations — website
 
-Production-ready Next.js 14 website for AZ Global Translations - Professional Certified Translation Services.
+Informational marketing site for [azglobaltranslations.com](https://azglobaltranslations.com):
+certified Armenian, Russian and Ukrainian ⇄ English translation.
 
-## Features
+No accounts, checkout or database. Visitors request a quote (with document uploads) or send a message;
+submissions are emailed to the team.
 
-- ⚡ **Next.js 14** with App Router
-- 🎨 **Tailwind CSS** for styling
-- 📱 **Fully Responsive** design
-- 🔍 **SEO Optimized** with metadata
-- ♿ **Accessible** components
-- 🚀 **Performance Optimized**
-- 📝 **TypeScript** for type safety
+## Stack
 
-## Pages Included
+- Next.js 15 (App Router) + Tailwind CSS, deployed on Vercel
+- Vercel Blob (**private** store) for uploaded documents — browser uploads directly, so large scans work
+- Nodemailer over SMTP for notification + confirmation emails
+- Self-hosted fonts (Montserrat, Open Sans) via Fontsource
 
-- **Home** - Hero section, services overview, and CTAs
-- **Services** - Detailed service offerings
-- **About** - Company information and values
-- **Contact** - Contact form and information
-- **Quote** - Free quote request form
+## How the request form works
 
-## Getting Started
+1. The browser uploads each file to the private Blob store using a short-lived token from `POST /api/upload`
+   (PDF, JPG/PNG/HEIC, Word, etc.; up to 10 files, 25 MB each).
+2. The form posts details + file references to `POST /api/request`, which validates everything,
+   emails the team (files attached when ≤ 15 MB total, plus signed download links), and sends the customer a confirmation.
+3. Download links go through `GET /api/files/...?sig=…` (HMAC-signed; only people with the email can open them).
+4. A daily cron (`/api/cron/cleanup`, see `vercel.json`) deletes uploads older than `UPLOAD_RETENTION_DAYS` (default 90).
 
-### Prerequisites
+Spam protection: honeypot field + per-IP rate limits.
 
-- Node.js 18+ installed
-- npm or yarn package manager
+## Pages
 
-### Installation
+| Path | Purpose |
+| --- | --- |
+| `/` | Home |
+| `/quote` | Quote request form |
+| `/armenian-translation`, `/russian-translation`, `/ukrainian-translation` | Language landing pages (SEO) with embedded form |
+| `/services`, `/about`, `/contact` | Info pages (contact has a message form) |
+| `/privacy-policy`, `/terms-and-conditions` | Legal |
 
-1. Install dependencies:
+Old `/portal/*`, `/admin/*` and `/complete-order` URLs permanently redirect to `/quote` or `/`.
+
+Business details (phone, email, languages, form options) live in `lib/site.ts`; page copy for services,
+FAQs and language pages lives in `lib/content.ts`.
+
+## Development
 
 ```bash
 npm install
-```
-
-2. Run the development server:
-
-```bash
+cp .env.example .env.local   # fill in SMTP + BLOB_READ_WRITE_TOKEN
 npm run dev
+npm run lint && npm run build
 ```
-
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-## Project Structure
-
-```
-├── app/
-│   ├── layout.tsx          # Root layout with Header/Footer
-│   ├── page.tsx            # Homepage
-│   ├── globals.css         # Global styles
-│   ├── services/           # Services page
-│   ├── about/              # About page
-│   ├── contact/            # Contact page
-│   └── quote/              # Quote request page
-├── components/
-│   ├── Header.tsx          # Navigation header
-│   └── Footer.tsx          # Footer component
-├── public/                 # Static assets
-└── tailwind.config.ts      # Tailwind configuration
-```
-
-## Brand Colors
-
-- Primary Green: `#1B9C85`
-- Primary Dark: `#178E79`
-- Dark Text: `#0F172A`
-- Dark Light: `#454F5E`
-
-## Typography
-
-- Headings: **Encode Sans**
-- Body: **Open Sans**
-
-## Customization
-
-### Update Colors
-
-Edit `tailwind.config.ts`:
-
-```typescript
-colors: {
-  primary: {
-    DEFAULT: '#1B9C85',
-    dark: '#178E79',
-  },
-  // ...
-}
-```
-
-### Update Content
-
-- Homepage: `app/page.tsx`
-- Services: `app/services/page.tsx`
-- About: `app/about/page.tsx`
-- Contact: `app/contact/page.tsx`
-- Quote: `app/quote/page.tsx`
-
-### Update Navigation
-
-Edit `components/Header.tsx` to add/remove menu items.
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push code to GitHub
-2. Import project in [Vercel](https://vercel.com)
-3. Deploy automatically
-
-### Other Platforms
-
-Build the production bundle:
-
-```bash
-npm run build
-```
-
-Deploy the `.next` folder and `public` directory to your hosting provider.
-
-## Environment Variables
-
-Create a `.env.local` file for environment-specific variables:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://azglobaltranslations.com
-NEXT_PUBLIC_CONTACT_EMAIL=info@azglobaltranslations.com
-```
-
-## Performance
-
-- Uses Next.js Image optimization
-- Implements font optimization with `next/font`
-- CSS is automatically optimized and purged
-- Built-in code splitting
-
-## SEO
-
-- Metadata configured for all pages
-- Semantic HTML structure
-- Optimized for search engines
-- Open Graph tags ready to add
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## License
-
-Copyright © 2024 AZ Global Translations. All rights reserved.
-
-## Support
-
-For questions or support, contact: info@azglobaltranslations.com

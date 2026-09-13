@@ -1,9 +1,11 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Terms and Conditions | AZ Global Translations',
+export const metadata: Metadata = pageMetadata({
+  title: 'Terms and Conditions',
   description: 'Terms and Conditions for AZ Global Translations. Read our terms of service and usage policies.',
-};
+  path: '/terms-and-conditions',
+});
 
 export default function TermsAndConditionsPage() {
   return (
@@ -16,7 +18,7 @@ export default function TermsAndConditionsPage() {
               Terms and Conditions
             </h1>
             <p className="text-lg text-dark-light">
-              Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              Last Updated: September 11, 2026
             </p>
           </div>
         </div>
@@ -30,24 +32,24 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">1. Acceptance of Terms</h2>
                 <p className="text-dark-light leading-relaxed">
-                  By accessing and using the services provided by AZ Global Translations ("Company," "we," "our," or "us"), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our services.
+                  By accessing and using the services provided by AZ Global Translations (“Company,” “we,” “our,” or “us”), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our services.
                 </p>
               </div>
 
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">2. Services Description</h2>
                 <p className="text-dark-light leading-relaxed">
-                  AZ Global Translations provides professional translation services, including but not limited to certified translations, document translations, legal translations, and business translations. We translate documents between multiple languages with professional accuracy and certification where applicable.
+                  AZ Global Translations provides professional translation services, including but not limited to certified translations, document translations, legal translations, and business translations. We translate documents between English and Armenian, Russian and Ukrainian with professional accuracy and certification where applicable.
                 </p>
               </div>
 
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">3. Pricing and Payment</h2>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
-                  <li>Pricing is based on word count at $0.10 per word unless otherwise agreed upon in writing.</li>
+                  <li>Pricing is quoted individually for each request, based on the documents submitted and the services requested.</li>
                   <li>Quotes are provided upon document submission and remain valid for 30 days.</li>
                   <li>Payment is due in full before the translated document is delivered.</li>
-                  <li>We accept major credit cards, debit cards, and other payment methods as specified on our website.</li>
+                  <li>Accepted payment methods will be confirmed with your quote.</li>
                   <li>All prices are in USD unless otherwise stated.</li>
                   <li>Prices do not include applicable taxes, which will be added to your invoice.</li>
                 </ul>
@@ -56,7 +58,7 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">4. Delivery Times</h2>
                 <p className="text-dark-light leading-relaxed mb-3">
-                  Standard delivery is 24-48 hours from the time of payment confirmation. Delivery times may vary based on:
+                  Standard delivery is 12–48 hours from the time your quote is approved and payment is confirmed. Delivery times may vary based on:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
                   <li>Document length and complexity</li>
