@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, Check, Clock, Stamp } from 'lucide-react';
 import type { LanguagePage } from '@/lib/content';
@@ -6,6 +7,7 @@ import Flag from '@/components/Flag';
 import JsonLd from '@/components/JsonLd';
 import RequestForm from '@/components/RequestForm';
 import { CtaBand, Faq, Rating, StatsBar } from '@/components/Sections';
+import { IMAGES } from '@/lib/images';
 
 export default function LanguageLanding({ page }: { page: LanguagePage }) {
   const lang = LANGUAGES.find((l) => l.slug === page.slug)!;
@@ -75,7 +77,7 @@ export default function LanguageLanding({ page }: { page: LanguagePage }) {
             {[
               { icon: BadgeCheck, title: 'USCIS accepted', text: 'Signed certification of accuracy' },
               { icon: Clock, title: '12–48 hour delivery', text: 'For most documents' },
-              { icon: Stamp, title: 'Notarization available', text: 'On request' },
+              { icon: Stamp, title: 'From $25 per page', text: 'Flat, published pricing' },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -108,6 +110,17 @@ export default function LanguageLanding({ page }: { page: LanguagePage }) {
             </div>
           </div>
           <div className="lg:col-span-5">
+            <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src={IMAGES.documents.src}
+                alt={IMAGES.documents.alt}
+                fill
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                quality={70}
+                className="object-cover"
+              />
+            </div>
             <div className="rounded-2xl bg-slate-50 p-7">
               <h3 className="text-xl">{page.name} documents we translate</h3>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">

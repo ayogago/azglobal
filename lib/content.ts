@@ -45,7 +45,7 @@ export const SERVICES: {
   {
     key: 'personal',
     title: 'Personal Documents',
-    summary: 'Everyday documents translated quickly and correctly, with notarization available when you need it.',
+    summary: 'Everyday documents translated quickly and correctly, at flat per-page pricing.',
     documents: ['Driver’s licenses', 'Military records', 'Employment records', 'Personal letters'],
   },
 ];
@@ -65,15 +65,15 @@ export const GENERAL_FAQ: FaqItem[] = [
   },
   {
     q: 'How much does a translation cost?',
-    a: 'Every document is different, so we quote each request individually. Upload a photo or scan of your document and we will reply with a free quote. There is no obligation.',
+    a: 'Certified documents such as birth and marriage certificates are $25 per page. Complex formatted documents like passport books with stamps or military books are $60 per page. Text-heavy material such as contracts, manuals and websites is $0.10 per word. Rush service is $30 and a mailed hard copy is $20.',
   },
   {
     q: 'How do I send you my documents?',
     a: 'Use our quote form to upload photos or scans — a clear photo from your phone is usually enough. You can also email your documents to info@azglobaltranslations.com.',
   },
   {
-    q: 'Can you notarize the translation?',
-    a: 'Yes, notarization is available on request. Select “Certified + notarized” in the quote form, or tell us where the translation will be submitted and we will advise you.',
+    q: 'Can I get a printed copy in the mail?',
+    a: 'Yes. Translations are delivered as PDFs by email; a printed hard copy sent by mail is $20 extra. Ask for it in your request.',
   },
 ];
 
@@ -102,7 +102,7 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
       'Certified Armenian ⇄ English translations of birth certificates, marriage certificates, diplomas, court papers and more — accepted by USCIS, courts and universities.',
     about: [
       'Los Angeles is home to one of the largest Armenian communities in the world. Whether you are filing with USCIS, applying to a university, or submitting records to a court in Glendale, Burbank or downtown Los Angeles, you need a translation that is precise and properly certified.',
-      'Our professional translators work with Armenian-language records regularly, including civil registry documents issued in Armenia. Every certified translation includes a signed certification of accuracy, and notarization is available on request.',
+      'Our professional translators work with Armenian-language records regularly, including civil registry documents issued in Armenia. Every certified translation includes a signed certification of accuracy.',
     ],
     documents: [
       'Birth & death certificates',
@@ -145,7 +145,7 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
       'Certified Russian ⇄ English translations for immigration, legal, academic and business needs — accepted by USCIS, courts and universities.',
     about: [
       'Russian is used in official documents across many countries, from Russia and Belarus to Kazakhstan, Uzbekistan, Kyrgyzstan and other former Soviet republics. We translate Russian-language records from all of them, including older Soviet-era certificates.',
-      'Each certified translation mirrors the layout of the original, renders names and stamps accurately, and includes a signed certification of accuracy. Notarization is available on request.',
+      'Each certified translation mirrors the layout of the original, renders names and stamps accurately, and includes a signed certification of accuracy.',
     ],
     documents: [
       'Birth & marriage certificates',
@@ -188,7 +188,7 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
       'Certified Ukrainian ⇄ English translations for immigration, education, employment and legal matters — accepted by USCIS, courts and universities.',
     about: [
       'Many Ukrainian families arriving in the United States need their documents translated quickly and correctly — for immigration applications, school enrollment, employment and benefits. We handle Ukrainian civil records, education documents and legal papers with care and fast turnaround.',
-      'Documents issued in Ukraine can be in Ukrainian, Russian or both. We translate both languages, so your whole file can be handled in one place. Every certified translation includes a signed certification of accuracy, and notarization is available on request.',
+      'Documents issued in Ukraine can be in Ukrainian, Russian or both. We translate both languages, so your whole file can be handled in one place. Every certified translation includes a signed certification of accuracy.',
     ],
     documents: [
       'Birth & marriage certificates',
@@ -271,7 +271,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     included: CERTIFIED_INCLUDES,
     about: [
       'A birth certificate is the document USCIS asks for most often, and it is also the one most often rejected when the translation is incomplete. Every line matters: the registry number, the issuing office, the stamps in the margins, and the handwriting on older Soviet-era certificates.',
-      'We translate the whole document, keep the layout close to the original so an officer can compare them side by side, and attach a signed certificate of accuracy. Notarization is available if the office receiving it asks for one.',
+      'We translate the whole document, keep the layout close to the original so an officer can compare them side by side, and attach a signed certificate of accuracy.',
     ],
     faq: [
       {
@@ -319,8 +319,8 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
         a: 'Yes, and we recommend it. Upload them in one request and we will keep names and dates consistent across all of them.',
       },
       {
-        q: 'Is a certified translation enough, or do we need notarization?',
-        a: 'USCIS accepts a certified translation without notarization. Some courts and foreign consulates ask for a notarized one — tell us where it is going and we will advise.',
+        q: 'How much does a marriage certificate translation cost?',
+        a: 'A standard single-page marriage certificate is $25 per page. Certificates with heavy stamps or unusual formatting are quoted at the complex rate of $60 per page — your quote confirms the price before we start.',
       },
       {
         q: 'Our certificate is in Russian but issued in Armenia. Is that a problem?',

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
+import { IMAGES } from '@/lib/images';
 import { Clock, Mail, MapPin, MessageCircle, MessageSquare, Phone } from 'lucide-react';
 import Link from 'next/link';
 import RequestForm from '@/components/RequestForm';
@@ -26,6 +27,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
+        image={IMAGES.losAngeles}
         eyebrow="Contact"
         title="We’re here to help"
         intro="Questions about a document, a deadline, or what kind of translation you need? Reach out any time."

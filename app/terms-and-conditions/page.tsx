@@ -46,7 +46,7 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">3. Pricing and Payment</h2>
                 <ul className="list-disc pl-6 space-y-2 text-dark-light">
-                  <li>Pricing is quoted individually for each request, based on the documents submitted and the services requested.</li>
+                  <li>Standard rates are published on our pricing page. Your quote confirms the final price before any work begins.</li>
                   <li>Quotes are provided upon document submission and remain valid for 30 days.</li>
                   <li>Payment is due in full before the translated document is delivered.</li>
                   <li>Accepted payment methods will be confirmed with your quote.</li>
@@ -124,7 +124,7 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h2 className="text-2xl font-heading font-bold text-dark mb-4">11. Certified Translations</h2>
                 <p className="text-dark-light leading-relaxed">
-                  Certified translations include an official certificate of accuracy signed by a certified translator. These translations are suitable for submission to USCIS, courts, universities, and other official institutions. Additional notarization services are available upon request for an additional fee.
+                  Certified translations include an official certificate of accuracy signed by a certified translator. These translations are suitable for submission to USCIS, courts, universities, and other official institutions.
                 </p>
               </div>
 

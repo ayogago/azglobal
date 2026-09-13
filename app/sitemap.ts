@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('', 1.0, 'weekly'),
     ...LANGUAGES.map((l) => page(l.href, 0.9)),
     page('/quote', 0.9),
+    page('/pricing', 0.9),
     ...DOCUMENT_PAGES.map((doc) => page(doc.href, 0.85)),
     page('/services', 0.8),
     page('/guides', 0.7),

@@ -54,6 +54,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5 text-sm">
               {[
                 { name: 'Services', href: '/services' },
+                { name: 'Pricing', href: '/pricing' },
                 { name: 'Guides', href: '/guides' },
                 { name: 'About us', href: '/about' },
                 { name: 'Contact', href: '/contact' },

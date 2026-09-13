@@ -6,12 +6,13 @@ import Flag from '@/components/Flag';
 import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
 import { SERVICE_ICONS } from '@/lib/service-icons';
 import { pageMetadata } from '@/lib/seo';
+import { IMAGES } from '@/lib/images';
 import { LANGUAGES } from '@/lib/site';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Certified Translation Services',
   description:
-    'Certified translation of immigration, legal, academic, medical and business documents between English and Armenian, Russian or Ukrainian. USCIS accepted, notarization available.',
+    'Certified translation of immigration, legal, academic, medical and business documents between English and Armenian, Russian or Ukrainian. USCIS accepted, from $25 per page.',
   path: '/services',
 });
 
@@ -19,9 +20,10 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
+        image={IMAGES.documents}
         eyebrow="Services"
         title="Certified translation services"
-        intro="Immigration, legal, academic, medical and business documents, translated between English and Armenian, Russian or Ukrainian — certified, and notarized on request."
+        intro="Immigration, legal, academic, medical and business documents, translated between English and Armenian, Russian or Ukrainian — certified, from $25 per page."
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link href="/quote" className="btn-primary px-7 py-3.5">

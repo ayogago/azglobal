@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, Check, Clock, FileText, Lock, MessageCircle } from 'lucide-react';
 import type { DocumentPage } from '@/lib/content';
@@ -7,6 +8,7 @@ import Flag from '@/components/Flag';
 import JsonLd from '@/components/JsonLd';
 import RequestForm from '@/components/RequestForm';
 import { CtaBand, Faq, Rating, StatsBar } from '@/components/Sections';
+import { IMAGES } from '@/lib/images';
 
 export default function DocumentLanding({ page }: { page: DocumentPage }) {
   const url = `${SITE.url}${page.href}`;
@@ -59,6 +61,17 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
             </nav>
             <h1 className="mt-5 text-4xl leading-tight md:text-5xl">{page.title}</h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-dark-light md:text-xl">{page.intro}</p>
+
+            <p className="mt-5 inline-flex flex-wrap items-baseline gap-x-2 rounded-xl bg-white px-4 py-3 shadow-card">
+              <span className="font-heading text-2xl font-extrabold text-primary">$25</span>
+              <span className="font-semibold text-dark">per page</span>
+              <span className="text-dark-light">
+                · complex formatted pages $60 ·{' '}
+                <Link href="/pricing" className="font-semibold text-primary hover:underline">
+                  full pricing
+                </Link>
+              </span>
+            </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href="#quote" className="btn-primary px-7 py-4 text-lg">
@@ -131,6 +144,17 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
           </div>
 
           <div className="lg:col-span-5">
+            <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src={page.slug === 'drivers-license' || page.slug === 'birth-certificate' ? IMAGES.passport.src : IMAGES.documents.src}
+                alt={page.slug === 'drivers-license' || page.slug === 'birth-certificate' ? IMAGES.passport.alt : IMAGES.documents.alt}
+                fill
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                quality={70}
+                className="object-cover"
+              />
+            </div>
             <div className="rounded-2xl bg-slate-50 p-7">
               <h2 className="text-xl">Commonly submitted to</h2>
               <ul className="mt-5 space-y-3">

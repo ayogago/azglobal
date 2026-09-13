@@ -10,6 +10,7 @@ import Flag from '@/components/Flag';
 
 const NAV = [
   { name: 'Services', href: '/services' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'Guides', href: '/guides' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },

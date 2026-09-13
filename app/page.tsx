@@ -1,10 +1,12 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MessageSquareText, Stamp, Upload } from 'lucide-react';
-import { LANGUAGES, SITE } from '@/lib/site';
+import { LANGUAGES, PRICING, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
 import { SERVICE_ICONS } from '@/lib/service-icons';
 import Flag from '@/components/Flag';
 import { CtaBand, Faq, Rating, SectionHeading, StatsBar } from '@/components/Sections';
+import { IMAGES } from '@/lib/images';
 
 export const metadata = {
   alternates: { canonical: '/' },
@@ -36,11 +38,20 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-dark text-white">
+        <Image
+          src={IMAGES.hero.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          quality={70}
+          className="object-cover opacity-25"
+        />
         <div
-          className="pointer-events-none absolute inset-0 opacity-90"
+          className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'radial-gradient(60rem 30rem at 85% -10%, rgba(10,143,189,0.55), transparent 60%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.35), transparent 60%)',
+              'linear-gradient(100deg, rgba(14,36,51,0.94) 0%, rgba(14,36,51,0.86) 45%, rgba(14,36,51,0.55) 100%), radial-gradient(60rem 30rem at 85% -10%, rgba(10,143,189,0.5), transparent 60%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.3), transparent 60%)',
           }}
           aria-hidden="true"
         />
@@ -234,19 +245,70 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading
+              eyebrow="Pricing"
+              title="Flat rates, no surprises"
+              text="You see the exact price in your quote before any work starts."
+            />
+            <Link href="/pricing" className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline">
+              Full price list <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {PRICING.map((tier) => (
+              <div
+                key={tier.key}
+                className={`rounded-2xl border p-7 ${tier.featured ? 'border-primary bg-primary-soft' : 'border-slate-200'}`}
+              >
+                <p className="flex items-baseline gap-2">
+                  <span className="font-heading text-3xl font-extrabold text-primary">{tier.price}</span>
+                  <span className="text-dark-light">{tier.unit}</span>
+                </p>
+                <h3 className="mt-3 text-lg">{tier.name}</h3>
+                <p className="mt-2 text-dark-light">{tier.summary}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-dark-light">
+            Rush service +$30 · printed hard copy by mail +$20.{' '}
+            <Link href="/pricing" className="font-semibold text-primary hover:underline">
+              See what&apos;s included
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
       {/* Why us */}
       <section className="section bg-white">
         <div className="container-custom grid items-center gap-12 lg:grid-cols-2">
-          <SectionHeading
-            eyebrow="Why AZ Global"
-            title="Precision in every word. Speed in every project."
-            text="Your documents matter — to your immigration case, your education and your family. We treat every one that way."
-          />
+          <div>
+            <SectionHeading
+              eyebrow="Why AZ Global"
+              title="Precision in every word. Speed in every project."
+              text="Your documents matter — to your immigration case, your education and your family. We treat every one that way."
+            />
+            <div className="relative mt-8 hidden aspect-[4/3] overflow-hidden rounded-2xl shadow-card lg:block">
+              <Image
+                src={IMAGES.translator.src}
+                alt={IMAGES.translator.alt}
+                fill
+                loading="lazy"
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                quality={70}
+                className="object-cover"
+              />
+            </div>
+          </div>
           <ul className="grid gap-5 sm:grid-cols-2">
             {[
               { icon: BadgeCheck, title: 'USCIS accepted', text: 'Signed certification of accuracy on every certified translation.' },
               { icon: Clock, title: '12–48 hour delivery', text: 'Fast turnaround for most documents, with support 24/7.' },
-              { icon: Stamp, title: 'Notarization available', text: 'Certified and notarized translations on request.' },
+              { icon: Stamp, title: 'Clear, flat pricing', text: 'Certified documents from $25 per page — no surprises.' },
               { icon: Lock, title: 'Private & confidential', text: 'Documents are stored privately and only seen by our team.' },
             ].map((item) => {
               const Icon = item.icon;

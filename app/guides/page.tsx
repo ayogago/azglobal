@@ -4,6 +4,7 @@ import { ArrowRight, Clock } from 'lucide-react';
 import { CtaBand, PageHero } from '@/components/Sections';
 import { GUIDES } from '@/lib/guides';
 import { pageMetadata } from '@/lib/seo';
+import { IMAGES } from '@/lib/images';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Translation Guides',
@@ -16,6 +17,7 @@ export default function GuidesPage() {
   return (
     <>
       <PageHero
+        image={IMAGES.documents}
         eyebrow="Guides"
         title="Answers to the questions we get asked most"
         intro="Short, practical explanations of the paperwork around certified translation — what offices actually require, and what trips people up."

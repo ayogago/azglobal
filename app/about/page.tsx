@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Heart, ShieldCheck, Target, Zap } from 'lucide-react';
 import { CtaBand, PageHero, StatsBar } from '@/components/Sections';
 import { pageMetadata } from '@/lib/seo';
+import { IMAGES } from '@/lib/images';
 
 export const metadata: Metadata = pageMetadata({
   title: 'About Us',
@@ -21,6 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
+        image={IMAGES.translator}
         eyebrow="About us"
         title="Translation that helps people move forward"
         intro="AZ Global Translations provides certified Armenian, Russian and Ukrainian translations for individuals, families, attorneys and businesses — from our base in Los Angeles."

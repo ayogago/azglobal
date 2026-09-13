@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: false,
+    minimumCacheTTL: 2592000, // 30 days
+    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
   },
   compress: true,
   poweredByHeader: false,

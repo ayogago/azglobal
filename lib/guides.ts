@@ -59,7 +59,7 @@ export const GUIDES: Guide[] = [
         heading: 'Do you need a notary?',
         body: [
           'No. USCIS does not require the translator’s signature to be notarized. Notarization only confirms who signed a document — it says nothing about translation quality.',
-          'Some other institutions do ask for it: certain courts, foreign consulates, and occasionally universities. If the office receiving your document requires notarization, say so when you order, and it can be added.',
+          'Some other institutions do ask for it: certain courts, foreign consulates, and occasionally universities. If the office receiving your document requires a notarized signature, check with them first — it is a separate step from the translation itself.',
         ],
       },
       {
