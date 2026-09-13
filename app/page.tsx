@@ -45,13 +45,13 @@ export default function Home() {
           priority
           sizes="100vw"
           quality={70}
-          className="object-cover opacity-[0.45]"
+          className="object-cover"
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'linear-gradient(100deg, rgba(14,36,51,0.95) 0%, rgba(14,36,51,0.84) 38%, rgba(14,36,51,0.35) 100%), radial-gradient(55rem 28rem at 88% -10%, rgba(10,143,189,0.45), transparent 62%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.28), transparent 60%)',
+              'linear-gradient(100deg, rgba(14,36,51,0.97) 0%, rgba(14,36,51,0.92) 40%, rgba(14,36,51,0.45) 100%), radial-gradient(55rem 28rem at 88% -10%, rgba(10,143,189,0.35), transparent 62%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.22), transparent 60%)',
           }}
           aria-hidden="true"
         />
@@ -294,8 +294,8 @@ export default function Home() {
             />
             <div className="relative mt-8 hidden aspect-[4/3] overflow-hidden rounded-2xl shadow-card lg:block">
               <Image
-                src={IMAGES.translator.src}
-                alt={IMAGES.translator.alt}
+                src={IMAGES.consultation.src}
+                alt={IMAGES.consultation.alt}
                 fill
                 loading="lazy"
                 sizes="(max-width: 1024px) 100vw, 45vw"

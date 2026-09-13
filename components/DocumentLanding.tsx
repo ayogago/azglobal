@@ -8,7 +8,7 @@ import Flag from '@/components/Flag';
 import JsonLd from '@/components/JsonLd';
 import RequestForm from '@/components/RequestForm';
 import { CtaBand, Faq, Rating, StatsBar } from '@/components/Sections';
-import { IMAGES } from '@/lib/images';
+import { documentImage } from '@/lib/images';
 
 export default function DocumentLanding({ page }: { page: DocumentPage }) {
   const url = `${SITE.url}${page.href}`;
@@ -146,8 +146,8 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
           <div className="lg:col-span-5">
             <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
               <Image
-                src={page.slug === 'drivers-license' || page.slug === 'birth-certificate' ? IMAGES.passport.src : IMAGES.documents.src}
-                alt={page.slug === 'drivers-license' || page.slug === 'birth-certificate' ? IMAGES.passport.alt : IMAGES.documents.alt}
+                src={documentImage(page.slug).src}
+                alt={documentImage(page.slug).alt}
                 fill
                 loading="lazy"
                 sizes="(max-width: 1024px) 100vw, 40vw"

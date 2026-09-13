@@ -19,28 +19,29 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-primary-soft to-white">
-      {image && (
-        <>
-          <Image
-            src={image.src}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            quality={65}
-            className="object-cover opacity-[0.35]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/45" aria-hidden="true" />
-        </>
-      )}
-      <div className="container-custom relative py-14 md:py-20">
-        <div className="max-w-3xl">
+    <section className="border-b border-slate-200 bg-gradient-to-b from-primary-soft to-white">
+      <div className="container-custom grid items-center gap-10 py-14 md:py-20 lg:grid-cols-12">
+        <div className={image ? 'lg:col-span-7' : 'max-w-3xl lg:col-span-12'}>
           {eyebrow && <span className="eyebrow">{eyebrow}</span>}
           <h1 className="mt-3 text-4xl leading-tight md:text-5xl">{title}</h1>
           {intro && <p className="mt-5 text-lg leading-relaxed text-dark-light md:text-xl">{intro}</p>}
           {children}
         </div>
+        {image && (
+          <div className="lg:col-span-5">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                quality={70}
+                className="object-cover"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -90,9 +91,9 @@ export function CtaBand({
         loading="lazy"
         sizes="100vw"
         quality={60}
-        className="object-cover opacity-[0.38]"
+        className="object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/92 to-dark/45" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/40" aria-hidden="true" />
       <div className="container-custom relative flex flex-col items-start gap-8 py-14 md:flex-row md:items-center md:justify-between md:py-16">
         <div className="max-w-2xl">
           <h2 className="text-3xl text-white md:text-4xl">{title}</h2>

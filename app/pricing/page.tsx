@@ -45,7 +45,7 @@ export default function PricingPage() {
   return (
     <>
       <PageHero
-        image={IMAGES.form}
+        image={IMAGES.meeting}
         eyebrow="Pricing"
         title="Straightforward rates, quoted before we start"
         intro="Most documents are priced per page. Longer written material is priced per word. You always see the exact price in your quote before any work begins."

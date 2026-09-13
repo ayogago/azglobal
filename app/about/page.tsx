@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        image={IMAGES.translator}
+        image={IMAGES.consultation}
         eyebrow="About us"
         title="Translation that helps people move forward"
         intro="AZ Global Translations provides certified Armenian, Russian and Ukrainian translations for individuals, families, attorneys and businesses — from our base in Los Angeles."

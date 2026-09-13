@@ -17,7 +17,7 @@ export default function GuidesPage() {
   return (
     <>
       <PageHero
-        image={IMAGES.documents}
+        image={IMAGES.office}
         eyebrow="Guides"
         title="Answers to the questions we get asked most"
         intro="Short, practical explanations of the paperwork around certified translation — what offices actually require, and what trips people up."
