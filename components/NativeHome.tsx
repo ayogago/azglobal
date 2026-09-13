@@ -1,53 +1,41 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MessageSquareText, Stamp, Upload } from 'lucide-react';
-import { LANGUAGES, PRICING, SITE } from '@/lib/site';
-import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
+import { LANGUAGES, SITE } from '@/lib/site';
 import { SERVICE_ICONS } from '@/lib/service-icons';
+import { CONTENT, type NativeLocale } from '@/lib/i18n-content';
+import { pricingHref, quoteHref } from '@/lib/i18n';
 import Flag from '@/components/Flag';
-import { CtaBand, Faq, Rating, SectionHeading, StatsBar } from '@/components/Sections';
+import JsonLd from '@/components/JsonLd';
+import { Faq, SectionHeading } from '@/components/Sections';
+import NativeCtaBand from '@/components/NativeCtaBand';
 import { IMAGES } from '@/lib/images';
-import { HOME_ALTERNATES } from '@/lib/i18n';
 
-export const metadata = {
-  alternates: { canonical: '/', ...HOME_ALTERNATES },
-};
+const STEP_ICONS = [Upload, MessageSquareText, FileCheck2];
+const WHY_ICONS = [BadgeCheck, Clock, Stamp, Lock];
 
+export default function NativeHome({ locale }: { locale: NativeLocale }) {
+  const c = CONTENT[locale];
 
-const STEPS = [
-  {
-    icon: Upload,
-    title: 'Send your document',
-    text: 'Upload a photo or scan through our secure form — no account needed.',
-  },
-  {
-    icon: MessageSquareText,
-    title: 'Get your free quote',
-    text: 'We review your document and reply with a quote and delivery time.',
-  },
-  {
-    icon: FileCheck2,
-    title: 'Receive your translation',
-    text: 'Your certified translation is ready in 12–48 hours for most documents.',
-  },
-];
-
-const ACCEPTED_BY = ['USCIS', 'Courts', 'Universities', 'Government agencies'];
-
-export default function Home() {
   return (
-    <>
+    <div lang={locale}>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          '@id': `${SITE.url}/${locale}#webpage`,
+          url: `${SITE.url}/${locale}`,
+          name: c.meta.title,
+          description: c.meta.description,
+          inLanguage: locale,
+          isPartOf: { '@id': `${SITE.url}/#website` },
+          about: { '@id': `${SITE.url}/#business` },
+        }}
+      />
+
       {/* Hero */}
       <section className="relative overflow-hidden bg-dark text-white">
-        <Image
-          src={IMAGES.hero.src}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          quality={70}
-          className="object-cover"
-        />
+        <Image src={IMAGES.hero.src} alt="" fill priority sizes="100vw" quality={70} className="object-cover" />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -58,51 +46,55 @@ export default function Home() {
         />
         <div className="container-custom relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <Rating light />
-            <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] text-white sm:text-5xl lg:text-6xl">
-              Certified translations, <span className="text-leaf">accepted by USCIS.</span>
+            <div className="inline-flex items-center gap-2 text-sm font-semibold text-white">
+              <span className="flex" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-sun">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                ))}
+              </span>
+              {c.hero.rating}
+            </div>
+            <h1 className="mt-5 break-words text-[1.85rem] font-extrabold leading-[1.2] text-white sm:text-4xl md:text-5xl lg:text-[3.4rem] lg:leading-[1.15]">
+              {c.hero.title} <span className="text-leaf">{c.hero.accent}</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">
-              Armenian, Russian and Ukrainian ⇄ English. Professional translators, Los Angeles based, delivered in 12–48
-              hours.
-            </p>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300 md:text-xl">{c.hero.intro}</p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/quote" className="btn bg-leaf px-7 py-4 text-lg text-dark hover:bg-[#9cc251]">
-                Get a Free Quote
+              <Link href={quoteHref(locale)} className="btn bg-leaf px-7 py-4 text-lg text-dark hover:bg-[#9cc251]">
+                {c.hero.ctaQuote}
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <a href={SITE.phoneHref} className="btn-ghost-light px-7 py-4 text-lg">
-                Call {SITE.phone}
+                {c.hero.ctaCall} {SITE.phone}
               </a>
             </div>
 
-            <p className="mt-5 text-sm font-semibold text-leaf">{SITE.replyPromise}</p>
+            <p className="mt-5 text-sm font-semibold text-leaf">{c.hero.replyPromise}</p>
 
             <div className="mt-6 flex flex-wrap gap-2">
               {LANGUAGES.map((l) => (
-                <Link
+                <span
                   key={l.slug}
-                  href={l.href}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-sm font-semibold text-white hover:bg-white/10"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-sm font-semibold text-white"
                 >
                   <Flag code={l.flag} className="h-3.5 w-5 rounded-[2px]" />
-                  {l.name}
-                </Link>
+                  <span lang={l.slug === 'armenian' ? 'hy' : l.slug === 'russian' ? 'ru' : 'uk'}>{l.native}</span>
+                </span>
               ))}
             </div>
           </div>
 
-          {/* Certified translation illustration */}
           <div className="hidden lg:col-span-5 lg:block" aria-hidden="true">
             <div className="relative mx-auto max-w-sm">
               <div className="absolute -left-6 top-6 h-full w-full -rotate-6 rounded-2xl bg-white/10" />
               <div className="relative rounded-2xl bg-white p-7 text-dark shadow-2xl">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-widest text-primary">Certified translation</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-primary">AZ Global</span>
                   <BadgeCheck className="h-6 w-6 text-leaf-dark" />
                 </div>
-                <p className="mt-4 font-heading text-xl font-bold">Certificate of Birth</p>
+                <p className="mt-4 font-heading text-xl font-bold">{c.pricing.tiers[0].name}</p>
                 <div className="mt-5 space-y-2.5">
                   {[92, 78, 85, 64, 88, 70].map((w, i) => (
                     <div key={i} className="h-2.5 rounded-full bg-slate-200" style={{ width: `${w}%` }} />
@@ -111,7 +103,7 @@ export default function Home() {
                 <div className="mt-7 flex items-end justify-between">
                   <div>
                     <div className="h-px w-32 bg-slate-300" />
-                    <p className="mt-2 text-xs text-dark-light">Certification of accuracy</p>
+                    <p className="mt-2 text-xs text-dark-light">{c.hero.certLabel}</p>
                   </div>
                   <div className="flex h-20 w-20 rotate-12 items-center justify-center rounded-full border-4 border-primary/70 text-primary/80">
                     <Stamp className="h-8 w-8" />
@@ -120,7 +112,7 @@ export default function Home() {
               </div>
               <div className="absolute -bottom-5 -right-4 flex items-center gap-2 rounded-xl bg-leaf px-4 py-3 font-semibold text-dark shadow-xl">
                 <Clock className="h-5 w-5" />
-                Ready in 12–48h
+                {c.stats[2].value}
               </div>
             </div>
           </div>
@@ -128,8 +120,8 @@ export default function Home() {
 
         <div className="relative border-t border-white/10">
           <div className="container-custom flex flex-wrap items-center gap-x-8 gap-y-2 py-5 text-sm text-slate-300">
-            <span className="font-semibold text-white">Accepted by:</span>
-            {ACCEPTED_BY.map((item) => (
+            <span className="font-semibold text-white">{c.hero.acceptedLabel}</span>
+            {c.hero.acceptedBy.map((item) => (
               <span key={item} className="inline-flex items-center gap-2">
                 <BadgeCheck className="h-4 w-4 text-leaf" />
                 {item}
@@ -139,38 +131,36 @@ export default function Home() {
         </div>
       </section>
 
-      <StatsBar />
+      {/* Stats */}
+      <section className="border-y border-slate-200 bg-white">
+        <dl className="container-custom grid grid-cols-2 divide-slate-200 py-8 md:grid-cols-4 md:divide-x">
+          {c.stats.map((s) => (
+            <div key={s.label} className="flex flex-col-reverse px-4 py-3 text-center">
+              <dt className="mt-1 text-sm text-dark-light">{s.label}</dt>
+              <dd className="font-heading text-3xl font-extrabold text-primary md:text-4xl">{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
       {/* Languages */}
-      <section className="section bg-slate-50" id="languages">
+      <section className="section bg-slate-50">
         <div className="container-custom">
-          <SectionHeading
-            eyebrow="Languages"
-            title="Specialists in three languages"
-            text="We focus on Armenian, Russian and Ukrainian, translating to and from English — so every document gets a translator who knows it well."
-          />
+          <SectionHeading eyebrow={c.languages.eyebrow} title={c.languages.title} text={c.languages.text} />
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {LANGUAGES.map((l) => (
-              <Link
-                key={l.slug}
-                href={l.href}
-                className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition hover:-translate-y-0.5 hover:border-primary/40"
-              >
+              <div key={l.slug} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
                 <div className="flex items-center gap-4">
                   <Flag code={l.flag} className="h-9 w-[54px] rounded-md shadow-sm" />
                   <div>
-                    <h3 className="text-xl">{l.name}</h3>
-                    <p className="text-sm text-dark-light">{l.native} ⇄ English</p>
+                    <h3 className="text-xl" lang={l.slug === 'armenian' ? 'hy' : l.slug === 'russian' ? 'ru' : 'uk'}>
+                      {l.native}
+                    </h3>
+                    <p className="text-sm text-dark-light">{c.languages.pairSuffix}</p>
                   </div>
                 </div>
-                <p className="mt-5 flex-1 text-dark-light">
-                  Certified {l.name} translations of civil records, diplomas, legal and medical documents.
-                </p>
-                <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-primary">
-                  {l.name} translation services
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
+                <p className="mt-5 flex-1 text-dark-light">{c.languages.cardText}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -179,30 +169,9 @@ export default function Home() {
       {/* Services */}
       <section className="section bg-white">
         <div className="container-custom">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="What we translate"
-              title="Documents for every situation"
-              text="From a single birth certificate to a full immigration file."
-            />
-            <Link href="/services" className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline">
-              All services <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="mt-10 flex flex-wrap gap-2">
-            {DOCUMENT_PAGES.map((doc) => (
-              <Link
-                key={doc.slug}
-                href={doc.href}
-                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-dark transition hover:border-primary hover:text-primary"
-              >
-                {doc.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((service) => {
+          <SectionHeading eyebrow={c.services.eyebrow} title={c.services.title} text={c.services.text} />
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {c.services.items.map((service) => {
               const Icon = SERVICE_ICONS[service.key];
               return (
                 <div key={service.key} className="rounded-2xl border border-slate-200 p-7">
@@ -221,10 +190,10 @@ export default function Home() {
       {/* How it works */}
       <section className="section bg-primary-soft">
         <div className="container-custom">
-          <SectionHeading eyebrow="How it works" title="Three simple steps" center />
+          <SectionHeading eyebrow={c.steps.eyebrow} title={c.steps.title} center />
           <ol className="mt-12 grid gap-6 md:grid-cols-3">
-            {STEPS.map((step, i) => {
-              const Icon = step.icon;
+            {c.steps.items.map((step, i) => {
+              const Icon = STEP_ICONS[i];
               return (
                 <li key={step.title} className="relative rounded-2xl bg-white p-8 shadow-card">
                   <span className="absolute right-6 top-5 font-heading text-5xl font-extrabold text-primary/10">{i + 1}</span>
@@ -238,8 +207,8 @@ export default function Home() {
             })}
           </ol>
           <div className="mt-10 text-center">
-            <Link href="/quote" className="btn-primary px-8 py-4 text-lg">
-              Start with a free quote
+            <Link href={quoteHref(locale)} className="btn-primary px-8 py-4 text-lg">
+              {c.steps.cta}
               <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
@@ -250,20 +219,19 @@ export default function Home() {
       <section className="section bg-white">
         <div className="container-custom">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="Pricing"
-              title="Flat rates, no surprises"
-              text="You see the exact price in your quote before any work starts."
-            />
-            <Link href="/pricing" className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline">
-              Full price list <ArrowRight className="h-4 w-4" />
+            <SectionHeading eyebrow={c.pricing.eyebrow} title={c.pricing.title} text={c.pricing.text} />
+            <Link
+              href={pricingHref(locale)}
+              className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline"
+            >
+              {c.pricing.link} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {PRICING.map((tier) => (
+            {c.pricing.tiers.map((tier, i) => (
               <div
                 key={tier.key}
-                className={`rounded-2xl border p-7 ${tier.featured ? 'border-primary bg-primary-soft' : 'border-slate-200'}`}
+                className={`rounded-2xl border p-7 ${i === 0 ? 'border-primary bg-primary-soft' : 'border-slate-200'}`}
               >
                 <p className="flex items-baseline gap-2">
                   <span className="font-heading text-3xl font-extrabold text-primary">{tier.price}</span>
@@ -274,13 +242,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-sm text-dark-light">
-            Rush service +$30 · printed hard copy by mail +$20.{' '}
-            <Link href="/pricing" className="font-semibold text-primary hover:underline">
-              See what&apos;s included
-            </Link>
-            .
-          </p>
+          <p className="mt-6 text-sm text-dark-light">{c.pricing.note}</p>
         </div>
       </section>
 
@@ -288,11 +250,7 @@ export default function Home() {
       <section className="section bg-white">
         <div className="container-custom grid items-center gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeading
-              eyebrow="Why AZ Global"
-              title="Precision in every word. Speed in every project."
-              text="Your documents matter — to your immigration case, your education and your family. We treat every one that way."
-            />
+            <SectionHeading eyebrow={c.why.eyebrow} title={c.why.title} text={c.why.text} />
             <div className="relative mt-8 hidden aspect-[4/3] overflow-hidden rounded-2xl shadow-card lg:block">
               <Image
                 src={IMAGES.consultation.src}
@@ -306,13 +264,8 @@ export default function Home() {
             </div>
           </div>
           <ul className="grid gap-5 sm:grid-cols-2">
-            {[
-              { icon: BadgeCheck, title: 'USCIS accepted', text: 'Signed certification of accuracy on every certified translation.' },
-              { icon: Clock, title: '12–48 hour delivery', text: 'Fast turnaround for most documents, with support 24/7.' },
-              { icon: Stamp, title: 'Clear, flat pricing', text: 'Certified documents from $25 per page — no surprises.' },
-              { icon: Lock, title: 'Private & confidential', text: 'Documents are stored privately and only seen by our team.' },
-            ].map((item) => {
-              const Icon = item.icon;
+            {c.why.items.map((item, i) => {
+              const Icon = WHY_ICONS[i];
               return (
                 <li key={item.title} className="rounded-2xl bg-slate-50 p-6">
                   <Icon className="h-6 w-6 text-leaf-dark" />
@@ -325,8 +278,19 @@ export default function Home() {
         </div>
       </section>
 
-      <Faq items={GENERAL_FAQ} />
-      <CtaBand />
-    </>
+      <Faq
+        items={c.faq.items}
+        title={c.faq.title}
+        help={
+          <>
+            {c.quotePage.orCall}{' '}
+            <a href={SITE.phoneHref} className="font-semibold text-primary hover:underline">
+              {SITE.phone}
+            </a>
+          </>
+        }
+      />
+      <NativeCtaBand locale={locale} />
+    </div>
   );
 }

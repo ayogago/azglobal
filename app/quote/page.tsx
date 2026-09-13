@@ -4,13 +4,19 @@ import { BadgeCheck, Clock, Lock, Mail, MessageCircle, MessageSquare, Phone } fr
 import RequestForm from '@/components/RequestForm';
 import { Rating } from '@/components/Sections';
 import { SITE } from '@/lib/site';
+import { QUOTE_ALTERNATES } from '@/lib/i18n';
 
-export const metadata: Metadata = pageMetadata({
+const base = pageMetadata({
   title: 'Get a Free Translation Quote',
   description:
     'Upload your Armenian, Russian or Ukrainian document and get a free quote for a certified English translation. USCIS accepted, 12–48 hour turnaround.',
   path: '/quote',
 });
+
+export const metadata: Metadata = {
+  ...base,
+  alternates: { ...base.alternates, ...QUOTE_ALTERNATES },
+};
 
 export default function QuotePage() {
   return (

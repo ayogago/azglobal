@@ -1,66 +1,87 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES } from '@/lib/content';
+import { CHROME, localeFromPath, pricingHref, quoteHref } from '@/lib/i18n';
+
+const ENGLISH_COMPANY = [
+  { name: 'Services', href: '/services' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'Guides', href: '/guides' },
+  { name: 'About us', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+  { name: 'Privacy policy', href: '/privacy-policy' },
+  { name: 'Terms & conditions', href: '/terms-and-conditions' },
+];
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const locale = localeFromPath(usePathname());
+  const copy = CHROME[locale];
+  const isEnglish = locale === 'en';
+
+  const company = isEnglish
+    ? ENGLISH_COMPANY
+    : [
+        { name: copy.nav[0].name, href: pricingHref(locale) },
+        { name: copy.nav[1].name, href: quoteHref(locale) },
+        { name: 'English site', href: '/' },
+        { name: 'Privacy policy', href: '/privacy-policy' },
+        { name: 'Terms & conditions', href: '/terms-and-conditions' },
+      ];
 
   return (
     <footer className="bg-dark text-slate-300">
       <div className="container-custom py-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-3">
+          <div className={isEnglish ? 'lg:col-span-3' : 'lg:col-span-5'}>
             <div className="inline-block rounded-xl bg-white px-4 py-3">
-              <Image src="/logo-mark.png" alt="AZ Global Translations" width={1200} height={282} sizes="180px" className="h-9 w-auto" />
+              <Image src="/logo-mark.png" alt={SITE.name} width={1200} height={282} sizes="180px" className="h-9 w-auto" />
             </div>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed">
-              Certified Armenian, Russian and Ukrainian translations, accepted by USCIS, courts and universities.
-            </p>
-            <Link href="/quote" className="btn-light mt-6 px-5 py-2.5 text-sm">
-              Get a Free Quote
+            <p className="mt-5 max-w-xs text-sm leading-relaxed">{copy.footerBlurb}</p>
+            <Link href={quoteHref(locale)} className="btn-light mt-6 px-5 py-2.5 text-sm">
+              {copy.quoteCta}
             </Link>
           </div>
 
-          <div className="lg:col-span-2">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Languages</h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {LANGUAGES.map((l) => (
-                <li key={l.slug}>
-                  <Link href={l.href} className="hover:text-white">
-                    {l.name} translation
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {isEnglish && (
+            <>
+              <div className="lg:col-span-2">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-white">{copy.languagesHeading}</h2>
+                <ul className="mt-4 space-y-2.5 text-sm">
+                  {LANGUAGES.map((l) => (
+                    <li key={l.slug}>
+                      <Link href={l.href} className="hover:text-white">
+                        {l.name} translation
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-          <div className="lg:col-span-2">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Documents</h2>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {DOCUMENT_PAGES.map((doc) => (
-                <li key={doc.slug}>
-                  <Link href={doc.href} className="hover:text-white">
-                    {doc.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+              <div className="lg:col-span-2">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-white">{copy.documentsHeading}</h2>
+                <ul className="mt-4 space-y-2.5 text-sm">
+                  {DOCUMENT_PAGES.map((doc) => (
+                    <li key={doc.slug}>
+                      <Link href={doc.href} className="hover:text-white">
+                        {doc.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
 
-          <div className="lg:col-span-2">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Company</h2>
+          <div className={isEnglish ? 'lg:col-span-2' : 'lg:col-span-3'}>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white">{copy.companyHeading}</h2>
             <ul className="mt-4 space-y-2.5 text-sm">
-              {[
-                { name: 'Services', href: '/services' },
-                { name: 'Pricing', href: '/pricing' },
-                { name: 'Guides', href: '/guides' },
-                { name: 'About us', href: '/about' },
-                { name: 'Contact', href: '/contact' },
-                { name: 'Privacy policy', href: '/privacy-policy' },
-                { name: 'Terms & conditions', href: '/terms-and-conditions' },
-              ].map((item) => (
+              {company.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="hover:text-white">
                     {item.name}
@@ -70,8 +91,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Contact</h2>
+          <div className={isEnglish ? 'lg:col-span-3' : 'lg:col-span-4'}>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white">{copy.contactHeading}</h2>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a href={SITE.phoneHref} className="flex items-center gap-3 hover:text-white">
@@ -97,14 +118,14 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="h-4 w-4 shrink-0 text-leaf" />
-                Support available 24/7
+                {copy.support}
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 border-t border-white/10 pt-6 text-sm text-slate-400">
-          © {year} {SITE.name}. All rights reserved.
+          © {year} {SITE.name}. {copy.rights}
         </div>
       </div>
     </footer>

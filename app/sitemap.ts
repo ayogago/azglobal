@@ -23,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...GUIDES.map((guide) => page(`/guides/${guide.slug}`, 0.7)),
     page('/about', 0.6),
     page('/contact', 0.6),
+    page('/hy', 0.9, 'weekly'),
+    page('/hy/quote', 0.8),
+    page('/hy/pricing', 0.8),
+    page('/ru', 0.9, 'weekly'),
+    page('/ru/quote', 0.8),
+    page('/ru/pricing', 0.8),
     page('/privacy-policy', 0.3, 'yearly'),
     page('/terms-and-conditions', 0.3, 'yearly'),
   ];

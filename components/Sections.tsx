@@ -116,7 +116,15 @@ export function CtaBand({
 
 export type FaqItem = { q: string; a: string };
 
-export function Faq({ items, title = 'Frequently asked questions' }: { items: FaqItem[]; title?: string }) {
+export function Faq({
+  items,
+  title = 'Frequently asked questions',
+  help,
+}: {
+  items: FaqItem[];
+  title?: string;
+  help?: React.ReactNode;
+}) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -135,15 +143,19 @@ export function Faq({ items, title = 'Frequently asked questions' }: { items: Fa
           <span className="eyebrow">FAQ</span>
           <h2 className="mt-3 text-3xl md:text-4xl">{title}</h2>
           <p className="mt-4 text-dark-light">
-            Can’t find your answer? Call{' '}
-            <a href={SITE.phoneHref} className="font-semibold text-primary hover:underline">
-              {SITE.phone}
-            </a>{' '}
-            or{' '}
-            <Link href="/contact" className="font-semibold text-primary hover:underline">
-              send us a message
-            </Link>
-            .
+            {help ?? (
+              <>
+                Can’t find your answer? Call{' '}
+                <a href={SITE.phoneHref} className="font-semibold text-primary hover:underline">
+                  {SITE.phone}
+                </a>{' '}
+                or{' '}
+                <Link href="/contact" className="font-semibold text-primary hover:underline">
+                  send us a message
+                </Link>
+                .
+              </>
+            )}
           </p>
         </div>
         <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 lg:col-span-8">

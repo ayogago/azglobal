@@ -4,6 +4,7 @@ import { useId, useRef, useState } from 'react';
 import { upload } from '@vercel/blob/client';
 import { AlertCircle, CheckCircle2, FileText, Loader2, Lock, Paperclip, Upload, X } from 'lucide-react';
 import { DOCUMENT_TYPES, LANGUAGE_PAIRS, SERVICE_LEVELS, SITE, TURNAROUND } from '@/lib/site';
+import { FORM_COPY, type Locale, optionLabel } from '@/lib/i18n';
 import {
   ACCEPT_ATTRIBUTE,
   contentTypeFor,
@@ -29,7 +30,17 @@ declare global {
   }
 }
 
-export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }: { kind?: Kind; defaultLanguagePair?: string }) {
+export default function RequestForm({
+  kind = 'quote',
+  defaultLanguagePair = '',
+  locale = 'en',
+}: {
+  kind?: Kind;
+  defaultLanguagePair?: string;
+  locale?: Locale;
+}) {
+  const t = FORM_COPY[locale];
+  const label = (value: string) => optionLabel(locale, value);
   const formId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<PickedFile[]>([]);
@@ -48,15 +59,15 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
 
     for (const file of incoming) {
       if (files.length + next.length >= MAX_FILES) {
-        problems.push(`You can attach up to ${MAX_FILES} files.`);
+        problems.push(t.errorTooMany(MAX_FILES));
         break;
       }
       if (!contentTypeFor(file.name)) {
-        problems.push(`"${file.name}" isn't a supported file type.`);
+        problems.push(t.errorType(file.name));
         continue;
       }
       if (file.size > MAX_FILE_BYTES) {
-        problems.push(`"${file.name}" is larger than ${formatBytes(MAX_FILE_BYTES)}.`);
+        problems.push(t.errorSize(file.name, formatBytes(MAX_FILE_BYTES)));
         continue;
       }
       if (files.some((f) => f.file.name === file.name && f.file.size === file.size)) continue;
@@ -101,7 +112,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
       } catch (err) {
         console.error(err);
         setStatus('idle');
-        setError(`We couldn't upload your files. Please try again, or email them to ${SITE.email}.`);
+        setError(t.errorUpload(SITE.email));
         return;
       }
     }
@@ -129,7 +140,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
         }),
       });
       const result = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error || 'Something went wrong. Please try again.');
+      if (!response.ok) throw new Error(result.error || t.errorGeneric);
 
       setStatus('done');
       window.gtag?.('event', 'generate_lead', { form: kind, files: uploaded.length });
@@ -137,7 +148,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       setStatus('idle');
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(err instanceof Error ? err.message : t.errorGeneric);
     }
   }
 
@@ -145,14 +156,10 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
     return (
       <div className="rounded-2xl border border-leaf/40 bg-leaf-soft p-8 text-center" role="status">
         <CheckCircle2 className="mx-auto h-14 w-14 text-leaf-dark" />
-        <h2 className="mt-4 text-2xl">{isQuote ? 'Request received — thank you!' : 'Message sent — thank you!'}</h2>
-        <p className="mx-auto mt-3 max-w-md text-dark-light">
-          {isQuote
-            ? 'We’ll review your documents and email you a quote shortly. A confirmation is on its way to your inbox.'
-            : 'We’ll get back to you shortly. A confirmation is on its way to your inbox.'}
-        </p>
+        <h2 className="mt-4 text-2xl">{isQuote ? t.doneQuoteTitle : t.doneContactTitle}</h2>
+        <p className="mx-auto mt-3 max-w-md text-dark-light">{isQuote ? t.doneQuoteText : t.doneContactText}</p>
         <p className="mt-5 text-sm text-dark-light">
-          Need it sooner? Call{' '}
+          {t.sooner}{' '}
           <a href={SITE.phoneHref} className="font-semibold text-primary hover:underline">
             {SITE.phone}
           </a>
@@ -174,19 +181,19 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label htmlFor={id('name')} className="field-label">
-            Full name <span className="text-red-600">*</span>
+            {t.name} <span className="text-red-600">*</span>
           </label>
           <input id={id('name')} name="name" required minLength={2} maxLength={100} autoComplete="name" className="field" />
         </div>
         <div>
           <label htmlFor={id('email')} className="field-label">
-            Email <span className="text-red-600">*</span>
+            {t.email} <span className="text-red-600">*</span>
           </label>
           <input id={id('email')} name="email" type="email" required maxLength={200} autoComplete="email" className="field" />
         </div>
         <div>
           <label htmlFor={id('phone')} className="field-label">
-            Phone <span className="font-normal text-dark-light">(optional)</span>
+            {t.phone} <span className="font-normal text-dark-light">{t.optional}</span>
           </label>
           <input id={id('phone')} name="phone" type="tel" maxLength={40} autoComplete="tel" className="field" />
         </div>
@@ -195,52 +202,52 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
           <>
             <div>
               <label htmlFor={id('languagePair')} className="field-label">
-                Translate <span className="text-red-600">*</span>
+                {t.languagePair} <span className="text-red-600">*</span>
               </label>
               <select id={id('languagePair')} name="languagePair" required defaultValue={defaultLanguagePair} className="field">
                 <option value="" disabled>
-                  Choose languages
+                  {t.choosePair}
                 </option>
                 {LANGUAGE_PAIRS.map((pair) => (
                   <option key={pair} value={pair}>
-                    {pair}
+                    {label(pair)}
                   </option>
                 ))}
               </select>
             </div>
             <div>
               <label htmlFor={id('documentType')} className="field-label">
-                Document type
+                {t.documentType}
               </label>
               <select id={id('documentType')} name="documentType" defaultValue="" className="field">
-                <option value="">Select…</option>
+                <option value="">{t.select}</option>
                 {DOCUMENT_TYPES.map((type) => (
                   <option key={type} value={type}>
-                    {type}
+                    {label(type)}
                   </option>
                 ))}
               </select>
             </div>
             <div>
               <label htmlFor={id('serviceLevel')} className="field-label">
-                Service needed
+                {t.serviceLevel}
               </label>
               <select id={id('serviceLevel')} name="serviceLevel" defaultValue={SERVICE_LEVELS[0]} className="field">
                 {SERVICE_LEVELS.map((level) => (
                   <option key={level} value={level}>
-                    {level}
+                    {label(level)}
                   </option>
                 ))}
               </select>
             </div>
             <div>
               <label htmlFor={id('turnaround')} className="field-label">
-                When do you need it?
+                {t.turnaround}
               </label>
               <select id={id('turnaround')} name="turnaround" defaultValue={TURNAROUND[0]} className="field">
-                {TURNAROUND.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
+                {TURNAROUND.map((option) => (
+                  <option key={option} value={option}>
+                    {label(option)}
                   </option>
                 ))}
               </select>
@@ -249,7 +256,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
         ) : (
           <div className="sm:col-span-2">
             <label htmlFor={id('subject')} className="field-label">
-              Subject
+              {t.subject}
             </label>
             <input id={id('subject')} name="subject" maxLength={150} className="field" />
           </div>
@@ -257,7 +264,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
 
         <div className="sm:col-span-2">
           <label htmlFor={id('message')} className="field-label">
-            {isQuote ? 'Anything we should know?' : 'Message'} {!isQuote && <span className="text-red-600">*</span>}
+            {isQuote ? t.messageQuote : t.messageContact} {!isQuote && <span className="text-red-600">*</span>}
           </label>
           <textarea
             id={id('message')}
@@ -266,7 +273,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
             required={!isQuote}
             maxLength={5000}
             className="field resize-y"
-            placeholder={isQuote ? 'e.g. where it will be submitted (USCIS, court, university), a deadline, or names as spelled in your passport' : ''}
+            placeholder={isQuote ? t.messagePlaceholder : ''}
           />
         </div>
       </div>
@@ -274,8 +281,8 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
       {/* File upload */}
       <div>
         <span className="field-label" id={id('files-label')}>
-          {isQuote ? 'Your documents' : 'Attachments'}{' '}
-          <span className="font-normal text-dark-light">({isQuote ? 'recommended for an accurate quote' : 'optional'})</span>
+          {isQuote ? t.filesQuote : t.filesContact}{' '}
+          <span className="font-normal text-dark-light">({isQuote ? t.filesHintQuote : t.filesHintContact})</span>
         </span>
         <div
           onDragOver={(e) => {
@@ -301,12 +308,12 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
               className="font-semibold text-primary underline-offset-2 hover:underline"
               aria-describedby={id('files-help')}
             >
-              Choose files
+              {t.chooseFiles}
             </button>{' '}
-            or drag them here
+            {t.orDrag}
           </p>
           <p id={id('files-help')} className="mt-1 text-xs text-dark-light">
-            PDF, photos (JPG, PNG, HEIC) or Word · up to {MAX_FILES} files, {formatBytes(MAX_FILE_BYTES)} each
+            {t.fileTypes(MAX_FILES, formatBytes(MAX_FILE_BYTES))}
           </p>
           <input
             ref={inputRef}
@@ -342,7 +349,7 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
                     type="button"
                     onClick={() => removeFile(f.id)}
                     className="rounded-md p-1.5 text-dark-light hover:bg-slate-100 hover:text-dark"
-                    aria-label={`Remove ${f.file.name}`}
+                    aria-label={`${t.remove} ${f.file.name}`}
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -364,19 +371,19 @@ export default function RequestForm({ kind = 'quote', defaultLanguagePair = '' }
         {busy ? (
           <>
             <Loader2 className="h-5 w-5 animate-spin" />
-            {status === 'uploading' ? 'Uploading documents…' : 'Sending…'}
+            {status === 'uploading' ? t.uploading : t.sending}
           </>
         ) : (
           <>
             {files.length ? <Paperclip className="h-5 w-5" /> : null}
-            {isQuote ? 'Request my free quote' : 'Send message'}
+            {isQuote ? t.submitQuote : t.submitContact}
           </>
         )}
       </button>
 
       <p className="flex items-center justify-center gap-1.5 text-center text-xs text-dark-light">
         <Lock className="h-3.5 w-3.5" aria-hidden="true" />
-        Your documents are stored privately and only used to prepare your quote and translation.
+        {t.privacy}
       </p>
     </form>
   );

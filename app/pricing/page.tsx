@@ -6,13 +6,19 @@ import { CtaBand, Faq, PageHero } from '@/components/Sections';
 import { pageMetadata } from '@/lib/seo';
 import { IMAGES } from '@/lib/images';
 import { PRICING, PRICING_EXTRAS, SITE } from '@/lib/site';
+import { PRICING_ALTERNATES } from '@/lib/i18n';
 
-export const metadata: Metadata = pageMetadata({
+const base = pageMetadata({
   title: 'Pricing',
   description:
     'Certified translation pricing: $25 per page for standard documents, $60 per page for complex formatted documents, $0.10 per word for text-heavy material. Rush and mailed hard copies available.',
   path: '/pricing',
 });
+
+export const metadata: Metadata = {
+  ...base,
+  alternates: { ...base.alternates, ...PRICING_ALTERNATES },
+};
 
 const PRICING_FAQ = [
   {
