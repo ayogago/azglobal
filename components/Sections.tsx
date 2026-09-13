@@ -29,9 +29,9 @@ export function PageHero({
             priority
             sizes="100vw"
             quality={65}
-            className="object-cover opacity-[0.18]"
+            className="object-cover opacity-[0.35]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/40" aria-hidden="true" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/45" aria-hidden="true" />
         </>
       )}
       <div className="container-custom relative py-14 md:py-20">
@@ -90,9 +90,9 @@ export function CtaBand({
         loading="lazy"
         sizes="100vw"
         quality={60}
-        className="object-cover opacity-20"
+        className="object-cover opacity-[0.38]"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/90 to-dark/60" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/92 to-dark/45" aria-hidden="true" />
       <div className="container-custom relative flex flex-col items-start gap-8 py-14 md:flex-row md:items-center md:justify-between md:py-16">
         <div className="max-w-2xl">
           <h2 className="text-3xl text-white md:text-4xl">{title}</h2>

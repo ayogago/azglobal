@@ -45,13 +45,13 @@ export default function Home() {
           priority
           sizes="100vw"
           quality={70}
-          className="object-cover opacity-25"
+          className="object-cover opacity-[0.45]"
         />
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'linear-gradient(100deg, rgba(14,36,51,0.94) 0%, rgba(14,36,51,0.86) 45%, rgba(14,36,51,0.55) 100%), radial-gradient(60rem 30rem at 85% -10%, rgba(10,143,189,0.5), transparent 60%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.3), transparent 60%)',
+              'linear-gradient(100deg, rgba(14,36,51,0.95) 0%, rgba(14,36,51,0.84) 38%, rgba(14,36,51,0.35) 100%), radial-gradient(55rem 28rem at 88% -10%, rgba(10,143,189,0.45), transparent 62%), radial-gradient(40rem 24rem at -10% 110%, rgba(139,177,65,0.28), transparent 60%)',
           }}
           aria-hidden="true"
         />
