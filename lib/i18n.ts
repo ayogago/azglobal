@@ -112,6 +112,7 @@ export const CHROME: Record<Locale, Chrome> = {
     nav: [
       { name: 'Ծառայություններ', href: '/hy/services' },
       { name: 'Գներ', href: '/hy/pricing' },
+      { name: 'Ուղեցույցներ', href: '/hy/guides' },
       { name: 'Մեր մասին', href: '/hy/about' },
       { name: 'Կապ', href: '/hy/contact' },
     ],
@@ -135,6 +136,7 @@ export const CHROME: Record<Locale, Chrome> = {
     nav: [
       { name: 'Услуги', href: '/ru/services' },
       { name: 'Цены', href: '/ru/pricing' },
+      { name: 'Руководства', href: '/ru/guides' },
       { name: 'О нас', href: '/ru/about' },
       { name: 'Контакты', href: '/ru/contact' },
     ],

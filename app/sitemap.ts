@@ -30,6 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       page(`/${locale}/quote`, 0.8),
       page(`/${locale}/pricing`, 0.8),
       page(`/${locale}/services`, 0.7),
+      page(`/${locale}/guides`, 0.6),
+      ...GUIDES.map((guide) => page(`/${locale}/guides/${guide.slug}`, 0.6)),
       page(`/${locale}/about`, 0.5),
       page(`/${locale}/contact`, 0.5),
       ...DOCUMENT_PAGES.map((doc) => page(`/${locale}${doc.href}`, 0.75)),

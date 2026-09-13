@@ -33,6 +33,21 @@ export type PageUi = {
   otherAreas: string;
   cityFaqTitle: (city: string) => string;
   languageLinkSuffix: string;
+  /** Guides */
+  guides: string;
+  guidesTitle: string;
+  guidesIntro: string;
+  guidesMetaTitle: string;
+  guidesMetaDescription: string;
+  read: string;
+  updatedOn: (date: string) => string;
+  inShort: string;
+  sources: string;
+  disclaimer: string;
+  needTranslation: string;
+  needTranslationText: string;
+  moreGuides: string;
+  faqShort: string;
 };
 
 export const PAGE_UI: Record<Locale, PageUi> = {
@@ -65,6 +80,23 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     otherAreas: 'Other areas we serve',
     cityFaqTitle: (city) => `Translation in ${city} — common questions`,
     languageLinkSuffix: 'translation',
+    guides: 'Guides',
+    guidesTitle: 'Answers to the questions we get asked most',
+    guidesIntro:
+      'Short, practical explanations of the paperwork around certified translation — what offices actually require, and what trips people up.',
+    guidesMetaTitle: 'Translation Guides',
+    guidesMetaDescription:
+      'Plain-English guides to USCIS translation requirements, apostilles, and credential evaluation for foreign diplomas, from a certified translation company in Los Angeles.',
+    read: 'Read',
+    updatedOn: (date) => `Updated ${date}`,
+    inShort: 'In short',
+    sources: 'Sources',
+    disclaimer:
+      'General information, not legal advice. Requirements change and vary by office — confirm with the agency receiving your documents.',
+    needTranslation: 'Need a certified translation?',
+    needTranslationText: 'Armenian, Russian and Ukrainian ⇄ English, accepted by USCIS.',
+    moreGuides: 'More guides',
+    faqShort: 'Frequently asked',
   },
   hy: {
     home: 'Գլխավոր',
@@ -97,6 +129,23 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     otherAreas: 'Այլ տարածքներ, որոնք սպասարկում ենք',
     cityFaqTitle: (city) => `Թարգմանություն ${city}-ում — հաճախ տրվող հարցեր`,
     languageLinkSuffix: 'թարգմանություն',
+    guides: 'Ուղեցույցներ',
+    guidesTitle: 'Պատասխաններ ամենահաճախ տրվող հարցերին',
+    guidesIntro:
+      'Կարճ, գործնական բացատրություններ հաստատված թարգմանության շուրջ եղած թղթաբանության մասին՝ ինչ են իրականում պահանջում հաստատությունները և ինչի վրա են մարդիկ սայթաքում։',
+    guidesMetaTitle: 'Թարգմանության ուղեցույցներ',
+    guidesMetaDescription:
+      'Պարզ բացատրություններ USCIS-ի թարգմանության պահանջների, ապոստիլի և օտարերկրյա դիպլոմների որակավորման գնահատման մասին՝ Լոս Անջելեսի հաստատված թարգմանությունների ընկերությունից։',
+    read: 'Կարդալ',
+    updatedOn: (date) => `Թարմացվել է՝ ${date}`,
+    inShort: 'Հակիրճ',
+    sources: 'Աղբյուրներ',
+    disclaimer:
+      'Ընդհանուր տեղեկատվություն է, ոչ թե իրավաբանական խորհրդատվություն։ Պահանջները փոխվում են և տարբերվում ըստ հաստատության — ճշտեք այնտեղ, ուր ներկայացնում եք ձեր փաստաթղթերը։',
+    needTranslation: 'Հաստատված թարգմանությո՞ւն է պետք',
+    needTranslationText: 'Հայերեն, ռուսերեն և ուկրաիներեն ⇄ անգլերեն՝ ընդունելի USCIS-ի կողմից։',
+    moreGuides: 'Այլ ուղեցույցներ',
+    faqShort: 'Հաճախ տրվող հարցեր',
   },
   ru: {
     home: 'Главная',
@@ -128,5 +177,22 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     otherAreas: 'Другие районы, которые мы обслуживаем',
     cityFaqTitle: (city) => `Перевод в районе ${city} — частые вопросы`,
     languageLinkSuffix: 'перевод',
+    guides: 'Руководства',
+    guidesTitle: 'Ответы на вопросы, которые задают чаще всего',
+    guidesIntro:
+      'Короткие практичные объяснения бумажной стороны заверенного перевода — что на самом деле требуют инстанции и на чём люди спотыкаются.',
+    guidesMetaTitle: 'Руководства по переводу',
+    guidesMetaDescription:
+      'Понятные объяснения требований USCIS к переводу, апостиля и оценки иностранных дипломов — от бюро заверенных переводов в Лос-Анджелесе.',
+    read: 'Читать',
+    updatedOn: (date) => `Обновлено ${date}`,
+    inShort: 'Коротко',
+    sources: 'Источники',
+    disclaimer:
+      'Это общая информация, а не юридическая консультация. Требования меняются и отличаются в разных инстанциях — уточняйте там, куда подаёте документы.',
+    needTranslation: 'Нужен заверенный перевод?',
+    needTranslationText: 'Армянский, русский и украинский ⇄ английский, принимает USCIS.',
+    moreGuides: 'Другие руководства',
+    faqShort: 'Частые вопросы',
   },
 };
