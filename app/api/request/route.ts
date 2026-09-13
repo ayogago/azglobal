@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { get, head } from '@vercel/blob';
 import { z } from 'zod';
 import { checkRateLimit } from '@/lib/rate-limit';
-import { emailLayout, escapeHtml, isEmailConfigured, sendEmail, type EmailAttachment } from '@/lib/email';
+import { isEmailConfigured, sendEmail, type EmailAttachment } from '@/lib/email';
+import { customerEmail, staffEmail, type RequestEmailData } from '@/lib/email-templates';
 import { fileLink } from '@/lib/file-links';
 import { DOCUMENT_TYPES, LANGUAGE_PAIRS, SERVICE_LEVELS, SITE, TURNAROUND } from '@/lib/site';
 import { formatBytes, MAX_FILES, UPLOAD_PREFIX } from '@/lib/uploads';
@@ -50,10 +51,6 @@ function baseUrl(request: Request): string {
   return new URL(request.url).origin;
 }
 
-function row(label: string, value: string) {
-  if (!value) return '';
-  return `<tr><td style="padding:6px 12px 6px 0;color:#4A5A68;vertical-align:top;white-space:nowrap;">${escapeHtml(label)}</td><td style="padding:6px 0;font-weight:bold;">${escapeHtml(value).replace(/\n/g, '<br>')}</td></tr>`;
-}
 
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
@@ -124,67 +121,33 @@ export async function POST(request: Request) {
 
   const origin = baseUrl(request);
   const isQuote = data.kind === 'quote';
-  const heading = isQuote ? 'New quote request' : 'New contact message';
   const subjectLine = isQuote
     ? `Quote request: ${data.languagePair || 'translation'} – ${data.name}`
     : `Website message: ${data.subject || data.name}`;
 
-  const fileListHtml = files.length
-    ? `<h3 style="margin:24px 0 8px;font-size:16px;">Documents (${files.length})</h3>
-       <ul style="padding-left:18px;margin:0;">${files
-         .map(
-           (f) =>
-             `<li style="margin:4px 0;"><a href="${fileLink(origin, f.pathname)}" style="color:#077AA3;">${escapeHtml(f.name)}</a> <span style="color:#4A5A68;">(${formatBytes(f.size)})</span></li>`
-         )
-         .join('')}</ul>
-       <p style="color:#4A5A68;font-size:13px;margin-top:8px;">${
-         attachments.length === files.length
-           ? 'Files are also attached to this email.'
-           : 'Files were too large to attach — use the links above.'
-       }</p>`
-    : '<p style="color:#4A5A68;">No documents attached.</p>';
+  const emailData: RequestEmailData = {
+    kind: data.kind,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    languagePair: data.languagePair || '',
+    documentType: data.documentType || '',
+    serviceLevel: data.serviceLevel || '',
+    turnaround: data.turnaround || '',
+    subject: data.subject,
+    message: data.message,
+    files: files.map((f) => ({ name: f.name, size: formatBytes(f.size), url: fileLink(origin, f.pathname) })),
+    allFilesAttached: attachments.length === files.length,
+  };
 
-  const staffHtml = emailLayout(
-    heading,
-    `<h2 style="margin:0 0 16px;font-size:20px;">${heading}</h2>
-     <table role="presentation" cellpadding="0" cellspacing="0">
-       ${row('Name', data.name)}
-       ${row('Email', data.email)}
-       ${row('Phone', data.phone)}
-       ${row('Languages', data.languagePair || '')}
-       ${row('Document', data.documentType || '')}
-       ${row('Service', data.serviceLevel || '')}
-       ${row('Turnaround', data.turnaround || '')}
-       ${row('Subject', data.subject)}
-       ${row('Message', data.message)}
-     </table>
-     ${fileListHtml}
-     <p style="margin-top:24px;">Reply to this email to respond to ${escapeHtml(data.name)} directly.</p>`
-  );
-
-  const staffText = [
-    heading,
-    `Name: ${data.name}`,
-    `Email: ${data.email}`,
-    data.phone && `Phone: ${data.phone}`,
-    data.languagePair && `Languages: ${data.languagePair}`,
-    data.documentType && `Document: ${data.documentType}`,
-    data.serviceLevel && `Service: ${data.serviceLevel}`,
-    data.turnaround && `Turnaround: ${data.turnaround}`,
-    data.subject && `Subject: ${data.subject}`,
-    data.message && `Message:\n${data.message}`,
-    files.length ? `Documents:\n${files.map((f) => `- ${f.name}: ${fileLink(origin, f.pathname)}`).join('\n')}` : 'No documents attached.',
-  ]
-    .filter(Boolean)
-    .join('\n');
-
+  const staff = staffEmail(emailData);
   try {
     await sendEmail({
       to: process.env.REQUEST_NOTIFY_EMAIL || SITE.email,
       replyTo: data.email,
       subject: subjectLine,
-      html: staffHtml,
-      text: staffText,
+      html: staff.html,
+      text: staff.text,
       attachments,
     });
   } catch (error) {
@@ -197,25 +160,13 @@ export async function POST(request: Request) {
 
   // Confirmation to the customer (best effort).
   try {
-    const firstName = data.name.split(/\s+/)[0].slice(0, 40);
+    const customer = customerEmail(emailData);
     await sendEmail({
       to: data.email,
       replyTo: process.env.REQUEST_NOTIFY_EMAIL || SITE.email,
       subject: isQuote ? 'We received your translation request' : 'We received your message',
-      html: emailLayout(
-        'We received your request',
-        `<p>Hi ${escapeHtml(firstName)},</p>
-         <p>Thank you for contacting AZ Global Translations. ${
-           isQuote
-             ? `We received your quote request${files.length ? ` and ${files.length} document${files.length > 1 ? 's' : ''}` : ''}. A member of our team will review it and reply with your quote shortly.`
-             : 'A member of our team will get back to you shortly.'
-         }</p>
-         <p>If you need anything in the meantime, just reply to this email or call us at <a href="${SITE.phoneHref}" style="color:#077AA3;">${SITE.phone}</a>.</p>
-         <p>— AZ Global Translations</p>`
-      ),
-      text: `Hi ${firstName},\n\nThank you for contacting AZ Global Translations. We received your ${
-        isQuote ? 'quote request' : 'message'
-      } and will get back to you shortly.\n\nQuestions? Reply to this email or call ${SITE.phone}.\n\n— AZ Global Translations`,
+      html: customer.html,
+      text: customer.text,
     });
   } catch (error) {
     console.error('Request form: failed to send confirmation email', error);
