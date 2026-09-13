@@ -7,7 +7,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES } from '@/lib/content';
 import { CITY_PAGES } from '@/lib/cities';
-import { CHROME, localeFromPath, pricingHref, quoteHref } from '@/lib/i18n';
+import { CHROME, localeFromPath, quoteHref } from '@/lib/i18n';
 
 const ENGLISH_COMPANY = [
   { name: 'Services', href: '/services' },
@@ -28,8 +28,8 @@ export default function Footer() {
   const company = isEnglish
     ? ENGLISH_COMPANY
     : [
-        { name: copy.nav[0].name, href: pricingHref(locale) },
-        { name: copy.nav[1].name, href: quoteHref(locale) },
+        ...copy.nav,
+        { name: copy.quoteCta, href: quoteHref(locale) },
         { name: 'English site', href: '/' },
         { name: 'Privacy policy', href: '/privacy-policy' },
         { name: 'Terms & conditions', href: '/terms-and-conditions' },

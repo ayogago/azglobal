@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, ChevronDown, Phone } from 'lucide-react';
 import { SITE, STATS } from '@/lib/site';
+import type { Locale } from '@/lib/i18n';
+import { CONTENT } from '@/lib/i18n-content';
 import JsonLd from '@/components/JsonLd';
 import { IMAGES } from '@/lib/images';
 
@@ -56,11 +58,12 @@ export function Rating({ light = false }: { light?: boolean }) {
   );
 }
 
-export function StatsBar() {
+export function StatsBar({ locale = 'en' }: { locale?: Locale }) {
+  const stats = locale === 'en' ? STATS : CONTENT[locale].stats;
   return (
     <section className="border-y border-slate-200 bg-white">
       <dl className="container-custom grid grid-cols-2 divide-slate-200 py-8 md:grid-cols-4 md:divide-x">
-        {STATS.map((s) => (
+        {stats.map((s) => (
           <div key={s.label} className="flex flex-col-reverse px-4 py-3 text-center">
             <dt className="mt-1 text-sm text-dark-light">{s.label}</dt>
             <dd className="font-heading text-3xl font-extrabold text-primary md:text-4xl">{s.value}</dd>

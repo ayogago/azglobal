@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
+import { segmentAlternates } from '@/lib/i18n';
 import { IMAGES } from '@/lib/images';
 import { Clock, Mail, MapPin, MessageCircle, MessageSquare, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -7,12 +8,17 @@ import RequestForm from '@/components/RequestForm';
 import { PageHero } from '@/components/Sections';
 import { SITE } from '@/lib/site';
 
-export const metadata: Metadata = pageMetadata({
+const base = pageMetadata({
   title: 'Contact Us',
   description:
     'Contact AZ Global Translations in Los Angeles for certified Armenian, Russian and Ukrainian translations. Call +1 (747) 895-4845 or send us a message — support available 24/7.',
   path: '/contact',
 });
+
+export const metadata: Metadata = {
+  ...base,
+  alternates: { ...base.alternates, ...segmentAlternates('contact') },
+};
 
 const CHANNELS = [
   { icon: Phone, label: 'Phone', value: SITE.phone, href: SITE.phoneHref },

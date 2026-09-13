@@ -52,6 +52,16 @@ export const PRICING_ALTERNATES = {
   },
 };
 
+/** hreflang alternates for a page that exists at /<segment>, /hy/<segment> and /ru/<segment>. */
+export const segmentAlternates = (segment: string) => ({
+  languages: {
+    'en-US': `/${segment}`,
+    hy: `/hy/${segment}`,
+    ru: `/ru/${segment}`,
+    'x-default': `/${segment}`,
+  },
+});
+
 /* ------------------------------------------------------------------ */
 /* Header, footer and form strings                                     */
 /* ------------------------------------------------------------------ */
@@ -100,8 +110,10 @@ export const CHROME: Record<Locale, Chrome> = {
   },
   hy: {
     nav: [
+      { name: 'Ծառայություններ', href: '/hy/services' },
       { name: 'Գներ', href: '/hy/pricing' },
-      { name: 'Գնահատում', href: '/hy/quote' },
+      { name: 'Մեր մասին', href: '/hy/about' },
+      { name: 'Կապ', href: '/hy/contact' },
     ],
     quoteCta: 'Անվճար գնահատում',
     menu: 'Բացել ընտրացանկը',
@@ -121,8 +133,10 @@ export const CHROME: Record<Locale, Chrome> = {
   },
   ru: {
     nav: [
+      { name: 'Услуги', href: '/ru/services' },
       { name: 'Цены', href: '/ru/pricing' },
-      { name: 'Расчёт', href: '/ru/quote' },
+      { name: 'О нас', href: '/ru/about' },
+      { name: 'Контакты', href: '/ru/contact' },
     ],
     quoteCta: 'Бесплатный расчёт',
     menu: 'Открыть меню',

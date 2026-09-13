@@ -2,14 +2,20 @@ import type { Metadata } from 'next';
 import { Heart, ShieldCheck, Target, Zap } from 'lucide-react';
 import { CtaBand, PageHero, StatsBar } from '@/components/Sections';
 import { pageMetadata } from '@/lib/seo';
+import { segmentAlternates } from '@/lib/i18n';
 import { IMAGES } from '@/lib/images';
 
-export const metadata: Metadata = pageMetadata({
+const base = pageMetadata({
   title: 'About Us',
   description:
     'AZ Global Translations is a Los Angeles based certified translation company specializing in Armenian, Russian and Ukrainian. 10,000+ documents translated for 1,000+ clients.',
   path: '/about',
 });
+
+export const metadata: Metadata = {
+  ...base,
+  alternates: { ...base.alternates, ...segmentAlternates('about') },
+};
 
 const VALUES = [
   { icon: Target, title: 'Accuracy', text: 'Every translation is precise and faithful to the original — names, dates, stamps and all.' },
