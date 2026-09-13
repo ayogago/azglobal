@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
-import { BadgeCheck, Clock, Lock, Mail, Phone } from 'lucide-react';
+import { BadgeCheck, Clock, Lock, Mail, MessageCircle, MessageSquare, Phone } from 'lucide-react';
 import RequestForm from '@/components/RequestForm';
 import { Rating } from '@/components/Sections';
 import { SITE } from '@/lib/site';
@@ -23,7 +23,8 @@ export default function QuotePage() {
             Tell us what you need and upload your documents. We&apos;ll review them and email you a quote — no account,
             no obligation.
           </p>
-          <div className="mt-6">
+          <p className="mt-5 text-sm font-semibold text-leaf-dark">{SITE.replyPromise}</p>
+          <div className="mt-5">
             <Rating />
           </div>
         </div>
@@ -62,6 +63,12 @@ export default function QuotePage() {
             <div className="mt-3 space-y-2 text-dark-light">
               <a href={SITE.phoneHref} className="flex items-center gap-2 hover:text-primary">
                 <Phone className="h-4 w-4 text-primary" /> {SITE.phone}
+              </a>
+              <a href={SITE.whatsappHref} target="_blank" rel="noopener" className="flex items-center gap-2 hover:text-primary">
+                <MessageCircle className="h-4 w-4 text-primary" /> WhatsApp
+              </a>
+              <a href={SITE.smsHref} className="flex items-center gap-2 hover:text-primary">
+                <MessageSquare className="h-4 w-4 text-primary" /> Text us
               </a>
               <a href={`mailto:${SITE.email}`} className="flex items-center gap-2 break-all hover:text-primary">
                 <Mail className="h-4 w-4 text-primary" /> {SITE.email}

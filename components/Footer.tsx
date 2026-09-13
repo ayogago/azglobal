@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
+import { DOCUMENT_PAGES } from '@/lib/content';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,7 +11,7 @@ export default function Footer() {
     <footer className="bg-dark text-slate-300">
       <div className="container-custom py-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <div className="inline-block rounded-xl bg-white px-4 py-3">
               <Image src="/logo-mark.png" alt="AZ Global Translations" width={1200} height={282} sizes="180px" className="h-9 w-auto" />
             </div>
@@ -36,10 +37,24 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-2">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Documents</h2>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {DOCUMENT_PAGES.map((doc) => (
+                <li key={doc.slug}>
+                  <Link href={doc.href} className="hover:text-white">
+                    {doc.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">Company</h2>
             <ul className="mt-4 space-y-2.5 text-sm">
               {[
                 { name: 'Services', href: '/services' },
+                { name: 'Guides', href: '/guides' },
                 { name: 'About us', href: '/about' },
                 { name: 'Contact', href: '/contact' },
                 { name: 'Privacy policy', href: '/privacy-policy' },
@@ -54,13 +69,19 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-3">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">Contact</h2>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a href={SITE.phoneHref} className="flex items-center gap-3 hover:text-white">
                   <Phone className="h-4 w-4 shrink-0 text-leaf" />
                   {SITE.phone}
+                </a>
+              </li>
+              <li>
+                <a href={SITE.whatsappHref} target="_blank" rel="noopener" className="flex items-center gap-3 hover:text-white">
+                  <MessageCircle className="h-4 w-4 shrink-0 text-leaf" />
+                  WhatsApp
                 </a>
               </li>
               <li>

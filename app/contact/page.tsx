@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/lib/seo';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Mail, MapPin, MessageCircle, MessageSquare, Phone } from 'lucide-react';
 import Link from 'next/link';
 import RequestForm from '@/components/RequestForm';
 import { PageHero } from '@/components/Sections';
@@ -15,6 +15,8 @@ export const metadata: Metadata = pageMetadata({
 
 const CHANNELS = [
   { icon: Phone, label: 'Phone', value: SITE.phone, href: SITE.phoneHref },
+  { icon: MessageCircle, label: 'WhatsApp', value: 'Message us on WhatsApp', href: SITE.whatsappHref },
+  { icon: MessageSquare, label: 'Text', value: SITE.phone, href: SITE.smsHref },
   { icon: Mail, label: 'Email', value: SITE.email, href: `mailto:${SITE.email}` },
   { icon: MapPin, label: 'Location', value: 'Los Angeles, CA — serving clients nationwide' },
   { icon: Clock, label: 'Hours', value: 'Support available 24/7' },
@@ -27,7 +29,9 @@ export default function ContactPage() {
         eyebrow="Contact"
         title="We’re here to help"
         intro="Questions about a document, a deadline, or what kind of translation you need? Reach out any time."
-      />
+      >
+        <p className="mt-6 text-sm font-semibold text-leaf-dark">{SITE.replyPromise}</p>
+      </PageHero>
       <section className="section bg-white">
         <div className="container-custom grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5">

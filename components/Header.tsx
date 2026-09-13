@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, Phone, X } from 'lucide-react';
+import { ChevronDown, Menu, MessageCircle, Phone, X } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
 import Flag from '@/components/Flag';
 
 const NAV = [
   { name: 'Services', href: '/services' },
+  { name: 'Guides', href: '/guides' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -209,6 +210,10 @@ export default function Header() {
           <a href={SITE.phoneHref} className="btn-outline w-full">
             <Phone className="h-4 w-4" />
             {SITE.phone}
+          </a>
+          <a href={SITE.whatsappHref} target="_blank" rel="noopener" className="btn-outline w-full border-leaf text-leaf-dark hover:bg-leaf hover:text-dark">
+            <MessageCircle className="h-4 w-4" />
+            WhatsApp
           </a>
         </div>
       </div>

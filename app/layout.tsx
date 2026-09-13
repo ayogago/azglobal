@@ -7,6 +7,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import MobileCtaBar from "@/components/MobileCtaBar";
 import { SITE } from "@/lib/site";
 
 const title = "Certified Armenian, Russian & Ukrainian Translation | AZ Global Translations";
@@ -102,7 +103,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className="flex min-h-screen flex-col pb-[60px] lg:pb-0">
         <JsonLd data={organizationSchema} />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-9BH27BCL3G" strategy="lazyOnload" />
         <Script id="google-analytics" strategy="lazyOnload">
@@ -140,6 +141,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <MobileCtaBar />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MessageSquareText, Stamp, Upload } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
-import { GENERAL_FAQ, SERVICES } from '@/lib/content';
+import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
 import { SERVICE_ICONS } from '@/lib/service-icons';
 import Flag from '@/components/Flag';
 import { CtaBand, Faq, Rating, SectionHeading, StatsBar } from '@/components/Sections';
@@ -65,7 +65,9 @@ export default function Home() {
               </a>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2">
+            <p className="mt-5 text-sm font-semibold text-leaf">{SITE.replyPromise}</p>
+
+            <div className="mt-6 flex flex-wrap gap-2">
               {LANGUAGES.map((l) => (
                 <Link
                   key={l.slug}
@@ -175,7 +177,19 @@ export default function Home() {
               All services <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 flex flex-wrap gap-2">
+            {DOCUMENT_PAGES.map((doc) => (
+              <Link
+                key={doc.slug}
+                href={doc.href}
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-dark transition hover:border-primary hover:text-primary"
+              >
+                {doc.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {SERVICES.map((service) => {
               const Icon = SERVICE_ICONS[service.key];
               return (

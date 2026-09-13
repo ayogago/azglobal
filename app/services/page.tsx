@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import { CtaBand, Faq, PageHero } from '@/components/Sections';
 import Flag from '@/components/Flag';
-import { GENERAL_FAQ, SERVICES } from '@/lib/content';
+import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
 import { SERVICE_ICONS } from '@/lib/service-icons';
 import { pageMetadata } from '@/lib/seo';
 import { LANGUAGES } from '@/lib/site';
@@ -54,6 +54,28 @@ export default function ServicesPage() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="section bg-white pt-0">
+        <div className="container-custom">
+          <div className="max-w-2xl">
+            <span className="eyebrow">By document</span>
+            <h2 className="mt-3 text-3xl md:text-4xl">Pages for the documents we translate most</h2>
+            <p className="mt-4 text-lg text-dark-light">What each office expects, and what you get back.</p>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {DOCUMENT_PAGES.map((doc) => (
+              <Link
+                key={doc.slug}
+                href={doc.href}
+                className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 px-5 py-4 font-semibold text-dark hover:border-primary hover:text-primary"
+              >
+                {doc.name}
+                <ArrowRight className="h-4 w-4 text-primary transition-transform group-hover:translate-x-1" />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

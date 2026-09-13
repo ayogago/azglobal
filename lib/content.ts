@@ -221,3 +221,253 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
     ],
   },
 };
+
+export type DocumentSlug =
+  | 'birth-certificate'
+  | 'marriage-certificate'
+  | 'diploma-transcript'
+  | 'police-record'
+  | 'drivers-license'
+  | 'divorce-decree';
+
+export type DocumentPage = {
+  slug: DocumentSlug;
+  href: string;
+  name: string; // short label for links
+  title: string; // H1
+  metaTitle: string;
+  metaDescription: string;
+  intro: string;
+  usedFor: string[]; // where people submit it
+  included: string[]; // what is in the delivered translation
+  about: string[];
+  faq: FaqItem[];
+};
+
+const CERTIFIED_INCLUDES = [
+  'Complete word-for-word translation, laid out like the original',
+  'Signed certificate of translation accuracy',
+  'Names, dates, seals and stamps transcribed exactly',
+  'Delivered as a PDF, ready to print or upload',
+];
+
+export const DOCUMENT_PAGES: DocumentPage[] = [
+  {
+    slug: 'birth-certificate',
+    href: '/birth-certificate-translation',
+    name: 'Birth certificates',
+    title: 'Certified Birth Certificate Translation',
+    metaTitle: 'Certified Birth Certificate Translation for USCIS | Los Angeles',
+    metaDescription:
+      'Certified birth certificate translation from Armenian, Russian or Ukrainian into English, accepted by USCIS. Los Angeles based, delivered in 12–48 hours. Free quote.',
+    intro:
+      'Armenian, Russian and Ukrainian birth certificates translated into English and certified for USCIS, courts, schools and government agencies.',
+    usedFor: [
+      'Green card and citizenship applications',
+      'Passport and Social Security applications',
+      'School and university enrollment',
+      'Marriage licenses and name changes',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'A birth certificate is the document USCIS asks for most often, and it is also the one most often rejected when the translation is incomplete. Every line matters: the registry number, the issuing office, the stamps in the margins, and the handwriting on older Soviet-era certificates.',
+      'We translate the whole document, keep the layout close to the original so an officer can compare them side by side, and attach a signed certificate of accuracy. Notarization is available if the office receiving it asks for one.',
+    ],
+    faq: [
+      {
+        q: 'Do you translate the stamps and seals on a birth certificate?',
+        a: 'Yes. USCIS requires a complete translation, so every stamp, seal, signature block and handwritten note is translated or described.',
+      },
+      {
+        q: 'Do you need the original document?',
+        a: 'No. A clear photo or scan of the full page is enough. Make sure all four edges are visible and the text is readable.',
+      },
+      {
+        q: 'How long does a birth certificate translation take?',
+        a: 'Most single-page birth certificates are delivered within 12–48 hours. Tell us if you have a filing deadline.',
+      },
+      {
+        q: 'What if my name is spelled differently on other documents?',
+        a: 'Tell us the spelling used in your passport or immigration paperwork and we will match it, with a translator’s note where needed.',
+      },
+    ],
+  },
+  {
+    slug: 'marriage-certificate',
+    href: '/marriage-certificate-translation',
+    name: 'Marriage certificates',
+    title: 'Certified Marriage Certificate Translation',
+    metaTitle: 'Certified Marriage Certificate Translation for USCIS | Los Angeles',
+    metaDescription:
+      'Certified marriage certificate translation from Armenian, Russian or Ukrainian into English for USCIS, courts and immigration filings. 12–48 hour turnaround. Free quote.',
+    intro:
+      'Marriage certificates translated and certified for spousal petitions, green card applications, name changes and court filings.',
+    usedFor: [
+      'Spousal petitions and adjustment of status',
+      'Name change applications',
+      'Court and family law filings',
+      'Insurance, benefits and bank paperwork',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Marriage certificates are usually filed alongside birth certificates and passports, and the names have to agree across all of them. We keep spellings consistent across every document in your file so nothing looks like a mismatch to the officer reviewing it.',
+      'Send us the whole set at once — it is faster, and we can flag differences in spelling before they become a request for evidence.',
+    ],
+    faq: [
+      {
+        q: 'Can you translate our marriage certificate and birth certificates together?',
+        a: 'Yes, and we recommend it. Upload them in one request and we will keep names and dates consistent across all of them.',
+      },
+      {
+        q: 'Is a certified translation enough, or do we need notarization?',
+        a: 'USCIS accepts a certified translation without notarization. Some courts and foreign consulates ask for a notarized one — tell us where it is going and we will advise.',
+      },
+      {
+        q: 'Our certificate is in Russian but issued in Armenia. Is that a problem?',
+        a: 'Not at all. We translate both Armenian and Russian, including Soviet-era documents issued anywhere in the former USSR.',
+      },
+    ],
+  },
+  {
+    slug: 'diploma-transcript',
+    href: '/diploma-transcript-translation',
+    name: 'Diplomas & transcripts',
+    title: 'Certified Diploma and Transcript Translation',
+    metaTitle: 'Certified Diploma & Transcript Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian diplomas, transcripts and academic records for universities, credential evaluation and licensing boards.',
+    intro:
+      'Diplomas, degrees, transcripts and academic certificates translated for university admissions, credential evaluation and licensing boards.',
+    usedFor: [
+      'University and graduate school applications',
+      'Credential evaluation agencies',
+      'Professional licensing boards',
+      'Employers verifying foreign degrees',
+    ],
+    included: [
+      'Complete translation of the diploma and every transcript page',
+      'Course names, grades and hours kept in the original structure',
+      'Signed certificate of translation accuracy',
+      'Delivered as a PDF, ready to upload to an application portal',
+    ],
+    about: [
+      'Transcripts are dense — course titles, credit hours, grading scales and the stamps of the issuing institution. Evaluation agencies compare the translation against the original line by line, so the structure has to survive the translation.',
+      'We keep tables as tables, translate course titles precisely rather than loosely, and leave the grading scale intact so the evaluator can convert it.',
+    ],
+    faq: [
+      {
+        q: 'Will a credential evaluation agency accept your translation?',
+        a: 'Yes. Our certified translations include the signed statement of accuracy that evaluation agencies and universities require. Check whether your agency requires the translation to be sent directly by the school as well.',
+      },
+      {
+        q: 'Do you convert grades to a US GPA?',
+        a: 'No. A translation must mirror the original, so grades stay as issued. Converting them is the job of a credential evaluation service.',
+      },
+      {
+        q: 'How much does a multi-page transcript cost?',
+        a: 'It depends on the number of pages and how dense they are. Upload the pages and we will send you a quote.',
+      },
+    ],
+  },
+  {
+    slug: 'police-record',
+    href: '/police-record-translation',
+    name: 'Police records',
+    title: 'Certified Police Record Translation',
+    metaTitle: 'Certified Police Clearance Certificate Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian police clearance certificates and criminal record checks for USCIS, visas and immigration.',
+    intro:
+      'Police clearance certificates and criminal record checks translated and certified for immigration and visa applications.',
+    usedFor: [
+      'Immigrant visa and consular processing',
+      'Adjustment of status filings',
+      'Employment and licensing background checks',
+      'Foreign residency applications',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Police certificates are short but formal, and the phrasing matters: the exact wording of the finding, the period it covers, and the authority that issued it. A loose translation invites questions.',
+      'These are usually time-sensitive, since consulates treat them as valid only for a limited period. Tell us your interview or filing date and we will work to it.',
+    ],
+    faq: [
+      {
+        q: 'How fast can you turn around a police certificate?',
+        a: 'Usually within 12–24 hours, since they are short. Mention your deadline in the request and we will confirm.',
+      },
+      {
+        q: 'Do you translate the QR code or reference number page?',
+        a: 'Yes. Everything on the document is translated or described, including reference numbers and verification codes.',
+      },
+    ],
+  },
+  {
+    slug: 'drivers-license',
+    href: '/drivers-license-translation',
+    name: 'Driver’s licenses',
+    title: 'Certified Driver’s License Translation',
+    metaTitle: 'Certified Driver’s License Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian driver’s licenses and IDs for the DMV, insurance companies and car rental. Fast turnaround, free quote.',
+    intro:
+      'Driver’s licenses and national ID cards translated and certified for the DMV, insurance companies and rental agencies.',
+    usedFor: [
+      'DMV applications and license exchange',
+      'Auto insurance policies',
+      'Car rental abroad and in the US',
+      'Proof of identity for employers',
+    ],
+    included: [
+      'Both sides of the licence translated in full',
+      'Licence categories and endorsements explained',
+      'Signed certificate of translation accuracy',
+      'Delivered as a PDF, usually same day',
+    ],
+    about: [
+      'Licences are small but every field counts — categories, restrictions, issue and expiry dates, and the issuing authority. Insurance companies in particular look for the date you were first licensed, because it decides your rate.',
+      'Send clear photos of the front and the back. Both sides are needed for a complete certified translation.',
+    ],
+    faq: [
+      {
+        q: 'Do you need both sides of the licence?',
+        a: 'Yes. The back carries the categories and restrictions, and a certified translation has to cover the whole document.',
+      },
+      {
+        q: 'Can I use the translation at the California DMV?',
+        a: 'Our certified translations are prepared for official use, including DMV submissions. Always confirm current requirements with the office receiving it.',
+      },
+    ],
+  },
+  {
+    slug: 'divorce-decree',
+    href: '/divorce-decree-translation',
+    name: 'Divorce decrees',
+    title: 'Certified Divorce Decree Translation',
+    metaTitle: 'Certified Divorce Decree Translation for USCIS | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian divorce decrees and court judgments for USCIS, remarriage and court filings. 12–48 hour turnaround.',
+    intro:
+      'Divorce decrees, court judgments and dissolution certificates translated and certified for immigration and court use.',
+    usedFor: [
+      'Proving a previous marriage ended, for USCIS',
+      'Marriage licence applications',
+      'Family court filings',
+      'Name change and records updates',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Court documents use fixed legal phrasing, and immigration officers read them closely to confirm that a prior marriage legally ended and when. The date the judgment took effect is often the detail that matters most.',
+      'Our translators handle court language carefully and keep the decree’s structure — case number, parties, findings, and the operative order — intact.',
+    ],
+    faq: [
+      {
+        q: 'My decree is several pages of court text. Do you translate all of it?',
+        a: 'Yes. A certified translation must be complete, so every page you submit is translated in full.',
+      },
+      {
+        q: 'Do you translate the court seal and judge’s signature?',
+        a: 'Yes, seals and signature blocks are translated or described so the document is complete.',
+      },
+    ],
+  },
+];

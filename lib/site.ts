@@ -7,6 +7,9 @@ export const SITE = {
   phone: '+1 (747) 895-4845',
   phoneHref: 'tel:+17478954845',
   phoneSchema: '+1-747-895-4845',
+  whatsappHref: 'https://wa.me/17478954845',
+  smsHref: 'sms:+17478954845',
+  replyPromise: 'Most requests answered within 30 minutes',
   location: 'Los Angeles, CA',
   tagline: 'Precision in Every Word. Speed in Every Project.',
   social: [
