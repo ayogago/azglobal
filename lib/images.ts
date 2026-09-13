@@ -81,6 +81,13 @@ export const DOCUMENT_IMAGES: Record<string, SiteImage> = {
   'police-record': IMAGES.courthouse,
   'divorce-decree': IMAGES.courthouse,
   'drivers-license': IMAGES.passport,
+  passport: IMAGES.passport,
+  'medical-record': IMAGES.writing,
+  'bank-statement': IMAGES.documents,
+  'military-record': IMAGES.documents,
+  'work-book': IMAGES.documents,
+  'power-of-attorney': IMAGES.writing,
+  'court-document': IMAGES.courthouse,
 };
 
 export const documentImage = (slug: string): SiteImage => DOCUMENT_IMAGES[slug] ?? IMAGES.documents;

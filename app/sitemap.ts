@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { LANGUAGES, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES } from '@/lib/content';
 import { GUIDES } from '@/lib/guides';
+import { CITY_PAGES } from '@/lib/cities';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date('2026-09-11');
@@ -18,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/quote', 0.9),
     page('/pricing', 0.9),
     ...DOCUMENT_PAGES.map((doc) => page(doc.href, 0.85)),
+    ...CITY_PAGES.map((city) => page(city.href, 0.8)),
     page('/services', 0.8),
     page('/guides', 0.7),
     ...GUIDES.map((guide) => page(`/guides/${guide.slug}`, 0.7)),

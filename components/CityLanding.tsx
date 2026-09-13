@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BadgeCheck, Check, Clock, FileText, Lock, MessageCircle } from 'lucide-react';
-import type { DocumentPage } from '@/lib/content';
+import { ArrowRight, Check, MapPin, MessageCircle } from 'lucide-react';
+import type { CityPage } from '@/lib/cities';
+import { CITY_PAGES } from '@/lib/cities';
 import { DOCUMENT_PAGES } from '@/lib/content';
 import { LANGUAGES, SITE } from '@/lib/site';
 import Flag from '@/components/Flag';
 import JsonLd from '@/components/JsonLd';
 import RequestForm from '@/components/RequestForm';
-import { CtaBand, Faq, Rating, StatsBar } from '@/components/Sections';
-import { documentImage } from '@/lib/images';
+import { CtaBand, Faq, StatsBar } from '@/components/Sections';
+import { IMAGES } from '@/lib/images';
 
-export default function DocumentLanding({ page }: { page: DocumentPage }) {
+export default function CityLanding({ page }: { page: CityPage }) {
   const url = `${SITE.url}${page.href}`;
+  const others = CITY_PAGES.filter((c) => c.slug !== page.slug);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -19,15 +21,16 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
       {
         '@type': 'Service',
         '@id': `${url}#service`,
-        name: page.title,
+        name: `Certified translation in ${page.name}, CA`,
         serviceType: 'Certified document translation',
         description: page.metaDescription,
         url,
         provider: { '@id': `${SITE.url}/#business` },
         areaServed: [
-          { '@type': 'City', name: 'Los Angeles' },
-          { '@type': 'Country', name: 'United States' },
+          { '@type': 'City', name: page.name, address: { '@type': 'PostalAddress', addressRegion: 'CA', addressCountry: 'US' } },
+          ...page.nearby.map((n) => ({ '@type': 'Place', name: n })),
         ],
+        availableLanguage: LANGUAGES.map((l) => l.name).concat('English'),
       },
       {
         '@type': 'BreadcrumbList',
@@ -40,14 +43,12 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
     ],
   };
 
-  const others = DOCUMENT_PAGES.filter((d) => d.slug !== page.slug);
-
   return (
     <>
       <JsonLd data={schema} />
 
-      <section className="bg-gradient-to-b from-primary-soft to-white">
-        <div className="container-custom grid items-start gap-10 py-14 md:py-20 lg:grid-cols-12">
+      <section className="border-b border-slate-200 bg-gradient-to-b from-primary-soft to-white">
+        <div className="container-custom grid items-center gap-10 py-14 md:py-20 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <nav aria-label="Breadcrumb" className="text-sm text-dark-light">
               <Link href="/" className="hover:text-primary">
@@ -62,21 +63,10 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
             <h1 className="mt-5 text-4xl leading-tight md:text-5xl">{page.title}</h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-dark-light md:text-xl">{page.intro}</p>
 
-            <p className="mt-5 inline-flex flex-wrap items-baseline gap-x-2 rounded-xl bg-white px-4 py-3 shadow-card">
-              {page.priceNote ? (
-                <span className="font-semibold text-dark">{page.priceNote}</span>
-              ) : (
-                <>
-                  <span className="font-heading text-2xl font-extrabold text-primary">$25</span>
-                  <span className="font-semibold text-dark">per page</span>
-                  <span className="text-dark-light">· complex formatted pages $60</span>
-                </>
-              )}
+            <p className="mt-5 inline-flex flex-wrap items-center gap-2 rounded-xl bg-white px-4 py-3 text-sm shadow-card">
+              <MapPin className="h-4 w-4 shrink-0 text-primary" />
               <span className="text-dark-light">
-                ·{' '}
-                <Link href="/pricing" className="font-semibold text-primary hover:underline">
-                  full pricing
-                </Link>
+                Also serving {page.nearby.join(', ')} — everything handled online, nothing to drop off.
               </span>
             </p>
 
@@ -91,33 +81,19 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
               </a>
             </div>
             <p className="mt-4 text-sm font-semibold text-leaf-dark">{SITE.replyPromise}</p>
-            <div className="mt-6">
-              <Rating />
-            </div>
           </div>
 
           <div className="lg:col-span-5">
-            <div className="rounded-2xl bg-white p-7 shadow-card">
-              <h2 className="text-lg">Every certified translation includes</h2>
-              <ul className="mt-4 space-y-3">
-                {page.included.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-dark">
-                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-leaf-dark" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-slate-200 pt-5 text-sm text-dark-light">
-                <span className="inline-flex items-center gap-2">
-                  <BadgeCheck className="h-4 w-4 text-primary" /> USCIS accepted
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-primary" /> 12–48 hours
-                </span>
-                <span className="inline-flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-primary" /> Private &amp; secure
-                </span>
-              </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
+              <Image
+                src={IMAGES.losAngeles.src}
+                alt={IMAGES.losAngeles.alt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                quality={70}
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -128,8 +104,8 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
       <section className="section bg-white">
         <div className="container-custom grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <span className="eyebrow">What to know</span>
-            <h2 className="mt-3 text-3xl md:text-4xl">Getting it right the first time</h2>
+            <span className="eyebrow">{page.name}</span>
+            <h2 className="mt-3 text-3xl md:text-4xl">Working with {page.name}</h2>
             <div className="mt-6 space-y-4 text-lg leading-relaxed text-dark-light">
               {page.about.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)}>{paragraph}</p>
@@ -151,27 +127,23 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="relative mb-6 aspect-[4/3] overflow-hidden rounded-2xl shadow-card">
-              <Image
-                src={documentImage(page.slug).src}
-                alt={documentImage(page.slug).alt}
-                fill
-                loading="lazy"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                quality={70}
-                className="object-cover"
-              />
-            </div>
             <div className="rounded-2xl bg-slate-50 p-7">
-              <h2 className="text-xl">Commonly submitted to</h2>
+              <h2 className="text-xl">What {page.name} sends us most</h2>
               <ul className="mt-5 space-y-3">
-                {page.usedFor.map((item) => (
+                {page.common.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-dark">
-                    <FileText className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-leaf-dark" />
                     {item}
                   </li>
                 ))}
               </ul>
+              <p className="mt-6 border-t border-slate-200 pt-5 text-sm text-dark-light">
+                Certified documents are $25 per page, complex formatted pages $60, text-heavy material $0.10 per word.{' '}
+                <Link href="/pricing" className="font-semibold text-primary hover:underline">
+                  Full pricing
+                </Link>
+                .
+              </p>
             </div>
           </div>
         </div>
@@ -195,19 +167,32 @@ export default function DocumentLanding({ page }: { page: DocumentPage }) {
         </div>
       </section>
 
-      <Faq items={page.faq} title={`${page.name} — questions we get`} />
+      <Faq items={page.faq} title={`Translation in ${page.name} — common questions`} />
 
       <section className="border-t border-slate-200 bg-white">
         <div className="container-custom py-10">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-dark-light">Other documents we translate</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-dark-light">Documents we translate</h2>
           <div className="mt-4 flex flex-wrap gap-2">
-            {others.map((doc) => (
+            {DOCUMENT_PAGES.map((doc) => (
               <Link
                 key={doc.slug}
                 href={doc.href}
                 className="rounded-full border border-slate-200 px-3.5 py-1.5 text-sm font-semibold text-dark hover:border-primary hover:text-primary"
               >
                 {doc.name}
+              </Link>
+            ))}
+          </div>
+
+          <h2 className="mt-8 text-sm font-bold uppercase tracking-wider text-dark-light">Other areas we serve</h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {others.map((city) => (
+              <Link
+                key={city.slug}
+                href={city.href}
+                className="rounded-full border border-slate-200 px-3.5 py-1.5 text-sm font-semibold text-dark hover:border-primary hover:text-primary"
+              >
+                {city.name}
               </Link>
             ))}
           </div>

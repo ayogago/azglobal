@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MessageSquareText, Stamp, Upload } from 'lucide-react';
+import { ArrowRight, BadgeCheck, Clock, FileCheck2, Lock, MapPin, MessageSquareText, Stamp, Upload } from 'lucide-react';
 import { LANGUAGES, PRICING, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES, GENERAL_FAQ, SERVICES } from '@/lib/content';
+import { CITY_PAGES } from '@/lib/cities';
 import { SERVICE_ICONS } from '@/lib/service-icons';
 import Flag from '@/components/Flag';
 import { CtaBand, Faq, Rating, SectionHeading, StatsBar } from '@/components/Sections';
@@ -242,6 +243,36 @@ export default function Home() {
               Start with a free quote
               <ArrowRight className="h-5 w-5" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Areas served */}
+      <section className="section bg-white">
+        <div className="container-custom">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SectionHeading
+              eyebrow="Los Angeles and the Valley"
+              title="Where our clients are"
+              text="We're Los Angeles based and everything is handled online — upload your document from anywhere, and the certified translation comes back by email."
+            />
+          </div>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {CITY_PAGES.map((city) => (
+              <Link
+                key={city.slug}
+                href={city.href}
+                className="group rounded-2xl border border-slate-200 p-6 transition hover:border-primary/40 hover:shadow-card"
+              >
+                <MapPin className="h-5 w-5 text-primary" />
+                <h3 className="mt-3 text-lg">{city.name}</h3>
+                <p className="mt-1 text-sm text-dark-light">{city.nearby.slice(0, 2).join(', ')} and nearby</p>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  Translation in {city.name}
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

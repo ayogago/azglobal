@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { LANGUAGES, SITE } from '@/lib/site';
 import { DOCUMENT_PAGES } from '@/lib/content';
+import { CITY_PAGES } from '@/lib/cities';
 import { CHROME, localeFromPath, pricingHref, quoteHref } from '@/lib/i18n';
 
 const ENGLISH_COMPANY = [
@@ -66,13 +67,18 @@ export default function Footer() {
               <div className="lg:col-span-2">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-white">{copy.documentsHeading}</h2>
                 <ul className="mt-4 space-y-2.5 text-sm">
-                  {DOCUMENT_PAGES.map((doc) => (
+                  {DOCUMENT_PAGES.slice(0, 8).map((doc) => (
                     <li key={doc.slug}>
                       <Link href={doc.href} className="hover:text-white">
                         {doc.name}
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link href="/services" className="font-semibold text-white hover:underline">
+                      All documents →
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </>
@@ -124,7 +130,24 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-6 text-sm text-slate-400">
+        {isEnglish && (
+          <div className="mt-12 border-t border-white/10 pt-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-white">Areas we serve</h2>
+            <p className="mt-3 text-sm">
+              Los Angeles ·{' '}
+              {CITY_PAGES.map((city, i) => (
+                <span key={city.slug}>
+                  {i > 0 && ' · '}
+                  <Link href={city.href} className="hover:text-white hover:underline">
+                    {city.name}
+                  </Link>
+                </span>
+              ))}
+            </p>
+          </div>
+        )}
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-sm text-slate-400">
           © {year} {SITE.name}. {copy.rights}
         </div>
       </div>

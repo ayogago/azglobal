@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, ChevronDown, Phone, Star } from 'lucide-react';
+import { ArrowRight, BadgeCheck, ChevronDown, Phone } from 'lucide-react';
 import { SITE, STATS } from '@/lib/site';
 import JsonLd from '@/components/JsonLd';
 import { IMAGES } from '@/lib/images';
@@ -50,11 +50,7 @@ export function PageHero({
 export function Rating({ light = false }: { light?: boolean }) {
   return (
     <div className={`inline-flex items-center gap-2 text-sm font-semibold ${light ? 'text-white' : 'text-dark'}`}>
-      <span className="flex" aria-hidden="true">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="h-4 w-4 fill-sun text-sun" />
-        ))}
-      </span>
+      <BadgeCheck className={`h-5 w-5 ${light ? 'text-leaf' : 'text-leaf-dark'}`} aria-hidden="true" />
       Trusted by 1,000+ clients
     </div>
   );

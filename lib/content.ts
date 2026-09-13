@@ -228,7 +228,14 @@ export type DocumentSlug =
   | 'diploma-transcript'
   | 'police-record'
   | 'drivers-license'
-  | 'divorce-decree';
+  | 'divorce-decree'
+  | 'passport'
+  | 'medical-record'
+  | 'bank-statement'
+  | 'military-record'
+  | 'work-book'
+  | 'power-of-attorney'
+  | 'court-document';
 
 export type DocumentPage = {
   slug: DocumentSlug;
@@ -242,6 +249,8 @@ export type DocumentPage = {
   included: string[]; // what is in the delivered translation
   about: string[];
   faq: FaqItem[];
+  /** Overrides the default "$25 per page" line when the document is usually priced differently. */
+  priceNote?: string;
 };
 
 const CERTIFIED_INCLUDES = [
@@ -467,6 +476,279 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
       {
         q: 'Do you translate the court seal and judge’s signature?',
         a: 'Yes, seals and signature blocks are translated or described so the document is complete.',
+      },
+    ],
+  },
+  {
+    slug: 'passport',
+    href: '/passport-translation',
+    name: 'Passports',
+    title: 'Certified Passport Translation',
+    metaTitle: 'Certified Passport Translation | Armenian, Russian & Ukrainian',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian passports for USCIS, banks, universities and consulates. Every stamp and visa page transcribed. Los Angeles based.',
+    intro:
+      'Passports translated and certified page by page — the biographic page, every visa, and every entry and exit stamp.',
+    usedFor: [
+      'USCIS filings that ask for proof of identity or travel history',
+      'Bank and mortgage applications',
+      'University admissions and credential files',
+      'Consulates, licensing boards and employers',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Most people only need the biographic page — the one with the photo, name, date of birth and passport number. That is a single page at the standard rate, and it is what banks, universities and most employers ask for.',
+      'Immigration filings are different. When an officer wants travel history, every stamped page has to be translated or described, including stamps that are partly illegible. A passport book full of stamps is slow, detailed work, so those pages are priced at our complex rate.',
+      'Send us photos of every page you think you need and we will tell you in the quote exactly which pages we would translate and what it costs, before any work starts.',
+    ],
+    faq: [
+      {
+        q: 'Do I need my whole passport translated?',
+        a: 'Usually not. For a bank, a university or an employer the biographic page is enough. Only translate the stamped pages when the office you are filing with has asked for travel history — check the instruction letter, and if you are unsure, send us a photo of it and we will tell you.',
+      },
+      {
+        q: 'How much does a passport translation cost?',
+        a: 'The biographic page is $25. Pages dense with visas and entry stamps are $60 per page, because every stamp has to be read and reproduced. Your quote lists the exact pages and the exact total.',
+      },
+      {
+        q: 'Some of my stamps are smudged — is that a problem?',
+        a: 'No. Where a stamp cannot be read with confidence we mark it as illegible rather than guessing. That is the correct way to handle it, and it is what officers expect to see.',
+      },
+      {
+        q: 'Can you work from phone photos?',
+        a: 'Yes, as long as the whole page is in frame and the text is sharp. Lay the passport flat, avoid glare on the laminate, and take one photo per page.',
+      },
+    ],
+    priceNote: 'Biographic page $25 · pages full of stamps and visas $60',
+  },
+  {
+    slug: 'medical-record',
+    href: '/medical-records-translation',
+    name: 'Medical records',
+    title: 'Certified Medical Record Translation',
+    metaTitle: 'Certified Medical Record Translation | Armenian, Russian & Ukrainian',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian medical records, vaccination cards, test results and discharge summaries for doctors, insurers and USCIS.',
+    intro:
+      'Medical records, vaccination cards, test results and discharge summaries translated accurately for the people who will act on them.',
+    usedFor: [
+      'US doctors continuing treatment started abroad',
+      'Immigration medical exams and USCIS filings',
+      'Vaccination requirements for schools and universities',
+      'Insurance claims and disability applications',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Medical translation is where a careless word does real damage. Drug names, dosages, units and dates all have to carry over exactly, and a diagnosis has to land in the terminology a US clinician actually uses rather than a literal rendering of the original.',
+      'Post-Soviet records bring their own quirks: handwritten notes, abbreviations that have no English equivalent, and reference ranges reported in different units. We transcribe the original values and note the units rather than silently converting them, so your doctor can see what was actually measured.',
+      'Vaccination cards are the most common request. They are usually a single card with a grid of dates and vaccine names, translated and certified so a school, university or USCIS can match it against the US schedule.',
+    ],
+    faq: [
+      {
+        q: 'Will my doctor accept the translation?',
+        a: 'Yes. The translation reproduces the record in full with a signed certificate of accuracy, which is what clinics and insurers ask for. It is a translation of your record, not a medical opinion.',
+      },
+      {
+        q: 'Can you read handwritten notes?',
+        a: 'Usually. Handwriting from a doctor is often the hardest part of the document — where a word genuinely cannot be read, we mark it illegible rather than guess, and we tell you which part it was.',
+      },
+      {
+        q: 'Do you convert lab units to US units?',
+        a: 'We translate what the record says and keep the original values and units, which is what a certified translation must do. Your doctor converts from there; adding our own conversions would change the record.',
+      },
+      {
+        q: 'Is my medical information kept private?',
+        a: 'Yes. Documents are stored privately, seen only by the team working on your translation, and deleted on our retention schedule. We never share them.',
+      },
+    ],
+  },
+  {
+    slug: 'bank-statement',
+    href: '/bank-statement-translation',
+    name: 'Bank statements',
+    title: 'Certified Bank Statement Translation',
+    metaTitle: 'Certified Bank Statement & Financial Document Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian bank statements, account certificates and financial records for visas, mortgages and USCIS filings.',
+    intro:
+      'Bank statements, account certificates and financial records translated and certified for visa, immigration and lending applications.',
+    usedFor: [
+      'Proof of funds for student and visitor visas',
+      'Affidavit of support and USCIS filings',
+      'Mortgage and loan applications',
+      'Consular processing and residency applications',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Financial documents are read closely by the people who receive them, so the numbers have to be reproduced exactly — amounts, currencies, dates, account and reference numbers, and the running balance as the statement shows it.',
+      'We keep the original currency and the original figures. Converting to dollars would be inventing information the bank did not state; if the office you are filing with wants a conversion, that is a separate note you add, not something a certified translation supplies.',
+      'Statements are usually several pages of repeating rows, which reads as a lot of paper but translates quickly. Send the full statement rather than a screenshot of one page — a partial record tends to get questioned.',
+    ],
+    faq: [
+      {
+        q: 'How are multi-page statements priced?',
+        a: 'By page of the original, at the standard rate. Statements that are simple repeating tables stay at $25 per page; dense multi-column financial forms can fall into the complex rate, and your quote says which before work starts.',
+      },
+      {
+        q: 'Do you translate the bank stamp and signature?',
+        a: 'Yes. Stamps, signatures and the issuing officer are transcribed or described, because that is what shows the statement is genuine.',
+      },
+      {
+        q: 'Will you convert the balance into US dollars?',
+        a: 'No. A certified translation reproduces what the document says. We keep the original currency and amounts so the figures match the bank’s own record.',
+      },
+    ],
+  },
+  {
+    slug: 'military-record',
+    href: '/military-record-translation',
+    name: 'Military records',
+    title: 'Certified Military Record Translation',
+    metaTitle: 'Certified Military Book & Service Record Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian military books (военный билет) and service records for USCIS, citizenship and visa applications.',
+    intro:
+      'Military books and service records translated and certified for immigration filings that ask about military service.',
+    usedFor: [
+      'Naturalization applications that ask about military service',
+      'Immigrant visa and consular processing',
+      'Asylum and humanitarian filings',
+      'Background and security checks',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'A military book is a booklet, not a sheet of paper: dozens of small pages, printed tables, handwritten entries, unit stamps and abbreviations that mean nothing outside the original system. Reproducing it faithfully is detailed work, which is why it is priced at our complex rate.',
+      'Ranks, unit designations and specialties do not map neatly onto US equivalents. We translate them literally and keep the original designation alongside, rather than substituting an American rank that would misrepresent the record.',
+      'These documents come up in naturalization and security checks, where an inconsistency between your form and your record causes delay. Tell us how the details appear on your other filings so names and dates are spelled consistently across the file.',
+    ],
+    faq: [
+      {
+        q: 'Do I have to translate the whole book?',
+        a: 'Not always. Some offices ask only for the pages covering your service period. Send photos of everything and tell us what was requested — the quote will list exactly which pages we would translate.',
+      },
+      {
+        q: 'Why is a military book priced higher?',
+        a: 'It is a booklet of small, densely printed and hand-completed pages with stamps throughout. Reproducing that faithfully takes far longer than a single-page certificate, so those pages are $60 each.',
+      },
+      {
+        q: 'How are ranks and units handled?',
+        a: 'Translated literally, with the original designation kept alongside. Claiming a US rank equivalent would change what your record says.',
+      },
+    ],
+    priceNote: 'Usually $60 per page — military books are dense, hand-completed booklets',
+  },
+  {
+    slug: 'work-book',
+    href: '/work-book-translation',
+    name: 'Work books',
+    title: 'Certified Work Book & Employment Record Translation',
+    metaTitle: 'Certified Work Book (Трудовая книжка) Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian work books (трудовая книжка) and employment records for visas, pensions, licensing and immigration.',
+    intro:
+      'Work books and employment records translated and certified — every entry, employer and stamp, in order.',
+    usedFor: [
+      'Employment-based visa and green card filings',
+      'Professional licensing that requires proof of experience',
+      'Pension and social security claims',
+      'Employers verifying experience earned abroad',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'The work book — трудовая книжка, աշխատանքային գրքույկ — is the official record of a person’s whole working life in the post-Soviet system, and nothing in the US corresponds to it. Each entry has a date, a job title, an order number and an employer stamp, and the value of the document is that the entries run in an unbroken sequence.',
+      'We keep that sequence intact and reproduce each entry in full, including the order numbers and the stamps, so a licensing board or immigration officer can follow your employment history year by year.',
+      'Job titles are the part people ask about most. We translate the title as written rather than mapping it to the nearest American job title, because the office reading it is verifying what your employer actually recorded.',
+    ],
+    faq: [
+      {
+        q: 'How is a work book priced?',
+        a: 'By page of the original. Pages that are clean printed tables are $25; pages crowded with handwritten entries and overlapping stamps are $60. Your quote lists the pages and the total before any work starts.',
+      },
+      {
+        q: 'Do you translate the blank pages?',
+        a: 'No. Blank pages are not translated or charged. We translate every page that carries an entry, a stamp or a correction.',
+      },
+      {
+        q: 'What if an entry was crossed out and corrected?',
+        a: 'Corrections are part of the record, so we reproduce them — the original entry, the correction and the note authorising it. Leaving out a correction would misstate your history.',
+      },
+    ],
+  },
+  {
+    slug: 'power-of-attorney',
+    href: '/power-of-attorney-translation',
+    name: 'Powers of attorney',
+    title: 'Certified Power of Attorney Translation',
+    metaTitle: 'Certified Power of Attorney Translation | Armenian, Russian & Ukrainian',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian powers of attorney and notarial deeds for courts, banks, property transactions and consulates.',
+    intro:
+      'Powers of attorney and notarial deeds translated with the precision that legal authority requires.',
+    usedFor: [
+      'Property sales and inheritance matters abroad',
+      'Banks and financial institutions acting on your instructions',
+      'Courts and attorneys handling cross-border matters',
+      'Consulates and government agencies',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'A power of attorney is a grant of authority, and its wording is the whole document. The scope of what the agent may do, any limits on it, the validity period and the right to delegate all have to survive translation exactly as written — a softened phrase can widen or narrow authority that someone will rely on.',
+      'These documents almost always carry a notarial certificate, a register number and one or more seals. All of it is translated or described, because that is what shows the deed was properly executed.',
+      'If your document has an apostille attached, send that too. The apostille is a separate certificate and is usually translated with the deed so the receiving office can read both.',
+    ],
+    faq: [
+      {
+        q: 'Does the translation need to be notarized as well?',
+        a: 'Not by us — we do not offer notarization. What we provide is a certified translation with a signed certificate of accuracy. If the office receiving it also requires a notarized signature, a local notary can handle that step.',
+      },
+      {
+        q: 'Should the apostille be translated too?',
+        a: 'Usually yes. It is a short separate certificate and most offices want it readable alongside the deed. Send a photo of it with the document and we will include it in the quote.',
+      },
+      {
+        q: 'Can you match wording to a template my attorney uses?',
+        a: 'A certified translation has to reflect the original, so we cannot substitute different wording. If your attorney needs particular terminology explained, tell us and we can note the original term alongside the translation.',
+      },
+    ],
+  },
+  {
+    slug: 'court-document',
+    href: '/court-document-translation',
+    name: 'Court documents',
+    title: 'Certified Court Document Translation',
+    metaTitle: 'Certified Court Document & Judgment Translation | Los Angeles',
+    metaDescription:
+      'Certified translation of Armenian, Russian and Ukrainian court judgments, rulings, summonses and case files for US courts, attorneys and immigration filings.',
+    intro:
+      'Judgments, rulings, summonses and case files translated for US courts, attorneys and immigration filings.',
+    usedFor: [
+      'US court filings that reference a foreign judgment',
+      'Attorneys building an immigration or family-law case',
+      'Asylum claims supported by court records',
+      'Recognition of foreign custody, divorce or property rulings',
+    ],
+    included: CERTIFIED_INCLUDES,
+    about: [
+      'Court documents are read by people looking for specific things: who the parties were, what the court actually ordered, on what date, and whether the decision became final. Those elements have to be unambiguous in the translation, with the operative part of the ruling rendered precisely rather than paraphrased.',
+      'Legal systems do not line up, so some terms have no clean English equivalent. Where that happens we translate the term and keep the original alongside, which lets an attorney see exactly what the foreign court said instead of an approximation.',
+      'Case files can run long. Tell us the filing deadline in your request — long files are quoted with a realistic delivery date rather than an optimistic one.',
+    ],
+    faq: [
+      {
+        q: 'Will a US court accept this translation?',
+        a: 'Yes. US courts require a complete translation with a signed certification of accuracy, which is what we provide. Some courts have their own local rules on formatting — if yours does, send them and we will follow them.',
+      },
+      {
+        q: 'Do you translate the whole file or just the judgment?',
+        a: 'Whichever you need. Many people file only the judgment and the finality stamp. Tell us what the court or your attorney asked for and the quote will cover exactly that.',
+      },
+      {
+        q: 'How are long case files priced?',
+        a: 'Dense text-heavy filings are usually priced per word at $0.10, which works out cheaper than per-page for long documents. Short formal rulings are priced per page. The quote tells you which applies.',
+      },
+      {
+        q: 'Is the content kept confidential?',
+        a: 'Yes. Case documents are stored privately, seen only by the team working on the translation, and never shared.',
       },
     ],
   },

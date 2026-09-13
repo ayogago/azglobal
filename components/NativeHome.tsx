@@ -47,13 +47,7 @@ export default function NativeHome({ locale }: { locale: NativeLocale }) {
         <div className="container-custom relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <div className="inline-flex items-center gap-2 text-sm font-semibold text-white">
-              <span className="flex" aria-hidden="true">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <svg key={i} viewBox="0 0 24 24" className="h-4 w-4 fill-sun">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                  </svg>
-                ))}
-              </span>
+              <BadgeCheck className="h-5 w-5 text-leaf" aria-hidden="true" />
               {c.hero.rating}
             </div>
             <h1 className="mt-5 break-words text-[1.85rem] font-extrabold leading-[1.2] text-white sm:text-4xl md:text-5xl lg:text-[3.4rem] lg:leading-[1.15]">
