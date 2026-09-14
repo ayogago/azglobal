@@ -31,6 +31,12 @@ const config: Config = {
         sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
         heading: ['var(--font-heading)', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+        fadeUp: {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
       boxShadow: {
         card: '0 1px 2px rgba(14,36,51,0.06), 0 8px 24px rgba(14,36,51,0.06)',
       },

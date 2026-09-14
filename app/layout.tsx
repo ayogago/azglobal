@@ -7,6 +7,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import { SITE } from "@/lib/site";
 
@@ -144,6 +145,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <MobileCtaBar />
+        <WhatsAppWidget />
       </body>
     </html>
   );

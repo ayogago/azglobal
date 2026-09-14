@@ -82,6 +82,16 @@ type Chrome = {
   languageLabel: string;
   barCall: string;
   barText: string;
+  wa: {
+    open: string;
+    title: string;
+    status: string;
+    greeting: string;
+    placeholder: string;
+    send: string;
+    close: string;
+    teaser: string;
+  };
 };
 
 export const CHROME: Record<Locale, Chrome> = {
@@ -107,6 +117,16 @@ export const CHROME: Record<Locale, Chrome> = {
     languageLabel: 'Language',
     barCall: 'Call',
     barText: 'Text',
+    wa: {
+      open: 'Chat with us on WhatsApp',
+      title: 'AZ Global Translations',
+      status: 'Replies within 30 minutes',
+      greeting: 'Hi! Tell us what you need translated — or send a photo of the document and we will quote you.',
+      placeholder: 'Type your message…',
+      send: 'Send on WhatsApp',
+      close: 'Close chat',
+      teaser: 'Questions? Chat with us',
+    },
   },
   hy: {
     nav: [
@@ -131,6 +151,16 @@ export const CHROME: Record<Locale, Chrome> = {
     languageLabel: 'Լեզու',
     barCall: 'Զանգ',
     barText: 'SMS',
+    wa: {
+      open: 'Գրեք մեզ WhatsApp-ով',
+      title: 'AZ Global Translations',
+      status: 'Պատասխանում ենք 30 րոպեում',
+      greeting: 'Բարև։ Գրեք՝ ինչ փաստաթուղթ է պետք թարգմանել, կամ ուղարկեք դրա լուսանկարը, և մենք կհայտնենք գինը։',
+      placeholder: 'Գրեք ձեր հաղորդագրությունը…',
+      send: 'Ուղարկել WhatsApp-ով',
+      close: 'Փակել',
+      teaser: 'Հարցե՞ր ունեք։ Գրեք մեզ',
+    },
   },
   ru: {
     nav: [
@@ -155,6 +185,16 @@ export const CHROME: Record<Locale, Chrome> = {
     languageLabel: 'Язык',
     barCall: 'Звонок',
     barText: 'SMS',
+    wa: {
+      open: 'Напишите нам в WhatsApp',
+      title: 'AZ Global Translations',
+      status: 'Отвечаем за 30 минут',
+      greeting: 'Здравствуйте! Напишите, какой документ нужно перевести, или пришлите его фото — и мы назовём цену.',
+      placeholder: 'Введите сообщение…',
+      send: 'Отправить в WhatsApp',
+      close: 'Закрыть',
+      teaser: 'Есть вопросы? Напишите нам',
+    },
   },
 };
 
