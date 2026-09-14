@@ -77,9 +77,12 @@ export function StatsBar({ locale = 'en' }: { locale?: Locale }) {
 export function CtaBand({
   title = 'Get your free quote in minutes',
   text = 'Upload a photo or scan of your document and we’ll reply with a quote. No account, no obligation.',
+  primary,
 }: {
   title?: string;
   text?: string;
+  /** Override the main button (defaults to the quote form). Plain hrefs like mailto: render as <a>. */
+  primary?: { href: string; label: string };
 }) {
   return (
     <section className="relative overflow-hidden bg-dark">
@@ -99,10 +102,17 @@ export function CtaBand({
           <p className="mt-3 text-lg text-slate-300">{text}</p>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-          <Link href="/quote" className="btn bg-leaf text-dark hover:bg-[#9cc251]">
-            Get a Free Quote
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+          {primary && !primary.href.startsWith('/') ? (
+            <a href={primary.href} className="btn bg-leaf text-dark hover:bg-[#9cc251]">
+              {primary.label}
+              <ArrowRight className="h-5 w-5" />
+            </a>
+          ) : (
+            <Link href={primary?.href ?? '/quote'} className="btn bg-leaf text-dark hover:bg-[#9cc251]">
+              {primary?.label ?? 'Get a Free Quote'}
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          )}
           <a href={SITE.phoneHref} className="btn-ghost-light">
             <Phone className="h-5 w-5" />
             {SITE.phone}

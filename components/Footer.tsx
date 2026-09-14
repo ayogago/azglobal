@@ -13,6 +13,7 @@ const ENGLISH_COMPANY = [
   { name: 'Services', href: '/services' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Guides', href: '/guides' },
+  { name: 'For law firms', href: '/for-law-firms' },
   { name: 'About us', href: '/about' },
   { name: 'Contact', href: '/contact' },
   { name: 'Privacy policy', href: '/privacy-policy' },

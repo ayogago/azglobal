@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...DOCUMENT_PAGES.map((doc) => page(doc.href, 0.85)),
     ...CITY_PAGES.map((city) => page(city.href, 0.8)),
     page('/services', 0.8),
+    page('/for-law-firms', 0.8),
     page('/guides', 0.7),
     ...GUIDES.map((guide) => page(`/guides/${guide.slug}`, 0.7)),
     page('/about', 0.6),
