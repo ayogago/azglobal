@@ -7,6 +7,8 @@ import { homeHref, type Locale, quoteHref } from '@/lib/i18n';
 import { PAGE_UI } from '@/lib/i18n-pages';
 import { CONTENT, type NativeLocale } from '@/lib/i18n-content';
 import { translatedGuides } from '@/lib/i18n-guides';
+import { DOCUMENT_PAGES } from '@/lib/content';
+import { translatedDocuments } from '@/lib/i18n-documents';
 import JsonLd from '@/components/JsonLd';
 import { CtaBand, Faq } from '@/components/Sections';
 import NativeCtaBand from '@/components/NativeCtaBand';
@@ -23,6 +25,8 @@ export default function GuideArticle({ guide, locale = 'en' }: { guide: Guide; l
   const base = isEnglish ? '' : `/${locale}`;
   const url = `${SITE.url}${base}/guides/${guide.slug}`;
   const others = (isEnglish ? GUIDES : translatedGuides(locale)).filter((g) => g.slug !== guide.slug);
+  const allDocuments = isEnglish ? DOCUMENT_PAGES : translatedDocuments(locale);
+  const related = guide.related.map((slug) => allDocuments.find((d) => d.slug === slug)).filter(Boolean);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -128,6 +132,23 @@ export default function GuideArticle({ guide, locale = 'en' }: { guide: Guide; l
               </ul>
               <p className="mt-4 text-sm text-dark-light">{t.disclaimer}</p>
             </div>
+
+            {related.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-dark-light">{t.relatedServices}</h2>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {related.map((doc) => (
+                    <Link
+                      key={doc!.slug}
+                      href={doc!.href}
+                      className="rounded-full border border-slate-200 px-3.5 py-1.5 text-sm font-semibold text-dark hover:border-primary hover:text-primary"
+                    >
+                      {doc!.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <aside className="lg:col-span-4">

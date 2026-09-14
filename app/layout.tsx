@@ -78,6 +78,8 @@ const organizationSchema = {
         { "@type": "Country", name: "United States" },
       ],
       knowsLanguage: ["en", "hy", "ru", "uk"],
+      priceRange: "$25–$60 per page",
+      currenciesAccepted: "USD",
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

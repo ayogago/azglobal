@@ -48,6 +48,7 @@ export type PageUi = {
   needTranslationText: string;
   moreGuides: string;
   faqShort: string;
+  relatedServices: string;
 };
 
 export const PAGE_UI: Record<Locale, PageUi> = {
@@ -97,6 +98,7 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     needTranslationText: 'Armenian, Russian and Ukrainian ⇄ English, accepted by USCIS.',
     moreGuides: 'More guides',
     faqShort: 'Frequently asked',
+    relatedServices: 'Documents this applies to',
   },
   hy: {
     home: 'Գլխավոր',
@@ -146,6 +148,7 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     needTranslationText: 'Հայերեն, ռուսերեն և ուկրաիներեն ⇄ անգլերեն՝ ընդունելի USCIS-ի կողմից։',
     moreGuides: 'Այլ ուղեցույցներ',
     faqShort: 'Հաճախ տրվող հարցեր',
+    relatedServices: 'Փաստաթղթեր, որոնց վերաբերում է սա',
   },
   ru: {
     home: 'Главная',
@@ -194,5 +197,6 @@ export const PAGE_UI: Record<Locale, PageUi> = {
     needTranslationText: 'Армянский, русский и украинский ⇄ английский, принимает USCIS.',
     moreGuides: 'Другие руководства',
     faqShort: 'Частые вопросы',
+    relatedServices: 'К каким документам это относится',
   },
 };

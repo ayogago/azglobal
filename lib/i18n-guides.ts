@@ -5,11 +5,11 @@ import { GUIDES_HY } from '@/lib/i18n-guides-hy';
 import { GUIDES_RU } from '@/lib/i18n-guides-ru';
 
 /**
- * Everything in a guide except the slug, the last-updated date and the source
- * list — those are shared across languages, since the sources are the same
- * official pages in every version.
+ * Everything in a guide except the slug, the last-updated date, the source list
+ * and the related-document slugs — those are shared across languages, since the
+ * sources are the same official pages and the slugs are language-independent.
  */
-export type TranslatedGuide = Omit<Guide, 'slug' | 'updated' | 'sources'>;
+export type TranslatedGuide = Omit<Guide, 'slug' | 'updated' | 'sources' | 'related'>;
 
 const BY_LOCALE: Record<NativeLocale, Record<string, TranslatedGuide>> = {
   hy: GUIDES_HY,
@@ -20,7 +20,7 @@ export function translatedGuide(locale: NativeLocale, slug: string): Guide | und
   const english = GUIDES.find((g) => g.slug === slug);
   const translated = english && BY_LOCALE[locale][slug];
   if (!english || !translated) return undefined;
-  return { ...translated, slug: english.slug, updated: english.updated, sources: english.sources };
+  return { ...translated, slug: english.slug, updated: english.updated, sources: english.sources, related: english.related };
 }
 
 export function translatedGuides(locale: NativeLocale): Guide[] {
@@ -29,5 +29,6 @@ export function translatedGuides(locale: NativeLocale): Guide[] {
     slug: g.slug,
     updated: g.updated,
     sources: g.sources,
+    related: g.related,
   }));
 }

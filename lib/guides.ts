@@ -1,4 +1,5 @@
 import type { FaqItem } from '@/components/Sections';
+import type { DocumentSlug } from '@/lib/content';
 
 export type GuideSection = {
   heading: string;
@@ -18,6 +19,8 @@ export type Guide = {
   sections: GuideSection[];
   faq: FaqItem[];
   sources: { label: string; href: string }[];
+  /** Document-page slugs this guide should send readers to. */
+  related: DocumentSlug[];
 };
 
 export const GUIDES: Guide[] = [
@@ -114,6 +117,7 @@ export const GUIDES: Guide[] = [
       { label: '8 CFR 103.2(b)(3) — Translations', href: 'https://www.law.cornell.edu/cfr/text/8/103.2' },
       { label: 'USCIS — Filing your application', href: 'https://www.uscis.gov/forms/filing-guidance' },
     ],
+    related: ['birth-certificate', 'marriage-certificate', 'police-record', 'passport'],
   },
   {
     slug: 'apostille-vs-certified-translation',
@@ -193,6 +197,7 @@ export const GUIDES: Guide[] = [
         href: 'https://travel.state.gov/content/travel/en/records-and-authentications/authenticate-your-document/apostille-requirements.html',
       },
     ],
+    related: ['power-of-attorney', 'birth-certificate', 'diploma-transcript', 'divorce-decree'],
   },
   {
     slug: 'credential-evaluation-foreign-diplomas',
@@ -271,6 +276,7 @@ export const GUIDES: Guide[] = [
       { label: 'NACES — member agencies', href: 'https://www.naces.org/members' },
       { label: 'AICE — member agencies', href: 'https://aice-eval.org/members/' },
     ],
+    related: ['diploma-transcript', 'work-book', 'medical-record'],
   },
 ];
 

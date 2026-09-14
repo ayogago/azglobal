@@ -5,7 +5,9 @@ import { GUIDES } from '@/lib/guides';
 import { CITY_PAGES } from '@/lib/cities';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date('2026-09-11');
+  // Regenerated on each build, so lastmod reflects when the page was last deployed
+  // rather than a date frozen in the source.
+  const lastModified = new Date();
   const page = (path: string, priority: number, changeFrequency: 'weekly' | 'monthly' | 'yearly' = 'monthly') => ({
     url: `${SITE.url}${path}`,
     lastModified,

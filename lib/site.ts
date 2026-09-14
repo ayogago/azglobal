@@ -2,7 +2,9 @@
 
 export const SITE = {
   name: 'AZ Global Translations',
-  url: 'https://azglobaltranslations.com',
+  // The live site is served at www — canonicals, hreflang, sitemap and schema @ids
+  // must match the host that actually answers, or every URL we publish 301-redirects.
+  url: 'https://www.azglobaltranslations.com',
   email: 'info@azglobaltranslations.com',
   phone: '+1 (747) 895-4845',
   phoneHref: 'tel:+17478954845',
