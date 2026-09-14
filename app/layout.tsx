@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE.url,
-    images: [{ url: "/az-global-icon.png", width: 500, height: 500, alt: "AZ Global Translations logo" }],
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "AZ Global Translations" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -35,9 +35,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       siteName: SITE.name,
       type: 'website',
       locale: OG_LOCALE,
-      images: [{ url: '/az-global-icon.png', width: 500, height: 500, alt: SITE.name }],
+      images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: SITE.name }],
     },
-    twitter: { card: 'summary', title: page.metaTitle, description: page.metaDescription, images: ['/az-global-icon.png'] },
+    twitter: { card: 'summary_large_image', title: page.metaTitle, description: page.metaDescription, images: ['/opengraph-image.png'] },
   };
 }
 

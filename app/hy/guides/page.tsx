@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     type: 'website',
     locale: 'hy_AM',
-    images: [{ url: '/az-global-icon.png', width: 500, height: 500, alt: SITE.name }],
+    images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: SITE.name }],
   },
-  twitter: { card: 'summary', title: t.guidesMetaTitle, description: t.guidesMetaDescription, images: ['/az-global-icon.png'] },
+  twitter: { card: 'summary_large_image', title: t.guidesMetaTitle, description: t.guidesMetaDescription, images: ['/opengraph-image.png'] },
 };
 
 export default function Page() {
