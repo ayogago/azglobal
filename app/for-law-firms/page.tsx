@@ -6,13 +6,14 @@ import {
   CheckCircle2,
   Download,
   FileCheck2,
-  Inbox,
-  Mail,
+  FolderLock,
   Receipt,
   Scale,
+  Send,
 } from 'lucide-react';
 import { CtaBand, Faq, PageHero, type FaqItem } from '@/components/Sections';
 import JsonLd from '@/components/JsonLd';
+import LawFirmForm from '@/components/LawFirmForm';
 import { pageMetadata } from '@/lib/seo';
 import { SITE, PRICING, PRICING_EXTRAS } from '@/lib/site';
 import { DOCUMENT_PAGES } from '@/lib/content';
@@ -23,14 +24,12 @@ import { IMAGES } from '@/lib/images';
 export const metadata: Metadata = pageMetadata({
   title: 'Certified Translations for Immigration Law Firms | AZ Global',
   description:
-    'Translation partner for LA immigration attorneys. Armenian, Russian, Ukrainian. One intake email, flat rates, USCIS-ready certification, monthly billing.',
+    'Translation partner for LA immigration attorneys. Armenian, Russian, Ukrainian. Shared secure folder, flat rates, USCIS-ready certification, PDF + DOCX.',
   path: '/for-law-firms',
   absoluteTitle: true,
 });
 
-const INTAKE_MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent('Law firm translation — first document')}&body=${encodeURIComponent(
-  'Firm name:\nContact name and role:\nLanguage of the document:\nDeadline (if any):\n\nDocument attached.',
-)}`;
+const FORM_ANCHOR = '#first-document';
 
 const RATE_SHEET = '/az-global-law-firm-rate-sheet.pdf';
 
@@ -46,9 +45,9 @@ const WORD = rate('word');
 
 const WHY = [
   {
-    icon: Inbox,
-    title: 'One intake email',
-    text: `Send documents to ${SITE.email} and you are done. No portal, no account, no per-document checkout.`,
+    icon: FolderLock,
+    title: 'A shared secure folder',
+    text: 'Your firm gets its own folder. Drop the originals in; the finished translations come back to the same place as PDF and DOCX.',
   },
   {
     icon: Receipt,
@@ -71,7 +70,7 @@ const INCLUDED = [
   'A signed certification statement on every translation, meeting 8 CFR 103.2(b)(3).',
   'A complete, literal rendering — stamps, seals, marginal notes and handwriting included, never summarised.',
   'Formatting that mirrors the original, so an adjudicator can match the two side by side.',
-  'PDF delivery, with a mailed hard copy on request.',
+  'Delivered as a PDF for filing and an editable DOCX, with a mailed hard copy on request.',
   'Free revisions if a name spelling or detail needs to match another document in the file.',
   'A translator you can reach if USCIS or the court raises a question about the translation.',
 ];
@@ -91,16 +90,16 @@ const IMMIGRATION_DOCS = [
 
 const STEPS = [
   {
-    title: 'Email the document',
-    text: 'A scan or a clear phone photo is fine. Tell us the deadline and the client matter it belongs to.',
+    title: 'Send the first document through the form below',
+    text: 'A scan or a clear phone photo is fine. Once your firm account is set up, you simply add originals to your shared secure folder.',
   },
   {
     title: 'Get the page count and price',
     text: `${SITE.replyPromise}. You will know the cost before we start, and the client can be quoted from your desk.`,
   },
   {
-    title: 'Receive the certified PDF',
-    text: 'Ready to attach to the filing. Hard copies are mailed on request, and everything is itemised on your monthly statement.',
+    title: 'Translations land in your folder',
+    text: 'Each document comes back as a certified PDF for filing and an editable DOCX, itemised by matter on one monthly statement.',
   },
 ];
 
@@ -108,6 +107,10 @@ const FAQ: FaqItem[] = [
   {
     q: 'Is the certification accepted by USCIS and the immigration court?',
     a: 'Yes. Every translation carries a signed statement that it is complete and accurate and that the translator is competent in both languages, which is exactly what 8 CFR 103.2(b)(3) requires. The same certification is used for EOIR filings.',
+  },
+  {
+    q: 'How does the shared folder work?',
+    a: 'Each firm account gets its own secure, private folder that only your team and our translators can see. You add the original documents, and we upload the finished translations to the same folder as PDF and DOCX, so there are no attachments to hunt for and every matter stays in one place.',
   },
   {
     q: 'Do you notarize translations?',
@@ -131,7 +134,7 @@ const FAQ: FaqItem[] = [
   },
   {
     q: 'How do we start?',
-    a: 'Send us your next document free. If it goes through without a hitch, we set up your firm account with monthly invoicing. No contract, no minimum.',
+    a: 'Send us your next document free using the form on this page. If it goes through without a hitch, we set up your firm account: a shared secure folder for your documents and monthly invoicing. No contract, no minimum.',
   },
 ];
 
@@ -177,11 +180,11 @@ export default function ForLawFirmsPage() {
         image={IMAGES.courthouse}
         eyebrow="For immigration law firms"
         title="Certified translations your filings can rely on"
-        intro="Armenian, Russian and Ukrainian, translated and certified for USCIS and the immigration court. Built for the way a firm works: one intake email, flat rates, turnaround you can calendar, and one statement a month."
+        intro="Armenian, Russian and Ukrainian, translated and certified for USCIS and the immigration court. Built for the way a firm works: a shared secure folder, flat rates, turnaround you can calendar, and one statement a month."
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href={INTAKE_MAILTO} className="btn-primary px-7 py-4 text-lg">
-            <Mail className="h-5 w-5" />
+          <a href={FORM_ANCHOR} className="btn-primary px-7 py-4 text-lg">
+            <Send className="h-5 w-5" />
             Send your first document free
           </a>
           <a href={RATE_SHEET} className="btn-outline px-7 py-4 text-lg" download>
@@ -288,7 +291,7 @@ export default function ForLawFirmsPage() {
         <div className="container-custom">
           <div className="max-w-2xl">
             <span className="eyebrow">How it works</span>
-            <h2 className="mt-3 text-3xl md:text-4xl">Three steps, no portal</h2>
+            <h2 className="mt-3 text-3xl md:text-4xl">Three steps, one folder</h2>
           </div>
           <ol className="mt-10 grid gap-6 md:grid-cols-3">
             {STEPS.map((step, i) => (
@@ -304,10 +307,34 @@ export default function ForLawFirmsPage() {
           <p className="mt-8 flex items-start gap-3 rounded-xl bg-primary-soft p-4 text-sm text-dark">
             <Scale className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
             <span>
-              Client documents are handled only by our translators, delivered over email to your firm, and never
-              published or shared. Uploads sent through the website are deleted automatically after 90 days.
+              Client documents are seen only by our translators and never published or shared. Your firm&apos;s folder is
+              private to your team and ours; documents sent through the form below are deleted automatically after 90 days.
             </span>
           </p>
+        </div>
+      </section>
+
+      <section id="first-document" className="section scroll-mt-24 bg-slate-50">
+        <div className="container-custom grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <span className="eyebrow">Free first document</span>
+            <h2 className="mt-3 text-3xl md:text-4xl">Try us on a real filing</h2>
+            <p className="mt-4 text-lg leading-relaxed text-dark-light">
+              Send one document from a live matter. We translate and certify it at no charge, and deliver it as PDF and
+              DOCX. If it goes through cleanly, we set up your firm&apos;s shared folder and monthly statement.
+            </p>
+            <ul className="mt-6 space-y-3 text-dark-light">
+              {['No contract, no minimum', 'Same certification as every paid document', `${SITE.replyPromise}`].map((line) => (
+                <li key={line} className="flex gap-3">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-leaf-dark" />
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-card sm:p-8 lg:col-span-7">
+            <LawFirmForm />
+          </div>
         </div>
       </section>
 
@@ -332,7 +359,7 @@ export default function ForLawFirmsPage() {
       <CtaBand
         title="Send us your next document free"
         text="One document, no charge, no contract. If it goes through cleanly, we set up your firm account with monthly invoicing."
-        primary={{ href: INTAKE_MAILTO, label: 'Email your first document' }}
+        primary={{ href: FORM_ANCHOR, label: 'Send your first document' }}
       />
     </>
   );

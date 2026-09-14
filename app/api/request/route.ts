@@ -18,7 +18,7 @@ const optionalChoice = <T extends readonly [string, ...string[]]>(values: T) =>
   z.union([z.enum(values), z.literal('')]).optional();
 
 const schema = z.object({
-  kind: z.enum(['quote', 'contact']),
+  kind: z.enum(['quote', 'contact', 'law-firm']),
   submissionId: z.uuid(),
   name: z.string().trim().min(2, 'Please enter your name.').max(100),
   email: z.email('Please enter a valid email address.').max(200),
@@ -29,6 +29,11 @@ const schema = z.object({
   turnaround: optionalChoice(TURNAROUND),
   subject: z.string().trim().max(150).optional().default(''),
   message: z.string().trim().max(5000).optional().default(''),
+  // Law-firm intake only
+  firm: z.string().trim().max(150).optional().default(''),
+  role: z.string().trim().max(60).optional().default(''),
+  matter: z.string().trim().max(120).optional().default(''),
+  deadline: z.string().trim().max(20).optional().default(''),
   website: z.string().optional().default(''), // honeypot
   files: z
     .array(
@@ -121,9 +126,12 @@ export async function POST(request: Request) {
 
   const origin = baseUrl(request);
   const isQuote = data.kind === 'quote';
-  const subjectLine = isQuote
-    ? `Quote request: ${data.languagePair || 'translation'} – ${data.name}`
-    : `Website message: ${data.subject || data.name}`;
+  const isFirm = data.kind === 'law-firm';
+  const subjectLine = isFirm
+    ? `Law firm — first document: ${data.firm || data.name} (${data.languagePair || 'translation'})`
+    : isQuote
+      ? `Quote request: ${data.languagePair || 'translation'} – ${data.name}`
+      : `Website message: ${data.subject || data.name}`;
 
   const emailData: RequestEmailData = {
     kind: data.kind,
@@ -136,6 +144,10 @@ export async function POST(request: Request) {
     turnaround: data.turnaround || '',
     subject: data.subject,
     message: data.message,
+    firm: data.firm,
+    role: data.role,
+    matter: data.matter,
+    deadline: data.deadline,
     files: files.map((f) => ({ name: f.name, size: formatBytes(f.size), url: fileLink(origin, f.pathname) })),
     allFilesAttached: attachments.length === files.length,
   };
@@ -164,7 +176,11 @@ export async function POST(request: Request) {
     await sendEmail({
       to: data.email,
       replyTo: process.env.REQUEST_NOTIFY_EMAIL || SITE.email,
-      subject: isQuote ? 'We received your translation request' : 'We received your message',
+      subject: isFirm
+        ? 'We received your first document — AZ Global Translations'
+        : isQuote
+          ? 'We received your translation request'
+          : 'We received your message',
       html: customer.html,
       text: customer.text,
     });

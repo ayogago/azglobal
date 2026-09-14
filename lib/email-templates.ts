@@ -102,7 +102,7 @@ function button(label: string, href: string, color = BRAND.primary): string {
 }
 
 export interface RequestEmailData {
-  kind: 'quote' | 'contact';
+  kind: 'quote' | 'contact' | 'law-firm';
   name: string;
   email: string;
   phone: string;
@@ -112,6 +112,11 @@ export interface RequestEmailData {
   turnaround: string;
   subject: string;
   message: string;
+  /** Law-firm intake only */
+  firm?: string;
+  role?: string;
+  matter?: string;
+  deadline?: string;
   files: { name: string; size: string; url: string }[];
   allFilesAttached: boolean;
 }
@@ -127,7 +132,8 @@ function receivedAt(): string {
 /** Notification sent to the AZ Global team. */
 export function staffEmail(data: RequestEmailData): { html: string; text: string } {
   const isQuote = data.kind === 'quote';
-  const title = isQuote ? 'New quote request' : 'New message from the website';
+  const isFirm = data.kind === 'law-firm';
+  const title = isFirm ? 'Law firm — free first document' : isQuote ? 'New quote request' : 'New message from the website';
   const firstName = data.name.split(/\s+/)[0].slice(0, 40) || 'them';
 
   const documentsBlock = data.files.length
@@ -166,7 +172,14 @@ export function staffEmail(data: RequestEmailData): { html: string; text: string
   const content = `${banner(title, `Received ${receivedAt()} · via azglobaltranslations.com`, BRAND.primary)}
     <tr>
       <td style="padding:28px;">
-        <p style="margin:0 0 4px 0;font-size:22px;font-weight:bold;color:${BRAND.ink};">${escapeHtml(data.name)}</p>
+        ${
+          isFirm && data.firm
+            ? `<p style="margin:0 0 2px 0;font-size:13px;font-weight:bold;text-transform:uppercase;letter-spacing:0.06em;color:${BRAND.leaf};">${escapeHtml(data.firm)}</p>`
+            : ''
+        }
+        <p style="margin:0 0 4px 0;font-size:22px;font-weight:bold;color:${BRAND.ink};">${escapeHtml(data.name)}${
+          isFirm && data.role ? `<span style="font-size:14px;font-weight:normal;color:${BRAND.muted};"> &nbsp;·&nbsp; ${escapeHtml(data.role)}</span>` : ''
+        }</p>
         <p style="margin:0 0 22px 0;font-size:14px;line-height:22px;color:${BRAND.muted};">
           <a href="mailto:${escapeHtml(data.email)}" style="color:${BRAND.primary};text-decoration:none;">${escapeHtml(data.email)}</a>
           ${data.phone ? ` &nbsp;·&nbsp; <a href="tel:${escapeHtml(data.phone.replace(/[^\d+]/g, ''))}" style="color:${BRAND.primary};text-decoration:none;">${escapeHtml(data.phone)}</a>` : ''}
@@ -177,6 +190,8 @@ export function staffEmail(data: RequestEmailData): { html: string; text: string
           ['Document type', data.documentType],
           ['Service needed', data.serviceLevel],
           ['Turnaround', data.turnaround],
+          ['Filing deadline', data.deadline ?? ''],
+          ['Client / matter', data.matter ?? ''],
           ['Subject', data.subject],
         ])}
 
@@ -186,7 +201,11 @@ export function staffEmail(data: RequestEmailData): { html: string; text: string
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:30px 0 0 0;">
           <tr>
             <td>${button(`Reply to ${firstName}`, `mailto:${data.email}?subject=${encodeURIComponent(
-              isQuote ? 'Your translation quote — AZ Global Translations' : 'Re: your message — AZ Global Translations'
+              isFirm
+                ? `Your first document — AZ Global Translations`
+                : isQuote
+                  ? 'Your translation quote — AZ Global Translations'
+                  : 'Re: your message — AZ Global Translations'
             )}`)}</td>
           </tr>
         </table>
@@ -198,9 +217,12 @@ export function staffEmail(data: RequestEmailData): { html: string; text: string
     title.toUpperCase(),
     `Received ${receivedAt()}`,
     '',
-    `Name:  ${data.name}`,
+    data.firm && `Firm:  ${data.firm}`,
+    `Name:  ${data.name}${data.role ? ` (${data.role})` : ''}`,
     `Email: ${data.email}`,
     data.phone && `Phone: ${data.phone}`,
+    data.deadline && `Filing deadline: ${data.deadline}`,
+    data.matter && `Client / matter: ${data.matter}`,
     data.languagePair && `Languages: ${data.languagePair}`,
     data.documentType && `Document type: ${data.documentType}`,
     data.serviceLevel && `Service needed: ${data.serviceLevel}`,
@@ -217,15 +239,22 @@ export function staffEmail(data: RequestEmailData): { html: string; text: string
     .filter(Boolean)
     .join('\n');
 
-  return { html: shell({ preheader: `${data.name} · ${data.languagePair || 'website message'}`, content }), text };
+  return { html: shell({ preheader: `${data.firm ? `${data.firm} · ` : ''}${data.name} · ${data.languagePair || 'website message'}`, content }), text };
 }
 
 /** Confirmation sent to the person who filled in the form. */
 export function customerEmail(data: RequestEmailData): { html: string; text: string } {
   const isQuote = data.kind === 'quote';
+  const isFirm = data.kind === 'law-firm';
   const firstName = data.name.split(/\s+/)[0].slice(0, 40) || 'there';
 
-  const steps: [string, string][] = isQuote
+  const steps: [string, string][] = isFirm
+    ? [
+        ['We review the document', 'A translator checks it and confirms the page count and delivery time by email.'],
+        ['We translate it — no charge', 'Certified, with the signed statement USCIS requires. Delivered as PDF and DOCX.'],
+        ['If it goes through cleanly, we set up your firm account', 'A shared secure folder for your documents and one itemised statement a month.'],
+      ]
+    : isQuote
     ? [
         ['We review your documents', 'A professional translator looks at what you sent and checks the details.'],
         ['You get a quote by email', 'Clear pricing and a delivery time, with no obligation.'],
@@ -245,7 +274,7 @@ export function customerEmail(data: RequestEmailData): { html: string; text: str
   ]);
 
   const content = `${banner(
-    isQuote ? 'We received your request' : 'We received your message',
+    isFirm ? 'We received your first document' : isQuote ? 'We received your request' : 'We received your message',
     'Thank you for choosing AZ Global Translations',
     BRAND.primary
   )}
@@ -254,7 +283,9 @@ export function customerEmail(data: RequestEmailData): { html: string; text: str
         <p style="margin:0 0 14px 0;font-size:17px;color:${BRAND.ink};">Hi ${escapeHtml(firstName)},</p>
         <p style="margin:0 0 24px 0;font-size:15px;line-height:24px;color:${BRAND.muted};">
           ${
-            isQuote
+            isFirm
+              ? `Thanks for trying us${data.firm ? ` at ${escapeHtml(data.firm)}` : ''}. Your document arrived safely, this first one is on us, and we&rsquo;re on it.`
+              : isQuote
               ? `Thanks for your quote request${
                   data.files.length
                     ? ` and the ${data.files.length} document${data.files.length > 1 ? 's' : ''} you sent`
@@ -314,9 +345,11 @@ export function customerEmail(data: RequestEmailData): { html: string; text: str
   const text = [
     `Hi ${firstName},`,
     '',
-    isQuote
-      ? `Thanks for your quote request${data.files.length ? ` and the ${data.files.length} document(s) you sent` : ''}. Everything arrived safely.`
-      : 'Thanks for getting in touch. Your message has arrived.',
+    isFirm
+      ? `Thanks for trying us${data.firm ? ` at ${data.firm}` : ''}. Your document arrived safely, and this first one is on us.`
+      : isQuote
+        ? `Thanks for your quote request${data.files.length ? ` and the ${data.files.length} document(s) you sent` : ''}. Everything arrived safely.`
+        : 'Thanks for getting in touch. Your message has arrived.',
     '',
     'What happens next:',
     ...steps.map(([heading, body], i) => `${i + 1}. ${heading} — ${body}`),
@@ -337,9 +370,11 @@ export function customerEmail(data: RequestEmailData): { html: string; text: str
 
   return {
     html: shell({
-      preheader: isQuote
-        ? 'We have your documents — your quote is on the way.'
-        : 'We have your message — we will reply shortly.',
+      preheader: isFirm
+        ? 'Your first document is on us — page count and delivery time coming shortly.'
+        : isQuote
+          ? 'We have your documents — your quote is on the way.'
+          : 'We have your message — we will reply shortly.',
       content,
     }),
     text,
