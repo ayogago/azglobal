@@ -27,9 +27,9 @@ export const GUIDES: Guide[] = [
   {
     slug: 'uscis-translation-requirements',
     title: 'USCIS translation requirements, explained',
-    metaTitle: 'USCIS Translation Requirements: What a Certified Translation Must Include',
+    metaTitle: 'USCIS Translation Requirements Explained',
     metaDescription:
-      'What USCIS actually requires from a translated document: a full English translation plus the translator’s signed certification. Notarization, who may translate, and the mistakes that cause rejections.',
+      'What USCIS requires from a translated document: a full English translation plus the translator’s signed certification, and the mistakes that cause rejections.',
     summary:
       'The rule itself is one sentence long. Most rejected translations fail on the details around it — completeness, certification wording, and matching names.',
     readingTime: '5 min read',
@@ -124,7 +124,7 @@ export const GUIDES: Guide[] = [
     title: 'Apostille vs certified translation: which one do you need?',
     metaTitle: 'Apostille vs Certified Translation — What’s the Difference?',
     metaDescription:
-      'An apostille authenticates a document; a certified translation makes it readable in English. What each one does, when you need both, and which order to do them in.',
+      'An apostille authenticates a document; a certified translation makes it readable. What each does, when you need both, and in which order.',
     summary:
       'They solve different problems, and people often pay for the wrong one. An apostille proves a document is genuine. A translation makes it readable.',
     readingTime: '4 min read',
@@ -202,9 +202,9 @@ export const GUIDES: Guide[] = [
   {
     slug: 'credential-evaluation-foreign-diplomas',
     title: 'Credential evaluation for foreign diplomas: how it works',
-    metaTitle: 'Credential Evaluation for Foreign Diplomas — Translation vs Evaluation',
+    metaTitle: 'Credential Evaluation for Foreign Diplomas',
     metaDescription:
-      'What a credential evaluation is, how it differs from a certified translation, which agencies are recognised, and what to prepare if your diploma is Armenian, Russian or Ukrainian.',
+      'What a credential evaluation is, how it differs from a certified translation, which agencies are recognised, and what to prepare.',
     summary:
       'A translation says what your diploma says. An evaluation says what it is worth in US terms. Most applicants need both, in that order.',
     readingTime: '5 min read',

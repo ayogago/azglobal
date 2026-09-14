@@ -8,7 +8,7 @@ import { IMAGES } from '@/lib/images';
 const base = pageMetadata({
   title: 'About Us',
   description:
-    'AZ Global Translations is a Los Angeles based certified translation company specializing in Armenian, Russian and Ukrainian. 10,000+ documents translated for 1,000+ clients.',
+    'A Los Angeles certified translation company specializing in Armenian, Russian and Ukrainian. 10,000+ documents for 1,000+ clients.',
   path: '/about',
 });
 

@@ -11,7 +11,7 @@ import { PRICING_ALTERNATES } from '@/lib/i18n';
 const base = pageMetadata({
   title: 'Pricing',
   description:
-    'Certified translation pricing: $25 per page for standard documents, $60 per page for complex formatted documents, $0.10 per word for text-heavy material. Rush and mailed hard copies available.',
+    'Certified translation pricing: $25 per page, $60 for complex formatted pages, $0.10 per word for text-heavy material. Rush and mailed copies available.',
   path: '/pricing',
 });
 

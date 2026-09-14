@@ -13,7 +13,7 @@ import { LANGUAGES } from '@/lib/site';
 const base = pageMetadata({
   title: 'Certified Translation Services',
   description:
-    'Certified translation of immigration, legal, academic, medical and business documents between English and Armenian, Russian or Ukrainian. USCIS accepted, from $25 per page.',
+    'Certified translation of immigration, legal, academic, medical and business documents. USCIS accepted, from $25 per page.',
   path: '/services',
 });
 

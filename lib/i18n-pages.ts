@@ -87,7 +87,7 @@ export const PAGE_UI: Record<Locale, PageUi> = {
       'Short, practical explanations of the paperwork around certified translation — what offices actually require, and what trips people up.',
     guidesMetaTitle: 'Translation Guides',
     guidesMetaDescription:
-      'Plain-English guides to USCIS translation requirements, apostilles, and credential evaluation for foreign diplomas, from a certified translation company in Los Angeles.',
+      'Plain-English guides to USCIS translation requirements, apostilles and credential evaluation for foreign diplomas.',
     read: 'Read',
     updatedOn: (date) => `Updated ${date}`,
     inShort: 'In short',
@@ -137,7 +137,7 @@ export const PAGE_UI: Record<Locale, PageUi> = {
       'Կարճ, գործնական բացատրություններ հաստատված թարգմանության շուրջ եղած թղթաբանության մասին՝ ինչ են իրականում պահանջում հաստատությունները և ինչի վրա են մարդիկ սայթաքում։',
     guidesMetaTitle: 'Թարգմանության ուղեցույցներ',
     guidesMetaDescription:
-      'Պարզ բացատրություններ USCIS-ի թարգմանության պահանջների, ապոստիլի և օտարերկրյա դիպլոմների որակավորման գնահատման մասին՝ Լոս Անջելեսի հաստատված թարգմանությունների ընկերությունից։',
+      'Պարզ բացատրություններ USCIS-ի թարգմանության պահանջների, ապոստիլի և օտարերկրյա դիպլոմների գնահատման մասին։',
     read: 'Կարդալ',
     updatedOn: (date) => `Թարմացվել է՝ ${date}`,
     inShort: 'Հակիրճ',

@@ -44,9 +44,9 @@ export const CITY_PAGES: CityPage[] = [
     href: '/translation-services-glendale',
     name: 'Glendale',
     title: 'Certified Translation Services in Glendale, CA',
-    metaTitle: 'Certified Translation Services in Glendale, CA | Armenian & Russian',
+    metaTitle: 'Certified Translation in Glendale, CA | Armenian & Russian',
     metaDescription:
-      'Certified Armenian, Russian and Ukrainian translation for Glendale, CA. USCIS-accepted, 12–48 hour turnaround, upload from home. Birth certificates, diplomas, passports.',
+      'Certified Armenian, Russian and Ukrainian translation for Glendale, CA. USCIS-accepted, 12–48 hours. Birth certificates, diplomas, passports.',
     intro:
       'Certified Armenian, Russian and Ukrainian translation for Glendale — accepted by USCIS, courts and universities, with no trip across town.',
     nearby: ['Montrose', 'La Crescenta', 'Verdugo City', 'Atwater Village', 'Eagle Rock'],
@@ -74,9 +74,9 @@ export const CITY_PAGES: CityPage[] = [
     href: '/translation-services-burbank',
     name: 'Burbank',
     title: 'Certified Translation Services in Burbank, CA',
-    metaTitle: 'Certified Translation Services in Burbank, CA | Armenian & Russian',
+    metaTitle: 'Certified Translation in Burbank, CA | Armenian & Russian',
     metaDescription:
-      'Certified Armenian, Russian and Ukrainian translation for Burbank, CA. USCIS-accepted, 12–48 hours, no office visit. Immigration, academic and legal documents.',
+      'Certified Armenian, Russian and Ukrainian translation for Burbank, CA. USCIS-accepted, 12–48 hours. Immigration, academic and legal documents.',
     intro:
       'Certified Armenian, Russian and Ukrainian translation for Burbank — immigration, academic, legal and business documents, delivered by email.',
     nearby: ['Toluca Lake', 'Magnolia Park', 'Sun Valley', 'Studio City'],
@@ -104,7 +104,7 @@ export const CITY_PAGES: CityPage[] = [
     href: '/translation-services-pasadena',
     name: 'Pasadena',
     title: 'Certified Translation Services in Pasadena, CA',
-    metaTitle: 'Certified Translation Services in Pasadena, CA | Armenian & Russian',
+    metaTitle: 'Certified Translation in Pasadena, CA | Armenian & Russian',
     metaDescription:
       'Certified Armenian, Russian and Ukrainian translation for Pasadena, CA. Diplomas, transcripts, immigration and court documents. USCIS-accepted, 12–48 hours.',
     intro:
@@ -134,7 +134,7 @@ export const CITY_PAGES: CityPage[] = [
     href: '/translation-services-north-hollywood',
     name: 'North Hollywood',
     title: 'Certified Translation Services in North Hollywood, CA',
-    metaTitle: 'Certified Translation Services in North Hollywood, CA | Armenian & Russian',
+    metaTitle: 'North Hollywood Certified Translation | Armenian & Russian',
     metaDescription:
       'Certified Armenian, Russian and Ukrainian translation for North Hollywood and the East Valley. USCIS-accepted, 12–48 hour turnaround, upload from your phone.',
     intro:
@@ -164,7 +164,7 @@ export const CITY_PAGES: CityPage[] = [
     href: '/translation-services-van-nuys',
     name: 'Van Nuys',
     title: 'Certified Translation Services in Van Nuys, CA',
-    metaTitle: 'Certified Translation Services in Van Nuys, CA | Armenian & Russian',
+    metaTitle: 'Certified Translation in Van Nuys, CA | Armenian & Russian',
     metaDescription:
       'Certified Armenian, Russian and Ukrainian translation for Van Nuys and the San Fernando Valley. Court, DMV and USCIS documents. 12–48 hour turnaround.',
     intro:

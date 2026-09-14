@@ -11,7 +11,7 @@ import { SITE } from '@/lib/site';
 const base = pageMetadata({
   title: 'Contact Us',
   description:
-    'Contact AZ Global Translations in Los Angeles for certified Armenian, Russian and Ukrainian translations. Call +1 (747) 895-4845 or send us a message — support available 24/7.',
+    'Contact AZ Global Translations for certified Armenian, Russian and Ukrainian translation. Call +1 (747) 895-4845 — support available 24/7.',
   path: '/contact',
 });
 

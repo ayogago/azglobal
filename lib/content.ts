@@ -95,9 +95,9 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
     slug: 'armenian',
     name: 'Armenian',
     title: 'Certified Armenian Translation Services',
-    metaTitle: 'Certified Armenian to English Translation in Los Angeles',
+    metaTitle: 'Certified Armenian Translation',
     metaDescription:
-      'USCIS-accepted certified Armenian to English and English to Armenian translations. Birth certificates, diplomas, court documents and more, delivered in 12–48 hours. Free quote.',
+      'USCIS-accepted Armenian to English translation. Birth certificates, diplomas and court documents, delivered in 12–48 hours. Free quote.',
     intro:
       'Certified Armenian ⇄ English translations of birth certificates, marriage certificates, diplomas, court papers and more — accepted by USCIS, courts and universities.',
     about: [
@@ -138,9 +138,9 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
     slug: 'russian',
     name: 'Russian',
     title: 'Certified Russian Translation Services',
-    metaTitle: 'Certified Russian to English Translation in Los Angeles',
+    metaTitle: 'Certified Russian Translation',
     metaDescription:
-      'USCIS-accepted certified Russian to English and English to Russian translations. Birth certificates, diplomas, legal and medical documents, delivered in 12–48 hours. Free quote.',
+      'USCIS-accepted Russian to English translation. Birth certificates, diplomas, legal and medical documents, delivered in 12–48 hours. Free quote.',
     intro:
       'Certified Russian ⇄ English translations for immigration, legal, academic and business needs — accepted by USCIS, courts and universities.',
     about: [
@@ -181,9 +181,9 @@ export const LANGUAGE_PAGES: Record<LanguageSlug, LanguagePage> = {
     slug: 'ukrainian',
     name: 'Ukrainian',
     title: 'Certified Ukrainian Translation Services',
-    metaTitle: 'Certified Ukrainian to English Translation in Los Angeles',
+    metaTitle: 'Certified Ukrainian Translation',
     metaDescription:
-      'USCIS-accepted certified Ukrainian to English and English to Ukrainian translations for immigration, school and legal documents, delivered in 12–48 hours. Free quote.',
+      'USCIS-accepted Ukrainian to English translation for immigration, school and legal documents, delivered in 12–48 hours. Free quote.',
     intro:
       'Certified Ukrainian ⇄ English translations for immigration, education, employment and legal matters — accepted by USCIS, courts and universities.',
     about: [
@@ -266,9 +266,9 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/birth-certificate-translation',
     name: 'Birth certificates',
     title: 'Certified Birth Certificate Translation',
-    metaTitle: 'Certified Birth Certificate Translation for USCIS | Los Angeles',
+    metaTitle: 'Certified Birth Certificate Translation for USCIS',
     metaDescription:
-      'Certified birth certificate translation from Armenian, Russian or Ukrainian into English, accepted by USCIS. Los Angeles based, delivered in 12–48 hours. Free quote.',
+      'Certified birth certificate translation into English, accepted by USCIS. Los Angeles based, delivered in 12–48 hours. Free quote.',
     intro:
       'Armenian, Russian and Ukrainian birth certificates translated into English and certified for USCIS, courts, schools and government agencies.',
     usedFor: [
@@ -306,9 +306,9 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/marriage-certificate-translation',
     name: 'Marriage certificates',
     title: 'Certified Marriage Certificate Translation',
-    metaTitle: 'Certified Marriage Certificate Translation for USCIS | Los Angeles',
+    metaTitle: 'Certified Marriage Certificate Translation for USCIS',
     metaDescription:
-      'Certified marriage certificate translation from Armenian, Russian or Ukrainian into English for USCIS, courts and immigration filings. 12–48 hour turnaround. Free quote.',
+      'Certified marriage certificate translation into English for USCIS, courts and immigration filings. 12–48 hour turnaround. Free quote.',
     intro:
       'Marriage certificates translated and certified for spousal petitions, green card applications, name changes and court filings.',
     usedFor: [
@@ -342,9 +342,9 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/diploma-transcript-translation',
     name: 'Diplomas & transcripts',
     title: 'Certified Diploma and Transcript Translation',
-    metaTitle: 'Certified Diploma & Transcript Translation | Los Angeles',
+    metaTitle: 'Certified Diploma & Transcript Translation',
     metaDescription:
-      'Certified translation of Armenian, Russian and Ukrainian diplomas, transcripts and academic records for universities, credential evaluation and licensing boards.',
+      'Certified translation of diplomas, transcripts and academic records for universities, credential evaluation and licensing boards.',
     intro:
       'Diplomas, degrees, transcripts and academic certificates translated for university admissions, credential evaluation and licensing boards.',
     usedFor: [
@@ -383,7 +383,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/police-record-translation',
     name: 'Police records',
     title: 'Certified Police Record Translation',
-    metaTitle: 'Certified Police Clearance Certificate Translation | Los Angeles',
+    metaTitle: 'Certified Police Clearance Certificate Translation',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian police clearance certificates and criminal record checks for USCIS, visas and immigration.',
     intro:
@@ -417,7 +417,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     title: 'Certified Driver’s License Translation',
     metaTitle: 'Certified Driver’s License Translation | Los Angeles',
     metaDescription:
-      'Certified translation of Armenian, Russian and Ukrainian driver’s licenses and IDs for the DMV, insurance companies and car rental. Fast turnaround, free quote.',
+      'Certified driver’s licence and ID translation for the DMV, insurance companies and car rental. Fast turnaround, free quote.',
     intro:
       'Driver’s licenses and national ID cards translated and certified for the DMV, insurance companies and rental agencies.',
     usedFor: [
@@ -484,9 +484,9 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/passport-translation',
     name: 'Passports',
     title: 'Certified Passport Translation',
-    metaTitle: 'Certified Passport Translation | Armenian, Russian & Ukrainian',
+    metaTitle: 'Certified Passport Translation | Los Angeles',
     metaDescription:
-      'Certified translation of Armenian, Russian and Ukrainian passports for USCIS, banks, universities and consulates. Every stamp and visa page transcribed. Los Angeles based.',
+      'Certified passport translation for USCIS, banks, universities and consulates. Every stamp and visa page transcribed. Los Angeles based.',
     intro:
       'Passports translated and certified page by page — the biographic page, every visa, and every entry and exit stamp.',
     usedFor: [
@@ -526,9 +526,9 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/medical-records-translation',
     name: 'Medical records',
     title: 'Certified Medical Record Translation',
-    metaTitle: 'Certified Medical Record Translation | Armenian, Russian & Ukrainian',
+    metaTitle: 'Certified Medical Record Translation | Los Angeles',
     metaDescription:
-      'Certified translation of Armenian, Russian and Ukrainian medical records, vaccination cards, test results and discharge summaries for doctors, insurers and USCIS.',
+      'Certified translation of medical records, vaccination cards, test results and discharge summaries for doctors, insurers and USCIS.',
     intro:
       'Medical records, vaccination cards, test results and discharge summaries translated accurately for the people who will act on them.',
     usedFor: [
@@ -567,7 +567,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/bank-statement-translation',
     name: 'Bank statements',
     title: 'Certified Bank Statement Translation',
-    metaTitle: 'Certified Bank Statement & Financial Document Translation | Los Angeles',
+    metaTitle: 'Certified Bank Statement Translation | Los Angeles',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian bank statements, account certificates and financial records for visas, mortgages and USCIS filings.',
     intro:
@@ -604,7 +604,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/military-record-translation',
     name: 'Military records',
     title: 'Certified Military Record Translation',
-    metaTitle: 'Certified Military Book & Service Record Translation | Los Angeles',
+    metaTitle: 'Certified Military Book Translation | Los Angeles',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian military books (военный билет) and service records for USCIS, citizenship and visa applications.',
     intro:
@@ -642,7 +642,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/work-book-translation',
     name: 'Work books',
     title: 'Certified Work Book & Employment Record Translation',
-    metaTitle: 'Certified Work Book (Трудовая книжка) Translation | Los Angeles',
+    metaTitle: 'Certified Work Book (Трудовая книжка) Translation',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian work books (трудовая книжка) and employment records for visas, pensions, licensing and immigration.',
     intro:
@@ -679,7 +679,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/power-of-attorney-translation',
     name: 'Powers of attorney',
     title: 'Certified Power of Attorney Translation',
-    metaTitle: 'Certified Power of Attorney Translation | Armenian, Russian & Ukrainian',
+    metaTitle: 'Certified Power of Attorney Translation | Los Angeles',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian powers of attorney and notarial deeds for courts, banks, property transactions and consulates.',
     intro:
@@ -716,7 +716,7 @@ export const DOCUMENT_PAGES: DocumentPage[] = [
     href: '/court-document-translation',
     name: 'Court documents',
     title: 'Certified Court Document Translation',
-    metaTitle: 'Certified Court Document & Judgment Translation | Los Angeles',
+    metaTitle: 'Certified Court Document Translation | Los Angeles',
     metaDescription:
       'Certified translation of Armenian, Russian and Ukrainian court judgments, rulings, summonses and case files for US courts, attorneys and immigration filings.',
     intro:

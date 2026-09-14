@@ -10,9 +10,9 @@ import JsonLd from "@/components/JsonLd";
 import MobileCtaBar from "@/components/MobileCtaBar";
 import { SITE } from "@/lib/site";
 
-const title = "Certified Armenian, Russian & Ukrainian Translation | AZ Global Translations";
+const title = "Certified Armenian, Russian & Ukrainian Translation";
 const description =
-  "USCIS-accepted certified translations between English and Armenian, Russian or Ukrainian. Los Angeles based, 12–48 hour turnaround. Upload your document for a free quote.";
+  "USCIS-accepted certified translations between English and Armenian, Russian or Ukrainian. Los Angeles based, 12–48 hour turnaround.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     images: [{ url: "/az-global-icon.png", width: 500, height: 500, alt: "AZ Global Translations logo" }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title,
     description,
-    images: ["/az-global-icon.png"],
+    images: ["/opengraph-image.png"],
   },
 };
 
